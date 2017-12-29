@@ -1,9 +1,8 @@
-import java.util.HashMap;
 import java.util.Collections;
 
 public class NegaMax{
 	//maps scores to "moves"
-	private Move best_move;
+	private MoveAndValue best_move;
 	private int depth;
 	private int alpha;
 	private int beta;
@@ -18,7 +17,7 @@ public class NegaMax{
 		int startTime = 0; /*This will be the start time of the negamax*/
 		int depthCount = 1;
 		//iterative deepening
-		Move [] moves = game.getAvailableMoves();
+		MoveAndValue [] moves = game.getAvailableMoves();
 		while(10 /*this should be current time*/ - startTime < 10){
 			for(int i=0; i<moves.length; i++){
 				best_move.move = -1;
@@ -27,19 +26,19 @@ public class NegaMax{
 				//Note: may have to make alpha and beta instance variables so that the iterative deepening actually helps pruning
 				moves[i].value = negaMax(game, depth, depthCount, alpha, beta, color);
 				game.undoMove(moves[i].move);
-					
+
 			}
 			depthCount++;
 			//explore the best moves first
 			game.sortMoves(moves);
 		}
-		
+
 		return moves[0].move;
 	}
 
 	//color keeps track of the player. It is 1 if we are the player, -1 if the opponent is the player
 	private int negaMax(Game game, int depth, int depthCount, int alpha, int beta, int color){
-		
+
 		//if we are at the end of the game or have reached the iterative deepening depth, evaluate the state of the board and return a reward
 		if(game.isOver() || depth == depthCount){
 			return color * game.evaluate(depth);
@@ -49,9 +48,9 @@ public class NegaMax{
 		int max = -10000;
 
 		//explores each node in the tree
-		for(Move possibleMove: game.getAvailableMoves()){
+		for(MoveAndValue possibleMove: game.getAvailableMoves()){
 
-			//these three lines make a move, recurivsely call the negamax on the new board state, and then un-make the move. This allows us to get the value of the move without 
+			//these three lines make a move, recurivsely call the negamax on the new board state, and then un-make the move. This allows us to get the value of the move without
 			//"making" the move on our actual board
 			game.makeMove(possibleMove.move);
 			int negaMax_value = -negaMax(game, depth +1, depthCount, -beta, -alpha, -color);
@@ -65,7 +64,7 @@ public class NegaMax{
 			//if we are at the first level of our recursion and the value of the move we are currently exploring is better than any we've found so far, the current move is the new best move
 			if(depth == 0){
 				if(negaMax_value > best_move.value){
-					best_move = new Move(possibleMove.move, negaMax_value);
+					best_move = new MoveAndValue(possibleMove.move, negaMax_value);
 				}
 			}
 
