@@ -127,4 +127,15 @@ public class SubBoard{
     }
     return result.toString();
   }
+
+  //Getters
+
+  public int getxBoard(){
+    return xBoard;
+  }
+
+  public int getoBoard(){
+    return oBoard;
+  }
+
 }

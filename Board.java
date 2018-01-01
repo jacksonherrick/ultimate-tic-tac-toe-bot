@@ -155,6 +155,7 @@ public class Board{
     return false;
   }
 
+
   // @override toString() method
   public String toString() {
     StringBuilder result = new StringBuilder();
