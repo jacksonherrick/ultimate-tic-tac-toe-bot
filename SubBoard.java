@@ -3,6 +3,12 @@ public class SubBoard{
   private int oBoard;
   private BoardState state;
 
+
+  // Evaluation constants to make the evaluation function easier to read
+  private int c0 = Constants.EVAL_CONSTANTS[0];
+  private int c1 = Constants.EVAL_CONSTANTS[1];
+  private int c2 = Constants.EVAL_CONSTANTS[2];
+
   // constructor to create an empto board
   public SubBoard() {
     this(0, 0);
@@ -127,4 +133,25 @@ public class SubBoard{
     }
     return result.toString();
   }
+
+  public int evaluate(){
+    if(state == BoardState.X_WON){
+      return c2;
+    }
+    if(state == BoardState.O_WON){
+      return -1*c2;
+    }
+    return c0*Eval.twoInARowsWithOpenThird(xBoard, oBoard) + c1*Eval.middleSquare(xBoard) - c0*Eval.twoInARowsWithOpenThird(oBoard, xBoard) - c1*Eval.middleSquare(oBoard);
+  }
+
+  //Getters
+
+  public int getxBoard(){
+    return xBoard;
+  }
+
+  public int getoBoard(){
+    return oBoard;
+  }
+
 }

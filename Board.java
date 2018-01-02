@@ -16,6 +16,10 @@ public class Board{
   // state of the board
   BoardState state;
 
+  // Evaluation constants to make the evaluation function easier to read
+  private int c0 = Constants.EVAL_CONSTANTS[0];
+  private int c1 = Constants.EVAL_CONSTANTS[1];
+
   /**
     * Default constructor, creates a Board of 9 empty SubBoards
     * Initializes win/draw boards
@@ -154,6 +158,21 @@ public class Board{
     // Yeah... so... this needs to be built!
     return false;
   }
+
+  public int evaluate(){
+    if(state == BoardState.X_WON){
+      return Integer.MAX_VALUE;
+    }
+    if(state == BoardState.O_WON){
+      return Integer.MIN_VALUE;
+    }
+    int score = 0;
+    for(int i =0; i<boards.length; i++){
+      score += Eval.getValues().get(boards[i]);
+    }
+    return 10*c0*Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards)) + 10*c1*Eval.middleSquare(xWinBoards) - 10*c0*Eval.twoInARowsWithOpenThird(oWinBoards, (xWinBoards | drawnBoards)) - 10*c1*Eval.middleSquare(oWinBoards)+ score;
+  }
+
 
   // @override toString() method
   public String toString() {
