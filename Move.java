@@ -7,6 +7,7 @@ public class Move{
     board = _board;
   }
 
+
   /**
     * @overide the toString() method
     * converts integer move into readable representation

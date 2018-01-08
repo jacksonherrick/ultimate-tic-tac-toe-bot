@@ -16,6 +16,10 @@ public class Board{
   // state of the board
   BoardState state;
 
+  // keeps track of the last move to constrain move generation. Might have to make this an array of all previous moves
+  Move [] pastMoves;
+  int count;
+
   // Evaluation constants to make the evaluation function easier to read
   private int c0 = Constants.EVAL_CONSTANTS[0];
   private int c1 = Constants.EVAL_CONSTANTS[1];
@@ -41,6 +45,9 @@ public class Board{
 
     // default BoardState
     state = BoardState.IN_PROGRESS;
+
+    pastMoves = new Move [81];
+    count = 0;
 	}
 
   /**
@@ -57,10 +64,20 @@ public class Board{
   public List<Move> generateMoves() {
     List<Move> moves = new ArrayList<>();
     // TODO: perhaps this is not the most efficient, concatting ArrayLists...
-    for(int i = 0; i < boards.length; i++) {
-      moves.addAll(generateMoves(i));
+
+    // If the SubBoard we are sending the other user to is in progess, only generate moves in that SubBoard
+    if((count != 0) && boards[pastMoves[count].board].getState() == BoardState.IN_PROGRESS){
+      moves.addAll(generateMoves(pastMoves[count].board));
+      return moves;
     }
-    return moves;
+
+    // If it has been won or is dead, generate moves for everywhere
+    else{
+      for(int i = 0; i < boards.length; i++) {
+        moves.addAll(generateMoves(i));
+      }
+      return moves;
+    }
   }
 
   /**
@@ -115,6 +132,8 @@ public class Board{
     boards[m.board].makeMove(m.move, side);
     updateStateBitboards(m.board);
     toggleSide();
+    pastMoves[count] = m;
+    count++;
   }
 
   /**
@@ -125,6 +144,8 @@ public class Board{
     boards[m.board].takeMove(m.move);
     updateStateBitboards(m.board);
     toggleSide();
+    count--;
+    pastMoves[count] = null;
   }
 
   /**
