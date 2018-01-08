@@ -66,7 +66,7 @@ public class Board{
     // TODO: perhaps this is not the most efficient, concatting ArrayLists...
 
     // If the SubBoard we are sending the other user to is in progess, only generate moves in that SubBoard
-    if((count != 0) && boards[pastMoves[count].board].getState() == BoardState.IN_PROGRESS){
+    if((count != 0) && boards[pastMoves[count].translate()].getState() == BoardState.IN_PROGRESS){
       moves.addAll(generateMoves(pastMoves[count].board));
       return moves;
     }

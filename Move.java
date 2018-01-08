@@ -7,6 +7,14 @@ public class Move{
     board = _board;
   }
 
+  // Gets the SubBoard that we are sending the next player to based on the last move. Can make this more efficient - make a hashMap of translations
+  public int translate(){
+    for(int i=0; i < Constants.BIT_MASKS.length; i++){
+      if((move & Constants.BIT_MASKS[i]) == Constants.BIT_MASKS[i])
+        return i;
+    }
+    return -1;
+  }
 
   /**
     * @overide the toString() method
