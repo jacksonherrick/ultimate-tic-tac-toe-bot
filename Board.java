@@ -129,6 +129,7 @@ public class Board{
     * TODO: make sure that legality check is called for player-entered moves (check there, not here)
     **/
   public void makeMove(Move m) {
+    
     boards[m.board].makeMove(m.move, side);
     updateStateBitboards(m.board);
     toggleSide();

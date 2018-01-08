@@ -29,7 +29,12 @@ public class Game{
 				b.takeMove(m);
 			} else if(s.matches("^\\s*[a-i][1-9]\\s*$")){
 				m = Utils.coordinatesToMove(s);
-				b.makeMove(m);
+				if(((b.boards[m.board].getxBoard() | b.boards[m.board].getoBoard()) & m.move) == 0){
+					b.makeMove(m);
+				}
+				else{
+					System.out.println("Sorry, that position is already taken. Please enter another move");
+				}
 			} else {
 				System.out.println("Sorry, please enter a move or command.");
 			}
