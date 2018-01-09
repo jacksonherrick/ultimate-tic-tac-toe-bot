@@ -170,13 +170,12 @@ public class SubBoard{
     return c0*Eval.twoInARowsWithOpenThird(xBoard, oBoard) + c1*Eval.middleSquare(xBoard) - c0*Eval.twoInARowsWithOpenThird(oBoard, xBoard) - c1*Eval.middleSquare(oBoard);
   }
 
-  //Getters
-
-  public int getxBoard(){
+  // getters
+  public int getXBoard(){
     return xBoard;
   }
 
-  public int getoBoard(){
+  public int getOBoard(){
     return oBoard;
   }
 

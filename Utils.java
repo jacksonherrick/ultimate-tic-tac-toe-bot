@@ -63,4 +63,54 @@ public final class Utils {
     return true;
   }
 
+  /**
+    * Converts a SubBoard to its HCN representation
+    **/
+  public static String subBoardToHCN(SubBoard sb) {
+    StringBuilder result = new StringBuilder();
+
+    // splice out "\" and newlines
+    String s = sb.toString().replaceAll("[\\n\\[\\]]", "");
+
+    // itererate through the string
+    int i = 0;
+    while(i < s.length()) {
+      char c = s.charAt(i);
+      if(c != ' ') {
+        // it is not empty
+        result.append(s.charAt(i));
+        i++;
+      } else {
+        // count how many empty spaces
+        int count = 0;
+        while(i < s.length() && s.charAt(i) == ' '){
+          count++;
+          i++;
+        }
+        result.append(count);
+      }
+    }
+    return result.toString();
+  }
+
+  /**
+    * Converts a Board to its HCN representation
+    **/
+  public static String boardToHCN(Board b) {
+    StringBuilder result = new StringBuilder();
+    // convert the SubBoards
+    for(SubBoard sb : b.boards) {
+      System.out.println(sb);
+      result.append(subBoardToHCN(sb) + "/");
+    }
+    // delete the last "/"
+    result.setLength(result.length() - 1);
+
+    // add side to move
+    String side = b.side == Side.X ? "X" : "O";
+    result.append(" " + side + " ");
+    result.append(b.getLastMove().toString());
+    return result.toString();
+  }
+
 }

@@ -37,7 +37,7 @@ public class Eval{
 		if(board.getState() == BoardState.O_WON){
 			return -1*c2;
 		}
-		return c0 * twoInARowsWithOpenThird(board.getxBoard(), board.getoBoard()) + c1 * middleSquare(board.getxBoard()) - c0*twoInARowsWithOpenThird(board.getoBoard(), board.getxBoard()) - c1*middleSquare(board.getoBoard());
+		return c0 * twoInARowsWithOpenThird(board.getXBoard(), board.getOBoard()) + c1 * middleSquare(board.getXBoard()) - c0*twoInARowsWithOpenThird(board.getOBoard(), board.getXBoard()) - c1*middleSquare(board.getOBoard());
 	}
 
 

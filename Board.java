@@ -48,7 +48,7 @@ public class Board{
     // default BoardState
     state = BoardState.IN_PROGRESS;
 
-    pastMoves = new Move [81];
+    pastMoves = new Move[81];
     count = 0;
 	}
 
@@ -72,10 +72,8 @@ public class Board{
           boards[i-1] = new SubBoard(m.group(i));
           boards[i-1].checkConditions();
           updateStateBitboards(i-1);
-          continue;
         } else if(i == 10) {
           side = m.group(i).equals("X") ? Side.X : Side.O;
-          continue;
         } else {
           pastMoves[0] = Utils.coordinatesToMove(m.group(i));
           count = 1;
@@ -99,7 +97,7 @@ public class Board{
     **/
   public List<Move> generateMoves() {
     List<Move> moves = new ArrayList<>();
-    // TODO: perhaps this is not the most efficient, concatting ArrayLists...
+    // TODO: perhaps this is not the most efficient, combining ArrayLists...
 
     // If the SubBoard we are sending the other user to is in progess, only generate moves in that SubBoard
     if((count != 0) && boards[pastMoves[count-1].translate()].getState() == BoardState.IN_PROGRESS){
@@ -118,11 +116,11 @@ public class Board{
     }
   }
 
+  /**
+    * Returns the last move, or null if there have not been any moves
+    **/
   public Move getLastMove(){
-    if(count ==0){
-      return null;
-    }
-    return pastMoves[count-1];
+    return count == 0 ? null : pastMoves[count-1];
   }
 
   /**
@@ -173,7 +171,6 @@ public class Board{
     * TODO: make sure that legality check is called for player-entered moves (check there, not here)
     **/
   public void makeMove(Move m) {
-
     boards[m.board].makeMove(m.move, side);
     updateStateBitboards(m.board);
     toggleSide();
@@ -217,7 +214,7 @@ public class Board{
   }
 
   /**
-    Returns true if the the board is drawn (no available moves)
+    * Returns true if the the board is drawn (no available moves)
     * TODO: this check only needs to be done after many, many moves
     **/
   public boolean isDrawn() {
@@ -242,7 +239,7 @@ public class Board{
 
   // @override toString() method
   public String toString() {
-    StringBuilder result = new StringBuilder();
+    StringBuilder result = new StringBuilder("HCN: " + Utils.boardToHCN(this) + "\n");
     String spacer = "  +---------+---------+---------+\n";
     result.append(spacer);
     int counter = 9;

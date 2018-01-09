@@ -31,33 +31,7 @@ public class Move{
     int col = (board % 3) * 3 + (2 - index % 3) + 97;
 
     // print basic information
-    result.append("Board #: " + board + ", Square: " + Character.toString((char)col) + row
-      + "\n");
-
-    // print representation of the move in a 3x3 grid - optional
-    if(Constants.PRINT_DETAIL > 1) {
-      result.append("+---+\n|");
-      int count = 0;
-      for(int i = 8; i > s.length() - 1; i--) {
-        result.append("0");
-        count++;
-        if(count % 3 == 0) result.append("|\n|");
-      }
-      for(int i = 0; i < s.length(); i++) {
-        result.append(s.charAt(i));
-        count++;
-        if(count % 3 == 0) {
-          result.append("|\n");
-          if(count < 9) {
-            result.append("|");
-          }
-        }
-      }
-      result.append("+---+\n");
-    }
-
-
-
+    result.append(Character.toString((char)col) + row);
     return result.toString();
   }
 }
