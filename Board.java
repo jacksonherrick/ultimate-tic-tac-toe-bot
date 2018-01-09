@@ -66,18 +66,27 @@ public class Board{
     // TODO: perhaps this is not the most efficient, concatting ArrayLists...
 
     // If the SubBoard we are sending the other user to is in progess, only generate moves in that SubBoard
-    if((count != 0) && boards[pastMoves[count].translate()].getState() == BoardState.IN_PROGRESS){
-      moves.addAll(generateMoves(pastMoves[count].board));
+    if((count != 0) && boards[pastMoves[count-1].translate()].getState() == BoardState.IN_PROGRESS){
+      moves.addAll(generateMoves(pastMoves[count-1].translate()));
       return moves;
     }
 
     // If it has been won or is dead, generate moves for everywhere
     else{
       for(int i = 0; i < boards.length; i++) {
-        moves.addAll(generateMoves(i));
+        if(boards[i].getState() == BoardState.IN_PROGRESS){
+          moves.addAll(generateMoves(i));
+        }
       }
       return moves;
     }
+  }
+
+  public Move getLastMove(){
+    if(count ==0){
+      return null;
+    }
+    return pastMoves[count-1];
   }
 
   /**
@@ -109,15 +118,15 @@ public class Board{
     BoardState s = boards[board].getState();
     System.out.println("S: " + s);
     if(s == BoardState.IN_PROGRESS) {
-      xWinBoards &= Constants.CLRBIT[8 - board];
-      oWinBoards &= Constants.CLRBIT[8 - board];
-      drawnBoards &= Constants.CLRBIT[8 - board];
+      xWinBoards &= Constants.CLRBIT[board];
+      oWinBoards &= Constants.CLRBIT[board];
+      drawnBoards &= Constants.CLRBIT[board];
     } else if (s == BoardState.DRAWN) {
-      drawnBoards |= Constants.BIT_MASKS[8 - board];
+      drawnBoards |= Constants.BIT_MASKS[board];
     } else if (s == BoardState.X_WON) {
-      xWinBoards |= Constants.BIT_MASKS[8 - board];
+      xWinBoards |= Constants.BIT_MASKS[board];
     } else if (s == BoardState.O_WON) {
-      oWinBoards |= Constants.BIT_MASKS[8 - board];
+      oWinBoards |= Constants.BIT_MASKS[board];
     } else if(Constants.REPORTING_LEVEL > 1){
       throw new java.lang.RuntimeException("Unknown BoardState encountered in updateStateBitboards()");
     }
@@ -129,7 +138,7 @@ public class Board{
     * TODO: make sure that legality check is called for player-entered moves (check there, not here)
     **/
   public void makeMove(Move m) {
-    
+
     boards[m.board].makeMove(m.move, side);
     updateStateBitboards(m.board);
     toggleSide();
