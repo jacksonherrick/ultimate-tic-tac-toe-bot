@@ -57,4 +57,12 @@ public final class Utils {
     return new Move(m, 8 - (3 * (row / 3) + (2 - col / 3)));
   }
 
+  /**
+    * Determines whether the inputted string is valid HCN
+    * TODO: implement... not only regex validation, but other too.
+    **/
+  public static boolean isValidHCN(String s) {
+    return true;
+  }
+
 }
