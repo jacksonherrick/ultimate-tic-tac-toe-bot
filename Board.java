@@ -53,19 +53,6 @@ public class Board{
 	}
 
   /**
-    * Overloaded constructor. Creates a Board of 9 specified SubBoards.
-    * Fills from top left to bottom right.
-    **/
-  public Board(SubBoard[] allSubBoards) {
-    for(int i = 0; i < allSubBoards.length; i++) {
-      boards[i] = allSubBoards[i];
-      boards[i].checkConditions();
-      updateStateBitboards(i);
-    }
-  }
-
-
-  /**
     * Overloaded constructor. Creates a Board from a Herrick-Corley Notation string.
     * HCN notation lists the SubBoards using "X", "O", and 1-9, starting from top left.
     **/
@@ -80,7 +67,7 @@ public class Board{
       // loop through matches
       for(int i = 1; i < 12; i++) {
         if(i < 10) {
-          boards[i] = new SubBoard();
+          boards[i] = new SubBoard(m.group(i));
           continue;
         } else if(i == 10) {
           side = m.group(i).equals("X") ? Side.X : Side.O;
