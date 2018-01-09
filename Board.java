@@ -78,6 +78,7 @@ public class Board{
       }
     } else {
       System.out.println("Invalid HCN.");
+      System.exit(0);
     }
 
 
