@@ -57,7 +57,19 @@ public class Game{
 				b.takeMove(m);
 			} else if(s.matches("^\\s*[a-i][1-9]\\s*$")){
 				m = Utils.coordinatesToMove(s);
-				b.makeMove(m);
+				// checks if the move is on top of another move
+				if(((b.boards[m.board].getxBoard() | b.boards[m.board].getoBoard()) & m.move) == 0){
+					// checks if the move is in the correct sub-board (it's not the first move or we are in the sub-board dictated by the lat move or if that board is not in progress)
+					if(b.getLastMove() == null || m.board == b.getLastMove().translate() || b.boards[b.getLastMove().translate()].getState() != BoardState.IN_PROGRESS){
+						b.makeMove(m);
+					}
+					else{
+						System.out.println("Sorry, please move in the board corresponding to the last move");
+					}
+				}
+				else{
+					System.out.println("Sorry, that position is already taken. Please enter another move");
+				}
 			} else {
 				System.out.println("Sorry, please enter a move or command.");
 			}
