@@ -34,14 +34,12 @@ public class SubBoard{
       if(s.charAt(stringIterator) == 'X'){
         xBoard = (xBoard | Constants.BIT_MASKS[count]);
         count++;
-        System.out.println("Increment count from " + (count-1) + " to " + count);
       }
       else if(s.charAt(stringIterator) == 'O'){
         oBoard = (oBoard | Constants.BIT_MASKS[count]);
         count ++;
-        System.out.println("Increment count from " + (count-1) + " to " + count);
       }
-      else{
+      else {
         count += Character.getNumericValue(s.charAt(stringIterator));
       }
       stringIterator++;

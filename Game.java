@@ -28,6 +28,8 @@ public class Game{
 
 		String s = reader.nextLine();
 		Board b = new Board(s);
+		System.out.println(b);
+		System.exit(0);
 		return b;
 
 	}

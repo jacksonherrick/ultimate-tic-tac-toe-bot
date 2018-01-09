@@ -48,8 +48,6 @@ public final class Utils {
     int col = (int)s.charAt(0) - 97;
     int row = Character.getNumericValue(s.charAt(1)) - 1;
 
-    System.out.println("Col: " + col);
-
     // create board representation
     int shift = ((row % 3) * 3) + (2 - (col % 3));
     int m = 1 << shift;

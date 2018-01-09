@@ -57,6 +57,8 @@ public class Board{
     * HCN notation lists the SubBoards using "X", "O", and 1-9, starting from top left.
     **/
   public Board(String hcn) {
+    // call default constructor
+    this();
 
     // compile the regex to match HCN's
     Pattern r = Pattern.compile("^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2})$");
@@ -67,10 +69,13 @@ public class Board{
       // loop through matches
       for(int i = 1; i < 12; i++) {
         if(i < 10) {
-          boards[i] = new SubBoard(m.group(i));
+          boards[i-1] = new SubBoard(m.group(i));
+          boards[i-1].checkConditions();
+          updateStateBitboards(i-1);
           continue;
         } else if(i == 10) {
           side = m.group(i).equals("X") ? Side.X : Side.O;
+          continue;
         } else {
           pastMoves[0] = Utils.coordinatesToMove(m.group(i));
           count = 1;
@@ -80,9 +85,6 @@ public class Board{
       System.out.println("Invalid HCN.");
       System.exit(0);
     }
-
-
-
   }
   /**
     * Toggles which side is to move
@@ -150,7 +152,6 @@ public class Board{
     **/
   public void updateStateBitboards(int board) {
     BoardState s = boards[board].getState();
-    System.out.println("S: " + s);
     if(s == BoardState.IN_PROGRESS) {
       xWinBoards &= Constants.CLRBIT[board];
       oWinBoards &= Constants.CLRBIT[board];
