@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Board{
   // array to hold SubBoard instances
@@ -50,6 +52,38 @@ public class Board{
     count = 0;
 	}
 
+  /**
+    * Overloaded constructor. Creates a Board from a Herrick-Corley Notation string.
+    * HCN notation lists the SubBoards using "X", "O", and 1-9, starting from top left.
+    **/
+  public Board(String hcn) {
+
+    // compile the regex to match HCN's
+    Pattern r = Pattern.compile("^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2})$");
+
+    // match the HCN
+    Matcher m = r.matcher(hcn);
+    if(m.matches()) {
+      // loop through matches
+      for(int i = 1; i < 12; i++) {
+        if(i < 10) {
+          boards[i] = new SubBoard(m.group(i));
+          continue;
+        } else if(i == 10) {
+          side = m.group(i).equals("X") ? Side.X : Side.O;
+        } else {
+          pastMoves[0] = Utils.coordinatesToMove(m.group(i));
+          count = 1;
+        }
+      }
+    } else {
+      System.out.println("Invalid HCN.");
+      System.exit(0);
+    }
+
+
+
+  }
   /**
     * Toggles which side is to move
     **/
