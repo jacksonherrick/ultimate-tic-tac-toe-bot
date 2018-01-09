@@ -3,6 +3,10 @@ public class SubBoard{
   private int oBoard;
   private BoardState state;
 
+  public static void main(String [] args){
+    SubBoard test = new SubBoard(args[0]);
+    System.out.print(test);
+  }
 
   // Evaluation constants to make the evaluation function easier to read
   private int c0 = Constants.EVAL_CONSTANTS[0];
@@ -18,6 +22,30 @@ public class SubBoard{
   public SubBoard(int _xBoard, int _oBoard) {
     xBoard = _xBoard;
     oBoard = _oBoard;
+  }
+
+  // constructs a sub-board from HCN
+  public SubBoard(String s){
+    xBoard = 0;
+    oBoard = 0;
+    int count =0;
+    int stringIterator =0;
+    while(stringIterator < s.length()){
+      if(s.charAt(stringIterator) == 'X'){
+        xBoard = (xBoard | Constants.BIT_MASKS[count]);
+        count++;
+        System.out.println("Increment count from " + (count-1) + " to " + count);
+      }
+      else if(s.charAt(stringIterator) == 'O'){
+        oBoard = (oBoard | Constants.BIT_MASKS[count]);
+        count ++;
+        System.out.println("Increment count from " + (count-1) + " to " + count);
+      }
+      else{
+        count += Character.getNumericValue(s.charAt(stringIterator));
+      }
+      stringIterator++;
+    }
   }
 
   public BoardState getState() {
