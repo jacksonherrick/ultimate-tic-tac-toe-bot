@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class Board {
 	// array to hold SubBoard instances
-	SubBoard[] boards;
+	public SubBoard[] boards;
 
 	// bitboards used to check for wins and draws
 	int xWinBoards;
@@ -79,8 +79,8 @@ public class Board {
 					updateStateBitboards(i - 1);
 				} else if (i == 10) {
 					side = m.group(i).equals("X") ? Side.X : Side.O;
-				} else {
-					pastMoves[0] = m.group(i).equals("-") ? null : Utils.coordinatesToMove(m.group(i));
+				} else if (!m.group(i).equals("-")) {
+					pastMoves[0] = Utils.coordinatesToMove(m.group(i));
 					count = 1;
 				}
 			}
@@ -105,16 +105,16 @@ public class Board {
 			boards[i].checkConditions();
 			updateStateBitboards(i);
 		}
-		
+
 		// set side
 		side = s;
-		
+
 		// set previous move
-		if(lastMove != null) {
+		if (lastMove != null) {
 			pastMoves[0] = lastMove;
 			count = 1;
 		}
- 
+
 	}
 
 	/**
@@ -125,26 +125,23 @@ public class Board {
 	}
 
 	/**
-	 * Generates the potential moves for all locations on the current board. Returns
-	 * a bitboard representation of the available moves.
+	 * Generates the potential moves for all locations on the current Board. Returns
+	 * a list representation of the available moves.
 	 **/
 	public List<Move> generateMoves() {
 		List<Move> moves = new ArrayList<>();
 		// TODO: perhaps this is not the most efficient, combining ArrayLists...
 
-		// If the SubBoard we are sending the other user to is in progess, only generate
-		// moves in that SubBoard
-		if ((count != 0) && boards[pastMoves[count - 1].translate()].getState() == BoardState.IN_PROGRESS) {
-			moves.addAll(generateMoves(pastMoves[count - 1].translate()));
-			return moves;
-		}
+		// get the last move
+		Move m = this.getLastMove();
 
-		// If it has been won or is dead, generate moves for everywhere
-		else {
+		// if target SubBoard is IN_PROGRESS, only generate moves in that SubBoard
+		if (m != null && boards[m.translate()].getState() == BoardState.IN_PROGRESS) {
+			moves.addAll(generateMoves(m.translate()));
+			return moves;
+		} else { // if the target SubBoard is won, dead, etc. generate moves for all SubBoards
 			for (int i = 0; i < boards.length; i++) {
-				if (boards[i].getState() == BoardState.IN_PROGRESS) {
-					moves.addAll(generateMoves(i));
-				}
+				moves.addAll(generateMoves(i));
 			}
 			return moves;
 		}
@@ -158,19 +155,19 @@ public class Board {
 	}
 
 	/**
-	 * Generates the potential moves for a particular board. Returns a bitboard
-	 * representation of the available moves.
+	 * Generates the potential moves for a particular SubBoard index. Returns a
+	 * bitboard representation of the available moves.
 	 **/
-	public List<Move> generateMoves(int board) {
-		// generate a bitboard for the specified board
+	public List<Move> generateMoves(int sb) {
+		// generate a bitboard for the specified SubBoard
 		// a 1 represents a potential move
-		int bb = boards[board].generateMoves();
+		int bb = boards[sb].generateMoves();
 		List<Move> moves = new ArrayList<>();
 
 		while (bb != 0) {
 			int move = bb & -bb;
 			bb &= (bb - 1);
-			moves.add(new Move(move, board));
+			moves.add(new Move(move, sb));
 		}
 
 		return moves;

@@ -41,6 +41,6 @@ class TestHCN {
 			}
 			br.close();
 		}
-		System.out.println("Completed " + count + " positions.");
+		System.out.println("Completed " + count + " positions for HCN tests.");
 	}
 }

@@ -28,7 +28,7 @@ public class TestBoardGenerator {
 			    PrintWriter out = new PrintWriter(bw))
 			{
 			 	for(int i = 0; i < times; i++) {
-			 		String s = Utils.boardToHCN(Utils.generateRandomBoard());
+			 		String s = Utils.boardToHCN(TestUtils.generateRandomBoard());
 			 		out.println(s);
 			    }
 			} catch (IOException e) {
