@@ -5,11 +5,6 @@ public class SubBoard {
 	private int oBoard;
 	private BoardState state;
 
-	public static void main(String[] args) {
-		SubBoard test = new SubBoard(args[0]);
-		System.out.print(test);
-	}
-
 	// Evaluation constants to make the evaluation function easier to read
 	private int c0 = Constants.EVAL_CONSTANTS[0];
 	private int c1 = Constants.EVAL_CONSTANTS[1];
@@ -68,7 +63,7 @@ public class SubBoard {
 	 * Takes back the specified move, and checks for win/draw conditions if
 	 * applicable Take as input a 9-bit integer and the side to move NOTE:
 	 * takeMove() does not have to check win/draw if neither were true NOTE: passing
-	 * a side is unecessary, since a bit cleared regardless
+	 * a side is unnecessary, since a bit cleared regardless
 	 **/
 	public void takeMove(int m) {
 		xBoard &= ~m;
@@ -96,12 +91,12 @@ public class SubBoard {
 		// table.
 		for (int bb : Constants.WIN_BITBOARDS) {
 			if ((bb & xBoard) == bb) {
-				if (state == BoardState.IN_PROGRESS) {
+				if (state == BoardState.IN_PROGRESS || state == null) {
 					state = BoardState.X_WON;
 				}
 				return true;
 			} else if ((bb & oBoard) == bb) {
-				if (state == BoardState.IN_PROGRESS) {
+				if (state == BoardState.IN_PROGRESS || state == null) {
 					state = BoardState.O_WON;
 				}
 				return true;

@@ -8,38 +8,36 @@ public class Game {
 
 	// main method
 	public static void main(String[] args) {
-
 		reader = new Scanner(System.in);
 
 		// set up the board
 		Board b = new Board();
-
+		
+		// get input
 		System.out.println("Welcome. Do you want a custom position?");
 		String s = reader.nextLine();
 		if (s.equals("yes")) {
 			b = inputCustomBoard();
 		}
+		
+		// use the inputed board
 		play(b);
-
+		
+		// close scanner
 		reader.close();
 	}
 
 	// input a particular board to play
 	public static Board inputCustomBoard() {
-
 		System.out.println("Please enter the HCN string for the custom board.");
-
 		String s = reader.nextLine();
 		Board b = new Board(s);
-		System.out.println(b);
-		System.exit(0);
 		return b;
-
 	}
 
 	// play position from a board, player controls all moves
 	public static void play(Board b) {
-
+		
 		// alert the player
 		System.out.println(
 				"Type the coordinates of your first move. Type \"exit\" to, well, you figure it out. Likewise for \"undo\".");
@@ -50,9 +48,9 @@ public class Game {
 		// continuously wait for input
 		while (true) {
 			System.out.println(b);
-			System.out.print("X: " + Integer.toBinaryString(b.xWinBoards));
-			System.out.print(" O: " + Integer.toBinaryString(b.oWinBoards));
-			System.out.print(" Draw: " + Integer.toBinaryString(b.drawnBoards));
+			System.out.print("  X: " + Integer.toBinaryString(b.xWinBoards));
+			System.out.print(", O: " + Integer.toBinaryString(b.oWinBoards));
+			System.out.print(", Draw: " + Integer.toBinaryString(b.drawnBoards));
 			System.out.println();
 			String s = reader.nextLine();
 			if (s.equals("quit") || s.equals("stop") || s.equals("exit")) {

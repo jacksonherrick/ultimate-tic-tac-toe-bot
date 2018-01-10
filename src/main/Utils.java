@@ -1,5 +1,7 @@
 package main;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public final class Utils {
 
 	private Utils() {
@@ -106,7 +108,6 @@ public final class Utils {
 		StringBuilder result = new StringBuilder();
 		// convert the SubBoards
 		for (SubBoard sb : b.boards) {
-			System.out.println(sb);
 			result.append(subBoardToHCN(sb) + "/");
 		}
 		// delete the last "/"
@@ -115,8 +116,38 @@ public final class Utils {
 		// add side to move
 		String side = b.side == Side.X ? "X" : "O";
 		result.append(" " + side + " ");
-		result.append(b.getLastMove().toString());
+		if(b.getLastMove() != null) {
+			result.append(b.getLastMove().toString());
+		} else {
+			result.append("-");
+		}
 		return result.toString();
 	}
-
+	
+	/**
+	 * Used to generate random boards for testing
+	 * TODO: make this generate only valid boards.
+	 **/
+	public static Board generateRandomBoard() {
+		// randomly generate board
+		SubBoard[] sbs = new SubBoard[9];
+		for(int i = 0; i < 9; i++) {
+			int xBoard = ThreadLocalRandom.current().nextInt(0, 513);
+			int oBoard = ThreadLocalRandom.current().nextInt(0, 513);
+			sbs[i] = new SubBoard(xBoard, oBoard);
+		}
+		
+		// randomly assign side
+		Side s = ThreadLocalRandom.current().nextInt(0, 2) < 1 ? Side.X : Side.O;
+		
+		// randomly assign previous move
+		Move m = null;
+		if(ThreadLocalRandom.current().nextInt(0, 82) > 0) {
+			int move = Constants.BIT_MASKS[ThreadLocalRandom.current().nextInt(0, 9)];
+			int board = ThreadLocalRandom.current().nextInt(0, 9);
+			m = new Move(move, board);
+		}
+		
+		return new Board(sbs, s, m);
+	}
 }

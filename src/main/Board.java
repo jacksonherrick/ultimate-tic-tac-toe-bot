@@ -66,7 +66,7 @@ public class Board {
 
 		// compile the regex to match HCN's
 		Pattern r = Pattern.compile(
-				"^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2})$");
+				"^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2}|\\-)$");
 
 		// match the HCN
 		Matcher m = r.matcher(hcn);
@@ -80,7 +80,7 @@ public class Board {
 				} else if (i == 10) {
 					side = m.group(i).equals("X") ? Side.X : Side.O;
 				} else {
-					pastMoves[0] = Utils.coordinatesToMove(m.group(i));
+					pastMoves[0] = m.group(i).equals("-") ? null : Utils.coordinatesToMove(m.group(i));
 					count = 1;
 				}
 			}
@@ -88,6 +88,33 @@ public class Board {
 			System.out.println("Invalid HCN.");
 			System.exit(0);
 		}
+	}
+
+	/**
+	 * Overloaded constructor. Creates a Board from a list of SubBoard objects, a
+	 * given Side, and a previous move. Primarily used in testing.
+	 **/
+	public Board(SubBoard[] sbs, Side s, Move lastMove) {
+
+		// call default constructor
+		this();
+
+		// set SubBoards
+		for (int i = 0; i < sbs.length; i++) {
+			boards[i] = sbs[i];
+			boards[i].checkConditions();
+			updateStateBitboards(i);
+		}
+		
+		// set side
+		side = s;
+		
+		// set previous move
+		if(lastMove != null) {
+			pastMoves[0] = lastMove;
+			count = 1;
+		}
+ 
 	}
 
 	/**
@@ -144,7 +171,6 @@ public class Board {
 			int move = bb & -bb;
 			bb &= (bb - 1);
 			moves.add(new Move(move, board));
-			System.out.println(new Move(move, board));
 		}
 
 		return moves;
@@ -167,7 +193,8 @@ public class Board {
 		} else if (s == BoardState.O_WON) {
 			oWinBoards |= Constants.BIT_MASKS[board];
 		} else if (Constants.REPORTING_LEVEL > 1) {
-			throw new java.lang.RuntimeException("Unknown BoardState encountered in updateStateBitboards()");
+			throw new java.lang.RuntimeException(
+					"Unknown BoardState \"" + s + "\" encountered in updateStateBitboards()");
 		}
 	}
 
@@ -243,9 +270,11 @@ public class Board {
 				- 10 * c1 * Eval.middleSquare(oWinBoards) + score;
 	}
 
-	// @override toString() method
+	/**
+	 * @override toString() method
+	 */
 	public String toString() {
-		StringBuilder result = new StringBuilder("HCN: " + Utils.boardToHCN(this) + "\n");
+		StringBuilder result = new StringBuilder("\n  HCN: " + Utils.boardToHCN(this) + "\n");
 		String spacer = "  +---------+---------+---------+\n";
 		result.append(spacer);
 		int counter = 9;
