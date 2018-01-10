@@ -10,7 +10,7 @@ public class SubBoard {
 	private int c1 = Constants.EVAL_CONSTANTS[1];
 	private int c2 = Constants.EVAL_CONSTANTS[2];
 
-	// constructor to create an empto board
+	// constructor to create an empty board
 	public SubBoard() {
 		this(0, 0);
 	}
@@ -19,14 +19,21 @@ public class SubBoard {
 	public SubBoard(int _xBoard, int _oBoard) {
 		xBoard = _xBoard;
 		oBoard = _oBoard;
+		state = BoardState.IN_PROGRESS;
 	}
 
 	// constructs a sub-board from HCN
 	public SubBoard(String s) {
 		xBoard = 0;
 		oBoard = 0;
+		
+		// keeps track of where we are in the sub board
 		int count = 0;
+		
+		// keeps track of where we are in the string
 		int stringIterator = 0;
+		
+		// while we still have string to iterate over
 		while (stringIterator < s.length()) {
 			if (s.charAt(stringIterator) == 'X') {
 				xBoard = (xBoard | Constants.BIT_MASKS[count]);
@@ -39,8 +46,12 @@ public class SubBoard {
 			}
 			stringIterator++;
 		}
+		state = BoardState.IN_PROGRESS;
 	}
-
+	
+	/**
+	 * Returns the BoardState of the SubBoard
+	 */
 	public BoardState getState() {
 		return state;
 	}

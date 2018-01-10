@@ -8,6 +8,7 @@ public class Game {
 
 	// main method
 	public static void main(String[] args) {
+		
 		reader = new Scanner(System.in);
 
 		// set up the board

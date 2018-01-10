@@ -259,7 +259,7 @@ public class Board {
 		}
 		int score = 0;
 		for (int i = 0; i < boards.length; i++) {
-			score += Eval.getValues().get(boards[i]);
+			// score += Eval.getValues().get(boards[i]);
 		}
 		return 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
 				+ 10 * c1 * Eval.middleSquare(xWinBoards)
