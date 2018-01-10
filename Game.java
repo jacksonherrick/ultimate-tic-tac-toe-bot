@@ -6,6 +6,8 @@ public class Game{
 	// main method
 	public static void main(String[] args) {
 
+		testPosition();
+
 		Scanner reader = new Scanner(System.in);
 
 		// set up the board
@@ -17,6 +19,11 @@ public class Game{
 			b = inputCustomBoard();
 		}
 		play(b);
+	}
+
+	public static void testPosition(){
+		Board b = new Board("XXX6/3O1OOX1/XXX6/9/X1XOOXXXO/9/9/9/X1XOOXXXO X b3");
+		System.out.println(NegaMax.nextMove(b));
 	}
 
 	// input a particular board to play

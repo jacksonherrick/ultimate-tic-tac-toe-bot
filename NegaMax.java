@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class NegaMax{
 
-	public Move nextMove(Board game){
+	public static Move nextMove(Board game){
 		int depth = 0;
 		int beta = Integer.MAX_VALUE;
 		int color = 1;
@@ -13,16 +13,31 @@ public class NegaMax{
 		int maxValue = Integer.MIN_VALUE;
 		//iterative deepening
 		List<Move> tempMoves = game.generateMoves();
+
+		for(int i=0; i<tempMoves.size(); i++){
+			System.out.println(tempMoves.get(i));
+		}
+
 		MoveAndValue [] moves = new MoveAndValue[tempMoves.size()];
 		int count = 0;
 		for(Move m : tempMoves){
 			MoveAndValue tempMove = new MoveAndValue(m,-1);
 			moves[count] = tempMove;
+			count++;
 		}
 
-		while(10 /*this should be current time*/ - startTime < 10){
+		for(int i=0; i<moves.length; i++){
+			System.out.println(moves[i]);
+		}
+
+		while(depthCount <= 5){
 			for(int i=0; i<moves.length; i++){
+
+				//System.out.println(depthCount + "NEW BRANCH!-------------------------------------------------------");
+				//System.out.println(game);
+				//System.out.println("Make move: " + moves[i].move);
 				game.makeMove(moves[i].move);
+				//System.out.println(game);
 
 				/*
 				maxValue here starts off as -infinity. In a normal negamax, the root has a value after the 
@@ -35,7 +50,11 @@ public class NegaMax{
 				if(moves[i].value > maxValue){
 					maxValue = moves[i].value;
 				}
+				
+				//System.out.println(game);
+				//System.out.println("Take move: " + moves[i].move);
 				game.takeMove(moves[i].move);
+				//System.out.println(game);
 
 			}
 			depthCount++;
@@ -47,7 +66,7 @@ public class NegaMax{
 	}
 
 	//color keeps track of the player. It is 1 if we are the player, -1 if the opponent is the player
-	private int negaMax(Board game, int depth, int depthCount, int alpha, int beta, int color){
+	private static int negaMax(Board game, int depth, int depthCount, int alpha, int beta, int color){
 
 		//if we are at the end of the game or have reached the iterative deepening depth, evaluate the state of the board and return a reward
 		//Note: Maybe factor depth into the evaluation in the future?
@@ -63,9 +82,16 @@ public class NegaMax{
 
 			//these three lines make a move, recurivsely call the negamax on the new board state, and then un-make the move. This allows us to get the value of the move without
 			//"making" the move on our actual board
+
+			//System.out.println("Make move: " + possibleMove);
 			game.makeMove(possibleMove);
+			//System.out.println(game);
+			
 			int negaMax_value = -negaMax(game, depth +1, depthCount, -beta, -alpha, -color);
+			
+			//System.out.println("Take move: " + possibleMove);
 			game.takeMove(possibleMove);
+			//System.out.println(game);
 
 			//if we found a move better than our max, it is our new max
 			if(negaMax_value > max){

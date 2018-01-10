@@ -85,6 +85,8 @@ public class Board{
       System.out.println("Invalid HCN.");
       System.exit(0);
     }
+
+    state = BoardState.IN_PROGRESS;
   }
   /**
     * Toggles which side is to move
@@ -139,7 +141,6 @@ public class Board{
       int move = bb & -bb;
       bb &= (bb-1);
       moves.add(new Move(move, board));
-      System.out.println(new Move(move, board));
     }
 
     return moves;
@@ -234,7 +235,7 @@ public class Board{
     }
     int score = 0;
     for(int i =0; i<boards.length; i++){
-      score += Eval.getValues().get(boards[i]);
+      //score += Eval.getValues().get(boards[i]);
     }
     return 10*c0*Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards)) + 10*c1*Eval.middleSquare(xWinBoards) - 10*c0*Eval.twoInARowsWithOpenThird(oWinBoards, (xWinBoards | drawnBoards)) - 10*c1*Eval.middleSquare(oWinBoards)+ score;
   }

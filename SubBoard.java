@@ -28,8 +28,14 @@ public class SubBoard{
   public SubBoard(String s){
     xBoard = 0;
     oBoard = 0;
+    state = BoardState.IN_PROGRESS;
+
+    // keeps track of where we are in the sub board
     int count =0;
+    // keeps track of where we are in the string
     int stringIterator =0;
+
+    // while we still have string to iterate over
     while(stringIterator < s.length()){
       if(s.charAt(stringIterator) == 'X'){
         xBoard = (xBoard | Constants.BIT_MASKS[count]);
