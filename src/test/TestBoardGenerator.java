@@ -15,7 +15,7 @@ public class TestBoardGenerator {
 	 * Randomly generate boards from the Utils.generateRandomBoard() function, and saves to file.
 	 * Does not need to be run, unless more positions are wanted.
 	 * @param args: number of random boards to generate
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
 		
