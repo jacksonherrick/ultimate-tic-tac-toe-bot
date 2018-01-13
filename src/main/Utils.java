@@ -80,7 +80,7 @@ public final class Utils {
 		// splice out "\" and newlines
 		String s = sb.toString().replaceAll("[\\n\\[\\]]", "");
 
-		// itererate through the string
+		// iterate through the string
 		int i = 0;
 		while (i < s.length()) {
 			char c = s.charAt(i);
@@ -122,32 +122,5 @@ public final class Utils {
 			result.append("-");
 		}
 		return result.toString();
-	}
-	
-	/**
-	 * Used to generate random boards for testing
-	 * TODO: make this generate only valid boards.
-	 **/
-	public static Board generateRandomBoard() {
-		// randomly generate board
-		SubBoard[] sbs = new SubBoard[9];
-		for(int i = 0; i < 9; i++) {
-			int xBoard = ThreadLocalRandom.current().nextInt(0, 513);
-			int oBoard = ThreadLocalRandom.current().nextInt(0, 513);
-			sbs[i] = new SubBoard(xBoard, oBoard);
-		}
-		
-		// randomly assign side
-		Side s = ThreadLocalRandom.current().nextInt(0, 2) < 1 ? Side.X : Side.O;
-		
-		// randomly assign previous move
-		Move m = null;
-		if(ThreadLocalRandom.current().nextInt(0, 82) > 0) {
-			int move = Constants.BIT_MASKS[ThreadLocalRandom.current().nextInt(0, 9)];
-			int board = ThreadLocalRandom.current().nextInt(0, 9);
-			m = new Move(move, board);
-		}
-		
-		return new Board(sbs, s, m);
 	}
 }
