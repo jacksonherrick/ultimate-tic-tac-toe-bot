@@ -259,7 +259,11 @@ public class Board {
 		}
 		int score = 0;
 		for (int i = 0; i < boards.length; i++) {
-			// score += Eval.getValues().get(boards[i]);
+			//System.out.println(boards[i]);
+			//score += Eval.getValues().get(boards[i]);
+			
+			//Until we come up with a hash function for boards, we'll just evaluate each sub-board when we get to it
+			score += boards[i].evaluate();
 		}
 		return 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
 				+ 10 * c1 * Eval.middleSquare(xWinBoards)

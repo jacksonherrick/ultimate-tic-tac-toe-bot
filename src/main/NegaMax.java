@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Arrays;
 
 public class NegaMax {
-
+	
 	public static Move nextMove(Board game) {
 		int depth = 0;
 		int beta = Integer.MAX_VALUE;
@@ -14,10 +14,6 @@ public class NegaMax {
 		int maxValue = Integer.MIN_VALUE;
 		// iterative deepening
 		List<Move> tempMoves = game.generateMoves();
-
-		for (int i = 0; i < tempMoves.size(); i++) {
-			System.out.println(tempMoves.get(i));
-		}
 			
 		MoveAndValue[] moves = new MoveAndValue[tempMoves.size()];
 		int count = 0;
@@ -27,11 +23,8 @@ public class NegaMax {
 			count++;
 		}
 		
-		for(int i=0; i<moves.length; i++){
-			System.out.println(moves[i]);
-		}
 
-		while (depthCount <= 5) {
+		while (depthCount <= 3) {
 			for (int i = 0; i < moves.length; i++) {
 				game.makeMove(moves[i].move);
 
