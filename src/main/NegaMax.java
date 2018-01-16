@@ -2,6 +2,7 @@ package main;
 
 import java.util.List;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class NegaMax {
 	
@@ -12,7 +13,7 @@ public class NegaMax {
 		int startTime = 0; /* This will be the start time of the negamax */
 		int depthCount = 1;
 		int maxValue = Integer.MIN_VALUE;
-		// iterative deepening
+		
 		List<Move> tempMoves = game.generateMoves();
 			
 		MoveAndValue[] moves = new MoveAndValue[tempMoves.size()];
@@ -23,8 +24,8 @@ public class NegaMax {
 			count++;
 		}
 		
-
-		while (depthCount <= 3) {
+		// iterative deepening
+		while (depthCount <= 5) {
 			for (int i = 0; i < moves.length; i++) {
 				game.makeMove(moves[i].move);
 
@@ -46,9 +47,10 @@ public class NegaMax {
 			}
 			depthCount++;
 			// explore the best moves first
-			Arrays.sort(moves);
+			Arrays.sort(moves, Collections.reverseOrder());
 		}
-
+		System.out.println(moves[0].move);
+		System.out.println(moves[0].value);
 		return moves[0].move;
 	}
 
@@ -72,8 +74,7 @@ public class NegaMax {
 
 			// these three lines make a move, recurivsely call the negamax on the new board
 			// state, and then un-make the move. This allows us to get the value of the move
-			// without
-			// "making" the move on our actual board
+			// without "making" the move on our actual board
 			game.makeMove(possibleMove);
 			int negaMax_value = -negaMax(game, depth + 1, depthCount, -beta, -alpha, -color);
 			game.takeMove(possibleMove);

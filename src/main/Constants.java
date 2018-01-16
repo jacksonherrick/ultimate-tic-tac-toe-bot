@@ -33,5 +33,5 @@ public final class Constants {
 	public static final int REPORTING_LEVEL = 3;
 	public static final int PRINT_DETAIL = 1;
 
-	public static final int[] EVAL_CONSTANTS = { 1, 2, 3 };
+	public static final int[] EVAL_CONSTANTS = { 5, 1, 100 };
 }
