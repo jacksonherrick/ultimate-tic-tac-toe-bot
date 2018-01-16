@@ -25,7 +25,7 @@ public class NegaMax {
 		}
 		
 		// iterative deepening
-		while (depthCount <= 5) {
+		while (depthCount <= 1) {
 			for (int i = 0; i < moves.length; i++) {
 				game.makeMove(moves[i].move);
 
@@ -72,8 +72,8 @@ public class NegaMax {
 		// explores each node in the tree
 		for (Move possibleMove : game.generateMoves()) {
 
-			// these three lines make a move, recurivsely call the negamax on the new board
-			// state, and then un-make the move. This allows us to get the value of the move
+			// these three lines make a move, recursively call the negamax on the new board
+			// state, and then undo the move. This allows us to get the value of the move
 			// without "making" the move on our actual board
 			game.makeMove(possibleMove);
 			int negaMax_value = -negaMax(game, depth + 1, depthCount, -beta, -alpha, -color);

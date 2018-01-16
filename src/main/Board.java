@@ -18,7 +18,7 @@ public class Board {
 	Side side;
 
 	// state of the board
-	BoardState state;
+	BoardState state; 
 
 	// keeps track of the last move to constrain move generation. Might have to make
 	// this an array of all previous moves
