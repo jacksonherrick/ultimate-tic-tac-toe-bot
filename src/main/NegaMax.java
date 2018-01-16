@@ -7,11 +7,11 @@ import java.util.Collections;
 public class NegaMax {
 	
 	public static Move nextMove(Board game) {
-		int depth = 0;
+		int ply = 1;
 		int beta = Integer.MAX_VALUE;
 		int color = 1;
 		int startTime = 0; /* This will be the start time of the negamax */
-		int depthCount = 1;
+		int depthLimit = 1;
 		int maxValue = Integer.MIN_VALUE;
 		
 		List<Move> tempMoves = game.generateMoves();
@@ -25,7 +25,7 @@ public class NegaMax {
 		}
 		
 		// iterative deepening
-		while (depthCount <= 5) {
+		while (depthLimit <= 1) {
 			for (int i = 0; i < moves.length; i++) {
 				game.makeMove(moves[i].move);
 
@@ -34,7 +34,7 @@ public class NegaMax {
 				 * value after the first branch explored that acts as a lower bound for the rest
 				 * of the search. Essentially it acts as the root's alpha.
 				 */
-				moves[i].value = negaMax(game, depth, depthCount, maxValue, beta, color);
+				moves[i].value = negaMax(game, ply, depthLimit, maxValue, beta, color);
 
 				// This should take care of the fact that we are doing each of the root's moves
 				// separately. This takes the place of the "max" in the recursive negamax
@@ -45,7 +45,7 @@ public class NegaMax {
 				game.takeMove(moves[i].move);
 
 			}
-			depthCount++;
+			depthLimit++;
 			// explore the best moves first
 			Arrays.sort(moves, Collections.reverseOrder());
 		}
@@ -56,12 +56,12 @@ public class NegaMax {
 
 	// color keeps track of the player. It is 1 if we are the player, -1 if the
 	// opponent is the player
-	private static int negaMax(Board game, int depth, int depthCount, int alpha, int beta, int color) {
+	private static int negaMax(Board game, int ply, int depthLimit, int alpha, int beta, int color) {
 
 		// if we are at the end of the game or have reached the iterative deepening
 		// depth, evaluate the state of the board and return a reward
 		// Note: Maybe factor depth into the evaluation in the future?
-		if (game.state == BoardState.X_WON || game.state == BoardState.O_WON || depth == depthCount) {
+		if (game.state == BoardState.X_WON || game.state == BoardState.O_WON || ply == depthLimit) {
 			return color * game.evaluate();
 		}
 
@@ -76,7 +76,7 @@ public class NegaMax {
 			// state, and then un-make the move. This allows us to get the value of the move
 			// without "making" the move on our actual board
 			game.makeMove(possibleMove);
-			int negaMax_value = -negaMax(game, depth + 1, depthCount, -beta, -alpha, -color);
+			int negaMax_value = -negaMax(game, ply + 1, depthLimit, -beta, -alpha, -color);
 			game.takeMove(possibleMove);
 
 			// if we found a move better than our max, it is our new max
