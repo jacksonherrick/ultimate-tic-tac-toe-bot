@@ -8,11 +8,11 @@ public class NegaMax {
 	
 	public static Move nextMove(Board game) {
 		int ply = 1;
-		int beta = Integer.MAX_VALUE;
+		int beta = 1000000;
 		int color = 1;
 		int startTime = 0; /* This will be the start time of the negamax */
 		int depthLimit = 1;
-		int maxValue = Integer.MIN_VALUE;
+		int maxValue = -1000000;
 		
 		List<Move> tempMoves = game.generateMoves();
 			
@@ -25,7 +25,7 @@ public class NegaMax {
 		}
 		
 		// iterative deepening
-		while (depthLimit <= 1) {
+		while (depthLimit <= 9) {
 			for (int i = 0; i < moves.length; i++) {
 				game.makeMove(moves[i].move);
 
@@ -34,7 +34,7 @@ public class NegaMax {
 				 * value after the first branch explored that acts as a lower bound for the rest
 				 * of the search. Essentially it acts as the root's alpha.
 				 */
-				moves[i].value = negaMax(game, ply, depthLimit, maxValue, beta, color);
+				moves[i].value = -negaMax(game, ply, depthLimit, -beta, -maxValue, -color);
 
 				// This should take care of the fact that we are doing each of the root's moves
 				// separately. This takes the place of the "max" in the recursive negamax
@@ -46,18 +46,20 @@ public class NegaMax {
 
 			}
 			depthLimit++;
+			maxValue = -1000000;
 			// explore the best moves first
 			Arrays.sort(moves, Collections.reverseOrder());
 		}
-		System.out.println(moves[0].move);
-		System.out.println(moves[0].value);
+		System.out.println();
+		System.out.println("Best Move: " + moves[0].move);
+		System.out.println("Value of best move: " + moves[0].value);
 		return moves[0].move;
 	}
 
 	// color keeps track of the player. It is 1 if we are the player, -1 if the
 	// opponent is the player
 	private static int negaMax(Board game, int ply, int depthLimit, int alpha, int beta, int color) {
-
+		
 		// if we are at the end of the game or have reached the iterative deepening
 		// depth, evaluate the state of the board and return a reward
 		// Note: Maybe factor depth into the evaluation in the future?
@@ -66,7 +68,7 @@ public class NegaMax {
 		}
 
 		// keeps track of the value of the best move we've found so far. Starts at
-		// -10000 so that the first value will override it
+		// MIN_VALUE so that the first value will override it
 		int max = Integer.MIN_VALUE;
 
 		// explores each node in the tree
@@ -82,6 +84,7 @@ public class NegaMax {
 			// if we found a move better than our max, it is our new max
 			if (negaMax_value > max) {
 				max = negaMax_value;
+				//System.out.println(max);
 			}
 
 			// Setting the bounds for our pruning
@@ -92,11 +95,12 @@ public class NegaMax {
 			// if the move we are looking at has a value greater than the worst move the
 			// opponent can make us take, we prune
 			if (negaMax_value >= beta) {
+				//System.out.println("Beta cutoff: " + beta);
 				return beta;
 			}
 
 		}
-
+		//System.out.println(max);
 		return max;
 	}
 
