@@ -49,8 +49,7 @@ public class NegaMax {
 			// explore the best moves first
 			Arrays.sort(moves, Collections.reverseOrder());
 		}
-		System.out.println(moves[0].move);
-		System.out.println(moves[0].value);
+		System.out.println("Value: " + moves[0].value);
 		return moves[0].move;
 	}
 

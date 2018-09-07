@@ -17,21 +17,19 @@ public class Game {
 		Board b = new Board();
 		
 		// get input
-		System.out.println("Welcome. Do you want a custom position?");
+		System.out.println("Welcome. Custom starting position y/n?");
 		String s = reader.nextLine();
-		if (s.equals("yes")) {
+		if (s.equals("y")) {
 			b = inputCustomBoard();
 		}
 		
-		System.out.println("Would you like to play against the AI? If so, type \"y\"");
+		System.out.println("AI game y/n?");
 		String t = reader.nextLine();
 		if(t.equals("y")) {
 			playVsCPU = true;
 		}
 		// use the inputed board
 		play(b, playVsCPU);
-		
-
 		
 		// close scanner
 		reader.close();
