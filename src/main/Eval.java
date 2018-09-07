@@ -1,15 +1,13 @@
 package main;
 
 import java.util.HashMap;
-import java.util.HashSet;
+
+import java.io.IOException;
 
 // NOTE: I am assuming the bot is always playing X for simplicity's sake right now
 public class Eval {
 	// Maps all the possible boards to their value
 	private static HashMap<SubBoard, Integer> values = new HashMap<SubBoard, Integer>();
-	// Set of all possible boards. If we want, we could just use values, but this
-	// may make it more readable
-	private static HashSet<SubBoard> possibleBoards = new HashSet<SubBoard>();
 
 	private static int c0 = Constants.EVAL_CONSTANTS[0];
 	private static int c1 = Constants.EVAL_CONSTANTS[1];
@@ -22,9 +20,11 @@ public class Eval {
 	 * when we use it in the negamax, we have to take the inverse for O moves. Or we
 	 * can have findValues take an argument for the side
 	 */
-	public static void findValues() {
-		for (SubBoard b : possibleBoards) {
-			values.put(b, evaluate(b));
+	public static void findValues(){
+		try {
+			values = Utils.generateSubBoardScores();
+		} catch (IOException e) {
+			System.out.println("Error generating subboard evaluations");
 		}
 	}
 

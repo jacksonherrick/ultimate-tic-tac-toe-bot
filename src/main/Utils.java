@@ -1,6 +1,14 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.HashMap;
 
 public final class Utils {
 
@@ -80,7 +88,7 @@ public final class Utils {
 		// splice out "\" and newlines
 		String s = sb.toString().replaceAll("[\\n\\[\\]]", "");
 
-		// itererate through the string
+		// iterate through the string
 		int i = 0;
 		while (i < s.length()) {
 			char c = s.charAt(i);
@@ -124,30 +132,57 @@ public final class Utils {
 		return result.toString();
 	}
 	
-	/**
-	 * Used to generate random boards for testing
-	 * TODO: make this generate only valid boards.
-	 **/
-	public static Board generateRandomBoard() {
-		// randomly generate board
-		SubBoard[] sbs = new SubBoard[9];
-		for(int i = 0; i < 9; i++) {
-			int xBoard = ThreadLocalRandom.current().nextInt(0, 513);
-			int oBoard = ThreadLocalRandom.current().nextInt(0, 513);
-			sbs[i] = new SubBoard(xBoard, oBoard);
+	public static HashMap<SubBoard, Integer> generateSubBoardScores() throws IOException{
+		String s = "src/main/board-combinations.txt";
+		File f = new File(s);
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		String line = null;
+		
+		HashMap<SubBoard, Integer> values = new HashMap<SubBoard, Integer>();
+		
+		try {
+			while ((line = br.readLine()) != null) {
+				String st = convertCombinationToHCN(line);
+				SubBoard temp = new SubBoard(st);
+				values.put(temp, temp.evaluate());
+			}
+		} catch (IOException e) {
+			System.out.println("Can't read file");
 		}
 		
-		// randomly assign side
-		Side s = ThreadLocalRandom.current().nextInt(0, 2) < 1 ? Side.X : Side.O;
-		
-		// randomly assign previous move
-		Move m = null;
-		if(ThreadLocalRandom.current().nextInt(0, 82) > 0) {
-			int move = Constants.BIT_MASKS[ThreadLocalRandom.current().nextInt(0, 9)];
-			int board = ThreadLocalRandom.current().nextInt(0, 9);
-			m = new Move(move, board);
-		}
-		
-		return new Board(sbs, s, m);
+			 
+		br.close();
+		return values;
 	}
+	
+	public static String convertCombinationToHCN(String line) {
+		
+		// initialize string
+		StringBuilder str = new StringBuilder();
+		
+		// keep track of consecutive blanks
+		int count = 0;
+		for (int i = 0; i < line.length(); i++) {
+			char c = line.charAt(i);
+			if (c == 'X' || c == 'O') {
+				if (count > 0) {
+					str.append(count);
+					// reset blanks
+					count = 0;
+				}
+				str.append(c);
+			} else if (c == '1') {
+				// increment blanks
+				count++;
+			} else {
+				throw new java.lang.RuntimeException(
+						"Unknown Character \"" + c + "\" encountered in convertCombinationToHCN()");
+			}
+
+		}
+		if (count > 0) {
+			str.append(count);
+		}
+		return str.toString();
+	} 
 }

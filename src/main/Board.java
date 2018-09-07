@@ -18,7 +18,7 @@ public class Board {
 	Side side;
 
 	// state of the board
-	BoardState state;
+	BoardState state; 
 
 	// keeps track of the last move to constrain move generation. Might have to make
 	// this an array of all previous moves
@@ -259,8 +259,28 @@ public class Board {
 		}
 		int score = 0;
 		for (int i = 0; i < boards.length; i++) {
-			// score += Eval.getValues().get(boards[i]);
+			//System.out.println(boards[i]);
+			//score += Eval.getValues().get(boards[i]);
+			
+			//Until we come up with a hash function for boards, we'll just evaluate each sub-board when we get to it
+			score += boards[i].evaluate();
+			//System.out.println("Board being considered: " + i);
+			//System.out.println(boards[i]); 
+			//System.out.println("Score: ");
+			//System.out.println(boards[i].evaluate());
 		}
+		/*
+		 * 
+		 
+		int x = 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
+				+ 10 * c1 * Eval.middleSquare(xWinBoards)
+				- 10 * c0 * Eval.twoInARowsWithOpenThird(oWinBoards, (xWinBoards | drawnBoards))
+				- 10 * c1 * Eval.middleSquare(oWinBoards) + score;
+
+		System.out.println(this.toString());
+		System.out.println("value: " + x);
+		*/
+		
 		return 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
 				+ 10 * c1 * Eval.middleSquare(xWinBoards)
 				- 10 * c0 * Eval.twoInARowsWithOpenThird(oWinBoards, (xWinBoards | drawnBoards))

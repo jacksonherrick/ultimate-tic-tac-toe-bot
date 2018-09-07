@@ -1,6 +1,7 @@
 package main;
 
 import java.util.Scanner;
+import java.io.IOException;
 
 public class Game {
 
@@ -9,20 +10,26 @@ public class Game {
 	// main method
 	public static void main(String[] args) {
 		
+		boolean playVsCPU = false;
 		reader = new Scanner(System.in);
 
 		// set up the board
 		Board b = new Board();
 		
 		// get input
-		System.out.println("Welcome. Do you want a custom position?");
+		System.out.println("Welcome. Custom starting position y/n?");
 		String s = reader.nextLine();
-		if (s.equals("yes")) {
+		if (s.equals("y")) {
 			b = inputCustomBoard();
 		}
 		
+		System.out.println("AI game y/n?");
+		String t = reader.nextLine();
+		if(t.equals("y")) {
+			playVsCPU = true;
+		}
 		// use the inputed board
-		play(b);
+		play(b, playVsCPU);
 		
 		// close scanner
 		reader.close();
@@ -37,8 +44,13 @@ public class Game {
 	}
 
 	// play position from a board, player controls all moves
-	public static void play(Board b) {
+	public static void play(Board b, boolean playingVsCPU){
 		
+		if(playingVsCPU) {
+			// we can definitely change this later, it's just how the NegaMax is set up for now
+			System.out.println("The AI will be playing as X and you will be playing as O");
+			Eval.findValues();
+		}
 		// alert the player
 		System.out.println(
 				"Type the coordinates of your first move. Type \"exit\" to, well, you figure it out. Likewise for \"undo\".");
@@ -48,6 +60,11 @@ public class Game {
 
 		// continuously wait for input
 		while (true) {
+			if(playingVsCPU) {
+				if(b.side == Side.X) {
+					makeCPUMove(b);
+				}
+			}
 			System.out.println(b);
 			System.out.print("  X: " + Integer.toBinaryString(b.xWinBoards));
 			System.out.print(", O: " + Integer.toBinaryString(b.oWinBoards));
@@ -79,5 +96,11 @@ public class Game {
 			}
 		}
 		System.out.println("Goodbye. As a side note, Stiven's a scrub.");
+	}
+	
+	public static void makeCPUMove(Board b) {
+		System.out.println(b);
+		System.out.println("AI move: ");
+		b.makeMove(NegaMax.nextMove(b));
 	}
 }
