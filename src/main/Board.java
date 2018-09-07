@@ -269,12 +269,18 @@ public class Board {
 			//System.out.println("Score: ");
 			//System.out.println(boards[i].evaluate());
 		}
+		/*
+		 * 
+		 
 		int x = 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
 				+ 10 * c1 * Eval.middleSquare(xWinBoards)
 				- 10 * c0 * Eval.twoInARowsWithOpenThird(oWinBoards, (xWinBoards | drawnBoards))
 				- 10 * c1 * Eval.middleSquare(oWinBoards) + score;
-		// System.out.println(this.toString());
-		// System.out.println("value: " + x);
+
+		System.out.println(this.toString());
+		System.out.println("value: " + x);
+		*/
+		
 		return 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
 				+ 10 * c1 * Eval.middleSquare(xWinBoards)
 				- 10 * c0 * Eval.twoInARowsWithOpenThird(oWinBoards, (xWinBoards | drawnBoards))
