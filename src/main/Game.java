@@ -82,7 +82,7 @@ public class Game {
 				// checks if the move is on top of another move
 				if (((b.boards[m.board].getXBoard() | b.boards[m.board].getOBoard()) & m.move) == 0) {
 					// checks if the move is in the correct sub-board (it's not the first move or we
-					// are in the sub-board dictated by the lat move or if that board is not in
+					// are in the sub-board dictated by the last move or if that board is not in
 					// progress)
 					if (b.getLastMove() == null || m.board == b.getLastMove().translate()
 							|| b.boards[b.getLastMove().translate()].getState() != BoardState.IN_PROGRESS) {
