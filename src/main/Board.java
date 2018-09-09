@@ -236,8 +236,10 @@ public class Board {
 					state = BoardState.O_WON;
 				}
 				return true;
-			}
+			} 
 		}
+		// TODO: draw check.
+		state = BoardState.IN_PROGRESS;
 		return false;
 	}
 
@@ -247,39 +249,30 @@ public class Board {
 	 **/
 	public boolean isDrawn() {
 		// Yeah... so... this needs to be built!
+		// TODO: implement!
 		return false;
 	}
 
+	/**
+	 * Returns integer value of the board. Calculated by analyzing the sub boards individually.
+	 * @return
+	 */
 	public int evaluate() {
+		
+		// TODO: this check probably does not need to be performed every evaluation
+		this.isWon();
 		if (state == BoardState.X_WON) {
-			return Integer.MAX_VALUE;
+			return 0xF423F;
 		}
 		if (state == BoardState.O_WON) {
-			return Integer.MIN_VALUE;
+			return -0xF423F;
 		}
+		
 		int score = 0;
 		for (int i = 0; i < boards.length; i++) {
-			//System.out.println(boards[i]);
-			//score += Eval.getValues().get(boards[i]);
-			
-			//Until we come up with a hash function for boards, we'll just evaluate each sub-board when we get to it
+			// until we come up with a hash function for boards, we'll just evaluate each sub-board when we get to it
 			score += boards[i].evaluate();
-			//System.out.println("Board being considered: " + i);
-			//System.out.println(boards[i]); 
-			//System.out.println("Score: ");
-			//System.out.println(boards[i].evaluate());
 		}
-		/*
-		 * 
-		 
-		int x = 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
-				+ 10 * c1 * Eval.middleSquare(xWinBoards)
-				- 10 * c0 * Eval.twoInARowsWithOpenThird(oWinBoards, (xWinBoards | drawnBoards))
-				- 10 * c1 * Eval.middleSquare(oWinBoards) + score;
-
-		System.out.println(this.toString());
-		System.out.println("value: " + x);
-		*/
 		
 		return 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
 				+ 10 * c1 * Eval.middleSquare(xWinBoards)

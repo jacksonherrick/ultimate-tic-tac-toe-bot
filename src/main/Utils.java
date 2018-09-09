@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.HashMap;
 
 public final class Utils {
@@ -19,7 +21,7 @@ public final class Utils {
 			25, 3, 30, 8, 12, 20, 28, 15, 17, 24, 7, 19, 27, 23, 6, 26, 5, 4, 31 };
 
 	/**
-	 * finds the index of the highest set bit of the passed integer
+	 * Finds the index of the highest set bit of the passed integer
 	 **/
 	public static int highestSetBit(int v) {
 		v |= v >>> 1;
@@ -31,7 +33,7 @@ public final class Utils {
 	}
 
 	/**
-	 * finds the index of the lowest set bit of the passed integer
+	 * Finds the index of the lowest set bit of the passed integer
 	 **/
 	public static int lowestSetBit(int v) {
 		if (v == 0)
@@ -72,11 +74,18 @@ public final class Utils {
 	}
 
 	/**
-	 * Determines whether the inputted string is valid HCN TODO: implement... not
-	 * only regex validation, but other too.
-	 **/
-	public static boolean isValidHCN(String s) {
-		return true;
+	 * Extracts HCN from a given string. 
+	 * If not valid, [match].matches() will return false.
+	 * @param hcn
+	 * @return Matcher
+	 */
+	public static Matcher extractHCN(String hcn) {
+		// compile the regex to match HCN's
+		Pattern r = Pattern.compile(
+				"^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2}|\\-)$");
+
+		// match the HCN
+		return r.matcher(hcn);
 	}
 
 	/**

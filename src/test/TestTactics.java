@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import main.Eval;
 import main.Move;
 import main.NegaMax;
+import main.Utils;
 import main.Board;
 
 /**
@@ -42,6 +43,13 @@ class TestTactics {
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				String[] parts = line.split(";");
+				
+				// if not HCN, it is an informational line.
+				if(!Utils.extractHCN(parts[0].trim()).matches()) {
+					System.out.println(line);
+					continue;
+				}
+				
 				Board b = new Board(parts[0].trim());
 				
 				// print and format
@@ -54,13 +62,15 @@ class TestTactics {
 				
 				// log outcome
 				
-				
 				count++;
 				if(m.toString().equals(parts[1].trim())) {
 					System.out.println("CORRECT. AI: " + m + ";  Solution: " + solution);
 					correct++;
 				} else {
 					System.out.println("INCORRECT. AI: " + m + ";  Solution: " + solution);
+					if(parts.length > 2) {
+						System.out.println("Explanation: " + parts[2].trim());
+					}
 				}
 			}
 			br.close();

@@ -11,7 +11,7 @@ public class NegaMax {
 		int beta = 1000000;
 		int color = 1;
 		int startTime = 0; /* This will be the start time of the negamax */
-		int depthLimit = 1;
+		int depthLimit = 3;
 		int maxValue = -1000000;
 		
 		List<Move> tempMoves = game.generateMoves();
@@ -25,7 +25,7 @@ public class NegaMax {
 		}
 		
 		// iterative deepening
-		while (depthLimit <= 9) {
+		while (depthLimit <= 3) {
 			for (int i = 0; i < moves.length; i++) {
 				game.makeMove(moves[i].move);
 
