@@ -14,6 +14,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import main.Eval;
+import main.Move;
+import main.NegaMax;
 import main.Board;
 
 /**
@@ -24,31 +26,46 @@ import main.Board;
 class TestTactics {
 
 	@BeforeAll
-	void setUp() {
+	static void setUp() {
 		Eval.findValues();
 	}
 
 	@Test
 	@DisplayName("Tactics Basic Test")
 	void test() throws IOException {
-		
 		int count = 0;
+		int correct = 0;
 		String[] files = new String[] { "tactical-positions.txt" };
 		for (String s : files) {
 			File f = new File("src/test/" + s);
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line = null;
 			while ((line = br.readLine()) != null) {
-				Board b = new Board(line);
-				Assertions.assertEquals(TestUtils.countMoves(b), b.generateMoves().size(),
-						"Different number of moves generated in moveGenerationShallowTest()");
+				String[] parts = line.split(";");
+				Board b = new Board(parts[0].trim());
+				
+				// print and format
+				System.out.println("\n########### Position " + count + " ###########");
+				System.out.println(b);
+				
+				// search
+				Move m = NegaMax.nextMove(b);
+				String solution = parts[1].trim();
+				
+				// log outcome
+				
+				
 				count++;
+				if(m.toString().equals(parts[1].trim())) {
+					System.out.println("CORRECT. AI: " + m + ";  Solution: " + solution);
+					correct++;
+				} else {
+					System.out.println("INCORRECT. AI: " + m + ";  Solution: " + solution);
+				}
 			}
 			br.close();
 		}
-		System.out.println("Completed " + count + " positions for shallow move generation.");
-
-		fail("Not yet implemented");
+		System.out.println("Correctly labeled " + correct + "/" + count + " positions for tactics.");
 	}
 
 }

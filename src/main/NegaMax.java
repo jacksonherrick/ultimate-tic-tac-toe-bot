@@ -50,9 +50,11 @@ public class NegaMax {
 			// explore the best moves first
 			Arrays.sort(moves, Collections.reverseOrder());
 		}
+
 		System.out.println();
 		System.out.println("Best Move: " + moves[0].move);
 		System.out.println("Value of best move: " + moves[0].value);
+
 		return moves[0].move;
 	}
 
