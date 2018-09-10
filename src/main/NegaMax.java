@@ -66,6 +66,8 @@ public class NegaMax {
 		// depth, evaluate the state of the board and return a reward
 		// Note: Maybe factor depth into the evaluation in the future?
 		if (game.state == BoardState.X_WON || game.state == BoardState.O_WON || ply == depthLimit) {
+			//System.out.println(game);
+			//System.out.println("Value: " + game.evaluate());
 			return color * game.evaluate();
 		}
 

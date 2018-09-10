@@ -6,6 +6,8 @@ OX1XO3O/9/9/OOOXX4/9/9/3OO4/9/9 X a1; c2; Preventing opponent sub-board completi
 
 ********** Ply 2 Tactics ********** 
 9/9/9/OOOXX4/OX1XO3O/OX1XO4/1OXOO12X/9/9 X a1; b1; Preventing opponent immediate win, creates two-in-a-row, blocks opponent two-in-a-row.
+OOO6/OOO6/OO7/XO1OO1OXO/9/3X5/9/9/9 X d5; c5; Playing c5 prevents O from winning in the top left board immediately.
 
 ********** Ply 3 Tactics ********** 
 XOOOXXX/9/9/9/9/99/9/4X1X2/4X1X2 X c9; g9; Playing g9 ensures that X wins a sub-board.
+XXX6/XXX6/XX7/XO1OXXOXO/9/9/9/9/9 X e5; d5; Playing d5 forces O into a move that will allow X to win on the following move.
