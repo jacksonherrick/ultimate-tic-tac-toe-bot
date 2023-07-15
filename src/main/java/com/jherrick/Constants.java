@@ -1,4 +1,4 @@
-package main;
+package com.jherrick;
 
 public final class Constants {
 

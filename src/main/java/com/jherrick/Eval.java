@@ -1,4 +1,4 @@
-package main;
+package com.jherrick;
 
 import java.util.HashMap;
 import java.util.HashSet;

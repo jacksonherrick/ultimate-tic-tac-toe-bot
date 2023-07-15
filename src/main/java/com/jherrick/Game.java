@@ -1,4 +1,4 @@
-package main;
+package com.jherrick;
 
 import java.util.Scanner;
 
@@ -7,7 +7,7 @@ public class Game {
 	private static Scanner reader;
 
 	// main method
-	public static void main(String[] args) {
+	public static void initAndPlayGame() {
 		
 		reader = new Scanner(System.in);
 

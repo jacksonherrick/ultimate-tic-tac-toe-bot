@@ -1,4 +1,4 @@
-package main;
+package com.jherrick;
 
 public class MoveAndValue implements Comparable<MoveAndValue> {
 	public Move move;
