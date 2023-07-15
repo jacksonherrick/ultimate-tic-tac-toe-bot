@@ -1,15 +1,12 @@
 package com.jherrick;
 
-/**
- * Hello world!
- */
 public final class App {
     private App() {
     }
 
     /**
-     * Says hello to the world.
-     * @param args The arguments of the program.
+     * Main entrypoint to use the program. 
+     * Initializes a new game for you to play. 
      */
     public static void main(String[] args) {
         Game.initAndPlayGame();
