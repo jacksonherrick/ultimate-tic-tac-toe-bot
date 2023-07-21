@@ -164,6 +164,11 @@ public class BigBoard implements Board{
 		}
 	}
 
+	@Override
+	public SubBoard[] getBoardPosition() {
+		return this.boards;
+	}
+
 	/**
 	 * Toggles which side is to move
 	 **/
@@ -260,7 +265,7 @@ public class BigBoard implements Board{
 		// Yeah... so... this needs to be built!
 		return false;
 	}
-
+	
 	public int evaluate() {
 		if (state == BoardState.X_WON) {
 			return Integer.MAX_VALUE;
