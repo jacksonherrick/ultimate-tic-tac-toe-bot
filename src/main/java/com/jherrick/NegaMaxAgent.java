@@ -3,9 +3,17 @@ package com.jherrick;
 import java.util.List;
 import java.util.Arrays;
 
-public class NegaMax {
+public class NegaMaxAgent implements Agent {
+	private final BoardEvaluator evaluator;
+	private final Side side; // TODO: right now, the negamax can only play as X. This needs to be generalized
 
-	public static Move nextMove(BigBoard game) {
+	public NegaMaxAgent(BoardEvaluator evaluator, Side side) {
+		this.evaluator = evaluator;
+		this.side = side;
+	}
+
+	@Override
+	public Move pickMove(Board game) {
 		int depth = 0;
 		int beta = Integer.MAX_VALUE;
 		int color = 1;
@@ -13,7 +21,7 @@ public class NegaMax {
 		int depthCount = 1;
 		int maxValue = Integer.MIN_VALUE;
 		// iterative deepening
-		List<Move> tempMoves = game.getLegalMoves();
+		List<Move> tempMoves = (List<Move>) game.getLegalMoves();
 
 		for (int i = 0; i < tempMoves.size(); i++) {
 			System.out.println(tempMoves.get(i));
@@ -48,7 +56,7 @@ public class NegaMax {
 				if (moves[i].value > maxValue) {
 					maxValue = moves[i].value;
 				}
-				game.takeMove(moves[i].move);
+				game.undoLastMove();
 
 			}
 			depthCount++;
@@ -61,13 +69,13 @@ public class NegaMax {
 
 	// color keeps track of the player. It is 1 if we are the player, -1 if the
 	// opponent is the player
-	private static int negaMax(BigBoard game, int depth, int depthCount, int alpha, int beta, int color) {
+	private int negaMax(Board game, int depth, int depthCount, int alpha, int beta, int color) {
 
 		// if we are at the end of the game or have reached the iterative deepening
 		// depth, evaluate the state of the board and return a reward
 		// Note: Maybe factor depth into the evaluation in the future?
-		if (game.state == BoardState.X_WON || game.state == BoardState.O_WON || depth == depthCount) {
-			return color * game.evaluate();
+		if (game.getBoardState() == BoardState.X_WON || game.getBoardState() == BoardState.O_WON || depth == depthCount) {
+			return (int) (color * evaluator.evaluate(game, side));
 		}
 
 		// keeps track of the value of the best move we've found so far. Starts at
@@ -83,7 +91,7 @@ public class NegaMax {
 			// "making" the move on our actual board
 			game.makeMove(possibleMove);
 			int negaMax_value = -negaMax(game, depth + 1, depthCount, -beta, -alpha, -color);
-			game.takeMove(possibleMove);
+			game.undoLastMove();
 
 			// if we found a move better than our max, it is our new max
 			if (negaMax_value > max) {
@@ -105,5 +113,4 @@ public class NegaMax {
 
 		return max;
 	}
-
 }
