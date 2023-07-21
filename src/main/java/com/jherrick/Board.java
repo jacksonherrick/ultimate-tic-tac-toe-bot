@@ -8,9 +8,9 @@ import java.util.Collection;
 public interface Board {
     /**
      * Apply the given Move to the Board, do all necessary checks, and return the board to an idle state
-     * @param m - the Move to be applied to the board
+     * @param move - the Move to be applied to the board
      */
-    void makeMove(Move m);
+    void makeMove(Move move);
 
     /**
      * "Take back" the last move, returning the board to the previous state.
