@@ -9,6 +9,6 @@ public final class App {
      * Initializes a new game for you to play. 
      */
     public static void main(String[] args) {
-        Game.initAndPlayGame();
+        GameImpl.initAndPlayGame();
     }
 }

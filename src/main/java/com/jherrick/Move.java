@@ -35,4 +35,25 @@ public class Move{
     result.append(Character.toString((char)col) + row);
     return result.toString();
   }
+
+  @Override
+  public boolean equals(Object otherObject){
+    // null check
+    if(otherObject == null){
+      return false;
+    }
+    // self check
+    if(this == otherObject){
+      return true;
+    }
+    // type check
+    if(getClass() != otherObject.getClass()){
+      return false;
+    }
+    //cast
+    Move otherMove = (Move) otherObject;
+    // field comparison
+    return this.move == otherMove.move && this.board == otherMove.board;
+
+  }
 }
