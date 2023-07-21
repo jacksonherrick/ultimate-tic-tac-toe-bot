@@ -27,4 +27,8 @@ public interface Board {
      */
     Collection<Move> getLegalMoves();
 
+    /**
+     * @return the specifics of the current Board position
+     */
+    SubBoard[] getBoardPosition();
 }
