@@ -1,20 +1,13 @@
 package com.jherrick;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import com.jherrick.Board;
-import com.jherrick.Utils;
 
 /**
  * Test class to confirm move generation works as expected. Tests both on random
@@ -38,8 +31,8 @@ class TestMoveGeneration {
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line = null;
 			while ((line = br.readLine()) != null) {
-				Board b = new Board(line);
-				Assertions.assertEquals(TestUtils.countMoves(b), b.generateMoves().size(),
+				BigBoard b = new BigBoard(line);
+				Assertions.assertEquals(TestUtils.countMoves(b), b.getLegalMoves().size(),
 						"Different number of moves generated in moveGenerationShallowTest()");
 				count++;
 			}

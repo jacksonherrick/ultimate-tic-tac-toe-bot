@@ -104,7 +104,7 @@ public final class Utils {
 	/**
 	 * Converts a Board to its HCN representation
 	 **/
-	public static String boardToHCN(Board b) {
+	public static String boardToHCN(BigBoard b) {
 		StringBuilder result = new StringBuilder();
 		// convert the SubBoards
 		for (SubBoard sb : b.boards) {
@@ -128,7 +128,7 @@ public final class Utils {
 	 * Used to generate random boards for testing
 	 * TODO: make this generate only valid boards.
 	 **/
-	public static Board generateRandomBoard() {
+	public static BigBoard generateRandomBoard() {
 		// randomly generate board
 		SubBoard[] sbs = new SubBoard[9];
 		for(int i = 0; i < 9; i++) {
@@ -148,6 +148,6 @@ public final class Utils {
 			m = new Move(move, board);
 		}
 		
-		return new Board(sbs, s, m);
+		return new BigBoard(sbs, s, m);
 	}
 }

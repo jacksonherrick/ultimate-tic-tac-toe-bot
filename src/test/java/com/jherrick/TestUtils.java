@@ -2,13 +2,6 @@ package com.jherrick;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.jherrick.Board;
-import com.jherrick.SubBoard; 
-import com.jherrick.Side;
-import com.jherrick.Move;
-import com.jherrick.Constants;
-import com.jherrick.BoardState;
-
 public final class TestUtils {
 
 	private TestUtils() {
@@ -18,7 +11,7 @@ public final class TestUtils {
 	 * Counts the number of expected moves for a given Board
 	 * Returns on the number of moves
 	 */
-	public static int countMoves(Board b) {
+	public static int countMoves(BigBoard b) {
 		int count = 0;
 		Move m = b.getLastMove();
 		int target = -1;
@@ -38,7 +31,7 @@ public final class TestUtils {
 	 * Used to generate random boards for testing
 	 * TODO: make this generate only valid boards.
 	 **/
-	public static Board generateRandomBoard() {
+	public static BigBoard generateRandomBoard() {
 		// randomly generate board
 		SubBoard[] sbs = new SubBoard[9];
 		for(int i = 0; i < 9; i++) {
@@ -58,6 +51,6 @@ public final class TestUtils {
 			m = new Move(move, board);
 		}
 		
-		return new Board(sbs, s, m);
+		return new BigBoard(sbs, s, m);
 	}
 }

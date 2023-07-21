@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class NegaMax {
 
-	public static Move nextMove(Board game) {
+	public static Move nextMove(BigBoard game) {
 		int depth = 0;
 		int beta = Integer.MAX_VALUE;
 		int color = 1;
@@ -13,7 +13,7 @@ public class NegaMax {
 		int depthCount = 1;
 		int maxValue = Integer.MIN_VALUE;
 		// iterative deepening
-		List<Move> tempMoves = game.generateMoves();
+		List<Move> tempMoves = game.getLegalMoves();
 
 		for (int i = 0; i < tempMoves.size(); i++) {
 			System.out.println(tempMoves.get(i));
@@ -61,7 +61,7 @@ public class NegaMax {
 
 	// color keeps track of the player. It is 1 if we are the player, -1 if the
 	// opponent is the player
-	private static int negaMax(Board game, int depth, int depthCount, int alpha, int beta, int color) {
+	private static int negaMax(BigBoard game, int depth, int depthCount, int alpha, int beta, int color) {
 
 		// if we are at the end of the game or have reached the iterative deepening
 		// depth, evaluate the state of the board and return a reward
@@ -75,7 +75,7 @@ public class NegaMax {
 		int max = Integer.MIN_VALUE;
 
 		// explores each node in the tree
-		for (Move possibleMove : game.generateMoves()) {
+		for (Move possibleMove : game.getLegalMoves()) {
 
 			// these three lines make a move, recurivsely call the negamax on the new board
 			// state, and then un-make the move. This allows us to get the value of the move

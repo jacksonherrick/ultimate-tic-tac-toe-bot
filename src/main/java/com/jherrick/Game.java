@@ -12,7 +12,7 @@ public class Game {
 		reader = new Scanner(System.in);
 
 		// set up the board
-		Board b = new Board();
+		BigBoard b = new BigBoard();
 		
 		// get input
 		System.out.println("Welcome. Do you want a custom position?");
@@ -29,15 +29,15 @@ public class Game {
 	}
 
 	// input a particular board to play
-	public static Board inputCustomBoard() {
+	public static BigBoard inputCustomBoard() {
 		System.out.println("Please enter the HCN string for the custom board.");
 		String s = reader.nextLine();
-		Board b = new Board(s);
+		BigBoard b = new BigBoard(s);
 		return b;
 	}
 
 	// play position from a board, player controls all moves
-	public static void play(Board b) {
+	public static void play(BigBoard b) {
 		
 		// alert the player
 		System.out.println(

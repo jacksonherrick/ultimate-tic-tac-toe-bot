@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.jherrick.Board;
-import com.jherrick.Utils;
-
 /**
  * Test class to confirm that HCN functions are working as expected. HCN
  * functions include: boardToHCN(), subBoardToHCN(), and Board's HCN
@@ -35,7 +32,7 @@ class TestHCN {
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line = null;
 			while ((line = br.readLine()) != null) {
-				Assertions.assertEquals(Utils.boardToHCN(new Board(line)), line,
+				Assertions.assertEquals(Utils.boardToHCN(new BigBoard(line)), line,
 						"Incorrect result in boardFromHCNAndBack().");
 				count++;
 			}
