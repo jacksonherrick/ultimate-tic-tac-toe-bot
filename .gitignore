@@ -29,11 +29,14 @@ replay_pid*
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
-#Apple Finder artifacts
-.DS_Store
+# vscode settings
+.vscode/
 
 # Intellij user-specific files
 .idea
 
-#generated binaries
-/bin/
+#Apple Finder artifacts
+.DS_Store
+
+# generated files
+target/

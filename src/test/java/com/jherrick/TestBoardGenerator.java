@@ -1,4 +1,4 @@
-package test;
+package com.jherrick;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import main.Utils;
+import com.jherrick.Utils;
 
 public class TestBoardGenerator {
 	

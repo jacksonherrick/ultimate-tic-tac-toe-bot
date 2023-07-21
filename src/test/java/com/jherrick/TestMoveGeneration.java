@@ -1,4 +1,4 @@
-package test;
+package com.jherrick;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,8 +13,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import main.Board;
-import main.Utils;
+import com.jherrick.Board;
+import com.jherrick.Utils;
 
 /**
  * Test class to confirm move generation works as expected. Tests both on random
@@ -34,7 +34,7 @@ class TestMoveGeneration {
 		int count = 0;
 		String[] files = new String[] { "general-positions.txt", "random-positions.txt" };
 		for (String s : files) {
-			File f = new File("src/test/" + s);
+			File f = new File("src/test/java/com/jherrick/" + s);
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line = null;
 			while ((line = br.readLine()) != null) {

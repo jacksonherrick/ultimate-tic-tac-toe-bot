@@ -1,13 +1,13 @@
-package test;
+package com.jherrick;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import main.Board;
-import main.SubBoard; 
-import main.Side;
-import main.Move;
-import main.Constants;
-import main.BoardState;
+import com.jherrick.Board;
+import com.jherrick.SubBoard; 
+import com.jherrick.Side;
+import com.jherrick.Move;
+import com.jherrick.Constants;
+import com.jherrick.BoardState;
 
 public final class TestUtils {
 

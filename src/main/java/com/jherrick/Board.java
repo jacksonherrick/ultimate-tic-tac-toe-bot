@@ -1,4 +1,4 @@
-package main;
+package com.jherrick;
 
 import java.util.List;
 import java.util.ArrayList;
