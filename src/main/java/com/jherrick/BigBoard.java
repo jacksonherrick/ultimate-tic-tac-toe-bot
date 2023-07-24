@@ -6,6 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BigBoard implements Board{
+	
+	// ============== Instance Variables =================
+	
 	// array to hold SubBoard instances
 	public SubBoard[] boards;
 
@@ -20,14 +23,17 @@ public class BigBoard implements Board{
 	// state of the board
 	BoardState state;
 
-	// keeps track of the last move to constrain move generation. Might have to make
-	// this an array of all previous moves
+	// previous Move array and number of moves compelted
 	Move[] pastMoves;
 	int count;
 
-	// Evaluation constants to make the evaluation function easier to read
+	// Evaluation constants to make the evaluation function easier to read - SHOULD BE REMOVED
 	private int c0 = Constants.EVAL_CONSTANTS[0];
 	private int c1 = Constants.EVAL_CONSTANTS[1];
+
+
+
+	// ===================== Constructors ======================
 
 	/**
 	 * Default constructor, creates a Board of 9 empty SubBoards Initializes
@@ -116,11 +122,16 @@ public class BigBoard implements Board{
 		}
 	}
 
+
+
+	// ======================== Public Functions =========================
+
 	/**
 	 * Makes the move (passed as an argument) Also triggers win/draw checks TODO:
 	 * make sure that legality check is called for player-entered moves (check
 	 * there, not here)
 	 **/
+
 	@Override
 	public void makeMove(Move m) {
 		boards[m.board].makeMove(m.move, side);
@@ -168,6 +179,10 @@ public class BigBoard implements Board{
 	public SubBoard[] getBoardPosition() {
 		return this.boards;
 	}
+
+
+
+	// ===================== Helper Functions ========================
 
 	/**
 	 * Toggles which side is to move
