@@ -161,20 +161,18 @@ public class BigBoard implements Board{
 	 **/
 	@Override
 	public List<Move> getLegalMoves() {
-		// TODO: perhaps this is not the most efficient, avoid combining ArrayLists
-		List<Move> moves = new ArrayList<>();
 		
-		// get the last move
-		Move m = this.getLastMove();
+		List<Move> moves = new ArrayList<>();
+		Move move = this.getLastMove();
 
 		// if target SubBoard is IN_PROGRESS and not first move, only generate moves in that SubBoard
 		
-		if (m != null && boards[m.translate()].getState() == BoardState.IN_PROGRESS) {
+		if (move != null && boards[move.getSubBoardTarget()].getState() == BoardState.IN_PROGRESS) {
 			
-			moves.addAll(getLegalMoves(m.translate()));
+			moves.addAll(getLegalMoves(move.getSubBoardTarget()));
 			return moves;
 		
-		} else { // if the target SubBoard is won, dead, etc. generate moves for all SubBoards
+		} else {
 			moves = allPossibleMoves(boards);
 		}
 
