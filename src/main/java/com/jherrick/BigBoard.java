@@ -134,11 +134,13 @@ public class BigBoard implements Board{
 
 	@Override
 	public void makeMove(Move m) {
-		boards[m.board].makeMove(m.move, side);
+		
+		SubBoard subboard = boards[m.board];
+		subboard.makeMove(m.move, side);
+
 		updateStateBitboards(m.board);
 		toggleSide();
-		pastMoves[count] = m;
-		count++;
+		putMoveInLog(m);
 	}
 
 	@Override
@@ -158,7 +160,7 @@ public class BigBoard implements Board{
 	@Override
 	public List<Move> getLegalMoves() {
 		List<Move> moves = new ArrayList<>();
-		// TODO: perhaps this is not the most efficient, combining ArrayLists...
+		// TODO: perhaps this is not the most efficient, avoid combining ArrayLists
 
 		// get the last move
 		Move m = this.getLastMove();
@@ -178,17 +180,6 @@ public class BigBoard implements Board{
 	@Override
 	public SubBoard[] getBoardPosition() {
 		return this.boards;
-	}
-
-
-
-	// ===================== Helper Functions ========================
-
-	/**
-	 * Toggles which side is to move
-	 **/
-	private void toggleSide() {
-		side = side == Side.X ? Side.O : Side.X;
 	}
 
 	/**
@@ -320,5 +311,25 @@ public class BigBoard implements Board{
 		String bottomKey = String.format("%3s a  b  c %1s d  e  f %1s g  h  i \n", " ", " ", " ");
 		result.append(bottomKey);
 		return result.toString();
+	}
+
+
+	// ===================== Helper Functions ========================
+
+
+
+	/**
+	 * Toggles which side is to move
+	 **/
+	private void toggleSide() {
+		side = side == Side.X ? Side.O : Side.X;
+	}
+
+
+	// ================ Make Move Helper Functions ==================
+	
+	public void putMoveInLog(Move m) {
+		pastMoves[count] = m;
+		count++;
 	}
 }
