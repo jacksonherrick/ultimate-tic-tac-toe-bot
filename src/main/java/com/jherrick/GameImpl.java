@@ -4,14 +4,14 @@ import java.util.Scanner;
 
 public class GameImpl implements Game {
 
-	private final Board board;
+	private final BigBoard board;
 	private final Agent xAgent;
 	private final Agent oAgent;
 	private final Side turn;
 
 	private static Scanner reader;
 
-	public GameImpl(Board board, Agent xAgent, Agent oAgent) {
+	public GameImpl(BigBoard board, Agent xAgent, Agent oAgent) {
 		this.board = board;
 		this.xAgent = xAgent;
 		this.oAgent = oAgent;
@@ -20,9 +20,10 @@ public class GameImpl implements Game {
 
 	// main method
 	public static void initAndPlayGame() {
-		Move m1 = Utils.coordinatesToMove("e5");
-		Move m2 = Utils.coordinatesToMove("e5");
-		System.out.println(m1.equals(m2));
+		
+		// Can use print statements to test functionality here:
+		//System.out.println("Hello World")
+		
 		reader = new Scanner(System.in);
 
 		// set up the board
@@ -35,7 +36,18 @@ public class GameImpl implements Game {
 			b = inputCustomBoard();
 		}
 
-		Agent xAgent = new ConsolePlayerAgent(reader);
+
+		// Only can assign CPU to X. TODO: Create functionality to choose if X or O or neither is bot
+		System.out.println("Would you like to play against a CPU? (say 'yes' if you would like a CPU)")
+		s = reader.nextLine();
+		Agent xAgent;
+		if (s.equals("yes")){
+			BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.X);
+			xAgent = new NegaMaxAgent(null, Side.X);
+		}
+		else {
+			xAgent = new ConsolePlayerAgent(reader);
+		}
 		Agent oAgent = new ConsolePlayerAgent(reader);
 
 		Game game = new GameImpl(b, xAgent, oAgent);
@@ -61,8 +73,9 @@ public class GameImpl implements Game {
 			System.out.println(board);
 			Move nextMove = getNextMove();
 			this.board.makeMove(nextMove);
-			gameOver = this.board.getBoardState() != BoardState.IN_PROGRESS;
+			gameOver = this.board.getBoardState() != BoardState.IN_PROGRESS; 
 		}
+		// TODO: Fix bug, no Game Over
 		System.out.println("Game Over!");
 	}
 
