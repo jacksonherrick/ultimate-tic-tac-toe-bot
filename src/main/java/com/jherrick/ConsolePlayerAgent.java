@@ -10,7 +10,7 @@ public class ConsolePlayerAgent implements Agent {
     }
 
     @Override
-    public Move pickMove(Board b) {
+    public Move pickMove(BigBoard b) {
 
         // alert the player
         System.out.println(

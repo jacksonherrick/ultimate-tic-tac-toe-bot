@@ -9,5 +9,5 @@ public interface Agent {
      * @param board - the game board
      * @return the move that the Agent will make
      */
-    Move pickMove(Board board);
+    Move pickMove(BigBoard board);
 }
