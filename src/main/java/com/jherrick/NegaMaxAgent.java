@@ -23,9 +23,9 @@ public class NegaMaxAgent implements Agent {
 		// iterative deepening
 		List<Move> tempMoves = (List<Move>) game.getLegalMoves();
 
-		for (int i = 0; i < tempMoves.size(); i++) {
-			System.out.println(tempMoves.get(i));
-		}
+		// for (int i = 0; i < tempMoves.size(); i++) {
+		// 	System.out.println(tempMoves.get(i));
+		// }
 			
 		MoveAndValue[] moves = new MoveAndValue[tempMoves.size()];
 		int count = 0;
@@ -35,9 +35,9 @@ public class NegaMaxAgent implements Agent {
 			count++;
 		}
 		
-		for(int i=0; i<moves.length; i++){
-			System.out.println(moves[i]);
-		}
+		// for(int i=0; i<moves.length; i++){
+		// 	System.out.println(moves[i]);
+		// }
 
 		while (depthCount <= 5) {
 			for (int i = 0; i < moves.length; i++) {
