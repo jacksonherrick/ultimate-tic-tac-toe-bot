@@ -55,9 +55,14 @@ public class BasicBoardEvaluator implements BoardEvaluator{
             return Integer.MIN_VALUE;
         }
         
-        // Why are we initializing this?
+        // Why are we initializing this? SHould we weigh the SubBoard that we are on?
         SubBoard[] boardPosition = board.getBoardPosition();
     
+        return evaluateBigBoard(board);
+    }
+
+    // Apply heuristic
+    private double evaluateBigBoard(BigBoard board){
         return 10 * c0 * Eval.twoInARowsWithOpenThird(board.xWinBoards, (board.oWinBoards | board.drawnBoards))
                 + 10 * c1 * Eval.middleSquare(board.xWinBoards)
                 - 10 * c0 * Eval.twoInARowsWithOpenThird(board.oWinBoards, (board.xWinBoards | board.drawnBoards))
