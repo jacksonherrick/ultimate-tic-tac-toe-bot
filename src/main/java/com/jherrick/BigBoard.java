@@ -257,7 +257,6 @@ public class BigBoard implements Board{
 		// Yeah... so... this needs to be built!
 		return false;
 	}
-	
 
 	/**
 	 * @override toString() method
