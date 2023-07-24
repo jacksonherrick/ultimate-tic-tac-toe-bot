@@ -193,7 +193,6 @@ public class BigBoard implements Board{
 		return count == 0 ? null : pastMoves[count - 1];
 	}
 
-	// Refactor Line ----------------------------------------------
 	/**
 	 * Updates board state bitboards Takes as input the board index TODO: any way to
 	 * make this cleaner? ugly ugly.
@@ -201,15 +200,13 @@ public class BigBoard implements Board{
 	public void updateStateBitboards(int board) {
 		BoardState s = boards[board].getState();
 		if (s == BoardState.IN_PROGRESS) {
-			xWinBoards &= Constants.CLRBIT[board];
-			oWinBoards &= Constants.CLRBIT[board];
-			drawnBoards &= Constants.CLRBIT[board];
+			updateInProgressBitBoards(board);
 		} else if (s == BoardState.DRAWN) {
-			drawnBoards |= Constants.BIT_MASKS[board];
+			updateDrawnBitBoards(board);
 		} else if (s == BoardState.X_WON) {
-			xWinBoards |= Constants.BIT_MASKS[board];
+			updateXWonBitBoards(board);
 		} else if (s == BoardState.O_WON) {
-			oWinBoards |= Constants.BIT_MASKS[board];
+			updateOWonBitBoards(board);
 		} else if (Constants.REPORTING_LEVEL > 1) {
 			throw new java.lang.RuntimeException(
 					"Unknown BoardState \"" + s + "\" encountered in updateStateBitboards()");
@@ -227,6 +224,9 @@ public class BigBoard implements Board{
 		pastMoves[count] = null;
 	}
 
+	
+	// Refactor Line ----------------------------------------------
+	
 	/**
 	 * Returns true if a player has won on the board TODO: this check only needs to
 	 * be done after many, many moves TODO: almost identical to SubBoard function.
@@ -300,9 +300,9 @@ public class BigBoard implements Board{
 	}
 
 
+
+
 	// ===================== Helper Functions ========================
-
-
 
 	/**
 	 * Toggles which side is to move
@@ -348,5 +348,25 @@ public class BigBoard implements Board{
 		}
 
 		return moves;
+	}
+
+	// ========== Update BitBoard Helper Function =============
+
+	private void updateInProgressBitBoards (int board){
+		xWinBoards &= Constants.CLRBIT[board];
+		oWinBoards &= Constants.CLRBIT[board];
+		drawnBoards &= Constants.CLRBIT[board];
+	}
+
+	private void updateDrawnBitBoards (int board){
+		drawnBoards |= Constants.BIT_MASKS[board];
+	}
+
+	private void updateXWonBitBoards (int board){
+		xWinBoards |= Constants.BIT_MASKS[board];
+	}
+
+	private void updateOWonBitBoards (int board){
+		oWinBoards |= Constants.BIT_MASKS[board];
 	}
 }
