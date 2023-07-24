@@ -16,7 +16,7 @@ public final class TestUtils {
 		Move m = b.getLastMove();
 		int target = -1;
 		if(m != null) {
-			target = m.translate();
+			target = m.getSubBoardTarget();
 		}
 		for(int i = 0; i < b.boards.length; i++) {
 			if(m == null || ((m.move & Constants.BIT_MASKS[i]) > 0) || b.boards[target].getState() != BoardState.IN_PROGRESS) {
