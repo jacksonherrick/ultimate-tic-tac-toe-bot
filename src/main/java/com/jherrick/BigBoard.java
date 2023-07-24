@@ -153,29 +153,35 @@ public class BigBoard implements Board{
 		return this.state;
 	}
 
+	// Refactor Line ----------------------------------------------
+
 	/**
 	 * Generates the potential moves for all locations on the current Board. Returns
 	 * a list representation of the available moves.
 	 **/
 	@Override
 	public List<Move> getLegalMoves() {
-		List<Move> moves = new ArrayList<>();
 		// TODO: perhaps this is not the most efficient, avoid combining ArrayLists
-
+		List<Move> moves = new ArrayList<>();
+		
 		// get the last move
 		Move m = this.getLastMove();
 
-		// if target SubBoard is IN_PROGRESS, only generate moves in that SubBoard
+		// if target SubBoard is IN_PROGRESS and not first move, only generate moves in that SubBoard
+		
 		if (m != null && boards[m.translate()].getState() == BoardState.IN_PROGRESS) {
+			
 			moves.addAll(getLegalMoves(m.translate()));
 			return moves;
+		
 		} else { // if the target SubBoard is won, dead, etc. generate moves for all SubBoards
-			for (int i = 0; i < boards.length; i++) {
-				moves.addAll(getLegalMoves(i));
-			}
-			return moves;
+			moves = allPossibleMoves(boards);
 		}
+
+		return moves;
 	}
+
+	
 
 	@Override
 	public SubBoard[] getBoardPosition() {
@@ -328,8 +334,20 @@ public class BigBoard implements Board{
 
 	// ================ Make Move Helper Functions ==================
 	
-	public void putMoveInLog(Move m) {
+	private void putMoveInLog(Move m) {
 		pastMoves[count] = m;
 		count++;
+	}
+
+
+	// =============== Get Legal Moves Helper Functions ============
+	private List<Move> allPossibleMoves(SubBoard[] boards){
+		List<Move> moves = new ArrayList<>();
+		
+		for (int i = 0; i < boards.length; i++) {
+				moves.addAll(getLegalMoves(i));
+			}
+
+		return moves;
 	}
 }
