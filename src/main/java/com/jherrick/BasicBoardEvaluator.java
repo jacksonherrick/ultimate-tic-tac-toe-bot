@@ -54,9 +54,6 @@ public class BasicBoardEvaluator implements BoardEvaluator{
         if (board.getBoardState() == BoardState.O_WON) {
             return Integer.MIN_VALUE;
         }
-        
-        // Why are we initializing this? SHould we weigh the SubBoard that we are on?
-        SubBoard[] boardPosition = board.getBoardPosition();
     
         return evaluateBigBoard(board);
     }
