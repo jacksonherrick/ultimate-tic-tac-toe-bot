@@ -43,7 +43,7 @@ public class GameImpl implements Game {
 		Agent xAgent;
 		if (s.equals("yes")){
 			BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.X);
-			xAgent = new NegaMaxAgent(null, Side.X);
+			xAgent = new NegaMaxAgent(board_eval, Side.X);
 		}
 		else {
 			xAgent = new ConsolePlayerAgent(reader);
