@@ -153,8 +153,6 @@ public class BigBoard implements Board{
 		return this.state;
 	}
 
-	// Refactor Line ----------------------------------------------
-
 	/**
 	 * Generates the potential moves for all locations on the current Board. Returns
 	 * a list representation of the available moves.
@@ -165,9 +163,13 @@ public class BigBoard implements Board{
 		List<Move> moves = new ArrayList<>();
 		Move move = this.getLastMove();
 
-		// if target SubBoard is IN_PROGRESS and not first move, only generate moves in that SubBoard
-		
-		if (move != null && boards[move.getSubBoardTarget()].getState() == BoardState.IN_PROGRESS) {
+		// if first move, generate all moves
+		if (move == null){
+			moves = allPossibleMoves(boards);
+		}
+
+		// if target SubBoard is IN_PROGRESS, only generate moves in that SubBoard
+		if (boards[move.getSubBoardTarget()].getState() == BoardState.IN_PROGRESS) {
 			
 			moves.addAll(getLegalMoves(move.getSubBoardTarget()));
 			return moves;
@@ -178,8 +180,6 @@ public class BigBoard implements Board{
 
 		return moves;
 	}
-
-	
 
 	@Override
 	public SubBoard[] getBoardPosition() {
@@ -193,25 +193,7 @@ public class BigBoard implements Board{
 		return count == 0 ? null : pastMoves[count - 1];
 	}
 
-	/**
-	 * Generates the potential moves for a particular SubBoard index. Returns a
-	 * bitboard representation of the available moves.
-	 **/
-	public List<Move> getLegalMoves(int sb) {
-		// generate a bitboard for the specified SubBoard
-		// a 1 represents a potential move
-		int bb = boards[sb].generateMoves();
-		List<Move> moves = new ArrayList<>();
-
-		while (bb != 0) {
-			int move = bb & -bb;
-			bb &= (bb - 1);
-			moves.add(new Move(move, sb));
-		}
-
-		return moves;
-	}
-
+	// Refactor Line ----------------------------------------------
 	/**
 	 * Updates board state bitboards Takes as input the board index TODO: any way to
 	 * make this cleaner? ugly ugly.
@@ -345,6 +327,25 @@ public class BigBoard implements Board{
 		for (int i = 0; i < boards.length; i++) {
 				moves.addAll(getLegalMoves(i));
 			}
+
+		return moves;
+	}
+
+	/**
+	 * Generates the potential moves for a particular SubBoard index. Returns a
+	 * bitboard representation of the available moves.
+	 **/
+	private List<Move> getLegalMoves(int subBoardIndex) {
+		// generate a bitboard for the specified SubBoard
+		// a 1 represents a potential move
+		int bb = boards[subBoardIndex].generateMoves();
+		List<Move> moves = new ArrayList<>();
+
+		while (bb != 0) {
+			int move = bb & -bb;
+			bb &= (bb - 1);
+			moves.add(new Move(move, subBoardIndex));
+		}
 
 		return moves;
 	}
