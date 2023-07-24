@@ -38,7 +38,7 @@ public class GameImpl implements Game {
 
 
 		// Only can assign CPU to X. TODO: Create functionality to choose if X or O or neither is bot
-		System.out.println("Would you like to play against a CPU? (say 'yes' if you would like a CPU)")
+		System.out.println("Would you like to play against a CPU? (say 'yes' if you would like a CPU)");
 		s = reader.nextLine();
 		Agent xAgent;
 		if (s.equals("yes")){
