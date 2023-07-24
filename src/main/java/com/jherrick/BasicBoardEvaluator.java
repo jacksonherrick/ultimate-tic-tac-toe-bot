@@ -1,8 +1,24 @@
 package com.jherrick;
 
 public class BasicBoardEvaluator implements BoardEvaluator{
+    
+    
+    private static int c0 = Constants.EVAL_CONSTANTS[0];
+	private static int c1 = Constants.EVAL_CONSTANTS[1];
+	private static int c2 = Constants.EVAL_CONSTANTS[2];
+
+    public BigBoard board;
+    public Side side;
+
+    public BasicBoardEvaluator(BigBoard b, Side s){
+        board = b;
+        side = s;
+    }
+
+
+
     @Override
-    public double evaluate(Board board, Side side) {
+    public double evaluate(BigBoard board, Side side) {
         double xScore = evaluateForX(board);
         if(side.equals(Side.O)){
             return -1 * xScore;
@@ -10,7 +26,7 @@ public class BasicBoardEvaluator implements BoardEvaluator{
         return xScore;
     }
 
-    private double evaluateForX(Board board){
+    private double evaluateForX(BigBoard board){
         if (board.getBoardState() == BoardState.X_WON) {
             return Integer.MAX_VALUE;
         }
@@ -18,11 +34,11 @@ public class BasicBoardEvaluator implements BoardEvaluator{
             return Integer.MIN_VALUE;
         }
         SubBoard[] boardPosition = board.getBoardPosition();
+        
         // TODO: implement actual evaluation
-//        return 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
-//                + 10 * c1 * Eval.middleSquare(xWinBoards)
-//                - 10 * c0 * Eval.twoInARowsWithOpenThird(oWinBoards, (xWinBoards | drawnBoards))
-//                - 10 * c1 * Eval.middleSquare(oWinBoards) + score;
-        return 0;
+        return 10 * c0 * Eval.twoInARowsWithOpenThird(board.xWinBoards, (board.oWinBoards | board.drawnBoards))
+                + 10 * c1 * Eval.middleSquare(board.xWinBoards)
+                - 10 * c0 * Eval.twoInARowsWithOpenThird(board.oWinBoards, (board.xWinBoards | board.drawnBoards))
+                - 10 * c1 * Eval.middleSquare(board.oWinBoards);
     }
 }
