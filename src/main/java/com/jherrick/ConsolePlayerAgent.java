@@ -3,12 +3,21 @@ package com.jherrick;
 import java.util.Scanner;
 
 public class ConsolePlayerAgent implements Agent {
+    
+    // =============== Instance Variables ================
     private final Scanner reader;
+
+
+
+    // ================== Constructors ====================
 
     public ConsolePlayerAgent(Scanner reader) {
         this.reader = new Scanner(System.in);;
     }
 
+
+
+    // ================ Public Functions ===================
     @Override
     public Move pickMove(BigBoard b) {
 
@@ -20,7 +29,7 @@ public class ConsolePlayerAgent implements Agent {
         while (true) {
             System.out.println();
             String s = reader.nextLine();
-            if (s.matches("^\\s*[a-i][1-9]\\s*$")) {
+            if (moveStringFormatCheck(s)) {
                 Move selectedMove = Utils.coordinatesToMove(s);
                 if (b.getLegalMoves().contains(selectedMove)) {
                     return selectedMove;
@@ -32,5 +41,13 @@ public class ConsolePlayerAgent implements Agent {
                 System.out.println("Sorry, please enter a move in the form of [a-i][0-9]. ex: e5");
             }
         }
+    }
+
+
+
+    // ================ Helper Functions =================
+
+    private boolean moveStringFormatCheck(String s){
+        return s.matches("^\\s*[a-i][1-9]\\s*$");
     }
 }
