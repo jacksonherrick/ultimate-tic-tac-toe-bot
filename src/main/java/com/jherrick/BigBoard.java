@@ -27,11 +27,6 @@ public class BigBoard implements Board{
 	Move[] pastMoves;
 	int count;
 
-	// Evaluation constants to make the evaluation function easier to read - SHOULD BE REMOVED
-	private int c0 = Constants.EVAL_CONSTANTS[0];
-	private int c1 = Constants.EVAL_CONSTANTS[1];
-
-
 
 	// ===================== Constructors ======================
 
@@ -267,6 +262,7 @@ public class BigBoard implements Board{
 
 		return result.toString();
 	}
+
 
 
 
