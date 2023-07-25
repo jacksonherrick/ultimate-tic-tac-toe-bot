@@ -1,3 +1,11 @@
+/*
+ * PROPOSE TO DELETE THIS CLASS
+ * Reasoning: Agents will pick a move based on their own algorithm. These algorithms will determine
+ * the path forward to "evaluate" which move is best. They do this by evaluating boards, so they will
+ * use a BoardEvaluator to determine the best board based on Heuristics. I personally don't see
+ * where this class will fit into the flow.
+ */
+
 package com.jherrick;
 
 import java.util.HashMap;
