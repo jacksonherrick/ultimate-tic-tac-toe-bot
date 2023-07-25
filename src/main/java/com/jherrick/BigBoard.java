@@ -225,31 +225,26 @@ public class BigBoard implements Board{
 		pastMoves[count] = null;
 	}
 
-	
-	// Refactor Line ----------------------------------------------
-	
 	/**
 	 * Returns true if a player has won on the board TODO: this check only needs to
 	 * be done after many, many moves TODO: almost identical to SubBoard function.
 	 * Hmmm... inheritance? TODO: Hash Map!
 	 **/
 	public boolean isWon() {
-		for (int bb : Constants.WIN_BITBOARDS) {
-			if ((bb & xWinBoards) == bb) {
-				if (state == BoardState.IN_PROGRESS) {
-					state = BoardState.X_WON;
-				}
-				return true;
-			} else if ((bb & oWinBoards) == bb) {
-				if (state == BoardState.IN_PROGRESS) {
-					state = BoardState.O_WON;
-				}
-				return true;
+		if (hasXWon()) {
+			if (state == BoardState.IN_PROGRESS) {
+				state = BoardState.X_WON;
 			}
+			return true;
+		} else if (hasOWon()) {
+			if (state == BoardState.IN_PROGRESS) {
+				state = BoardState.O_WON;
+			}
+			return true;
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Returns true if the the board is drawn (no available moves) TODO: this check
 	 * only needs to be done after many, many moves
@@ -264,25 +259,14 @@ public class BigBoard implements Board{
 	 */
 	public String toString() {
 		StringBuilder result = new StringBuilder("\n  HCN: " + Utils.boardToHCN(this) + "\n");
-		String spacer = "  +---------+---------+---------+\n";
-		result.append(spacer);
-		int counter = 9;
-		for (int j = 0; j < 9; j += 3) {
-			String[] b1 = boards[j].toArrayRepresentation();
-			String[] b2 = boards[j + 1].toArrayRepresentation();
-			String[] b3 = boards[j + 2].toArrayRepresentation();
+		
+		result = subBoardPrint(result);
 
-			for (int i = 0; i < 3; i++) {
-				result.append(counter + " " + "|" + b1[i] + "|" + b2[i] + "|" + b3[i] + "|\n");
-				counter--;
-			}
-			result.append(spacer);
-		}
 		String bottomKey = String.format("%3s a  b  c %1s d  e  f %1s g  h  i \n", " ", " ", " ");
 		result.append(bottomKey);
+
 		return result.toString();
 	}
-
 
 
 
@@ -352,5 +336,56 @@ public class BigBoard implements Board{
 
 	private void updateOWonBitBoards (int board){
 		oWinBoards |= Constants.BIT_MASKS[board];
+	}
+
+
+
+	// ============ Has Won Helper Function =============
+
+	// TODO: Check functionality, game end not executing.
+
+	private boolean hasXWon(){
+		for (int bb : Constants.WIN_BITBOARDS) {
+			if ((bb & xWinBoards) == bb) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean hasOWon(){
+		for (int bb : Constants.WIN_BITBOARDS) {
+			if ((bb & oWinBoards) == bb) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// private boolean hasDrawn(){
+	// 	return false;
+	// }
+
+	
+	// ================ To Strig Helper Function =================
+	private StringBuilder subBoardPrint(StringBuilder result){
+		
+		String spacer = "  +---------+---------+---------+\n";
+		result.append(spacer);
+
+		int counter = 9;
+		for (int j = 0; j < 9; j += 3) {
+			String[] b1 = boards[j].toArrayRepresentation();
+			String[] b2 = boards[j + 1].toArrayRepresentation();
+			String[] b3 = boards[j + 2].toArrayRepresentation();
+
+			for (int i = 0; i < 3; i++) {
+				result.append(counter + " " + "|" + b1[i] + "|" + b2[i] + "|" + b3[i] + "|\n");
+				counter--;
+			}
+			result.append(spacer);
+		}
+		
+		return result;
 	}
 }
