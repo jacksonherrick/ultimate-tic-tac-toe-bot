@@ -169,13 +169,15 @@ public class BigBoard implements Board{
 		}
 
 		// if target SubBoard is IN_PROGRESS, only generate moves in that SubBoard
-		if (boards[move.getSubBoardTarget()].getState() == BoardState.IN_PROGRESS) {
+		else {
+			if (boards[move.getSubBoardTarget()].getState() == BoardState.IN_PROGRESS) {
+				
+				moves.addAll(getLegalMoves(move.getSubBoardTarget()));
+				return moves;
 			
-			moves.addAll(getLegalMoves(move.getSubBoardTarget()));
-			return moves;
-		
-		} else {
-			moves = allPossibleMoves(boards);
+			} else {
+				moves = allPossibleMoves(boards);
+			}
 		}
 
 		return moves;
@@ -258,22 +260,6 @@ public class BigBoard implements Board{
 		return false;
 	}
 
-	public int evaluate() {
-		if (state == BoardState.X_WON) {
-			return Integer.MAX_VALUE;
-		}
-		if (state == BoardState.O_WON) {
-			return Integer.MIN_VALUE;
-		}
-		int score = 0;
-		for (int i = 0; i < boards.length; i++) {
-			// score += Eval.getValues().get(boards[i]);
-		}
-		return 10 * c0 * Eval.twoInARowsWithOpenThird(xWinBoards, (oWinBoards | drawnBoards))
-				+ 10 * c1 * Eval.middleSquare(xWinBoards)
-				- 10 * c0 * Eval.twoInARowsWithOpenThird(oWinBoards, (xWinBoards | drawnBoards))
-				- 10 * c1 * Eval.middleSquare(oWinBoards) + score;
-	}
 	/**
 	 * @override toString() method
 	 */
