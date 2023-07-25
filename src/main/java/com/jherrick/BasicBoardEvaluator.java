@@ -60,9 +60,31 @@ public class BasicBoardEvaluator implements BoardEvaluator{
 
     // Apply heuristic
     private double evaluateBigBoard(BigBoard board){
-        return 10 * c0 * Eval.twoInARowsWithOpenThird(board.xWinBoards, (board.oWinBoards | board.drawnBoards))
-                + 10 * c1 * Eval.middleSquare(board.xWinBoards)
-                - 10 * c0 * Eval.twoInARowsWithOpenThird(board.oWinBoards, (board.xWinBoards | board.drawnBoards))
-                - 10 * c1 * Eval.middleSquare(board.oWinBoards);
+        return 10 * c0 * twoInARowsWithOpenThird(board.xWinBoards, (board.oWinBoards | board.drawnBoards))
+                + 10 * c1 * middleSquare(board.xWinBoards)
+                - 10 * c0 * twoInARowsWithOpenThird(board.oWinBoards, (board.xWinBoards | board.drawnBoards))
+                - 10 * c1 * middleSquare(board.oWinBoards);
     }
+
+    // For Boards, blockedSquares is oWinBoards | drawnBoards. For SubBoards, it's
+	// just oBoard
+	public static int twoInARowsWithOpenThird(int goodSquares, int blockedSquares) {
+		int count = 0;
+		for (int i = 0; i < Constants.TWOINAROWS.length; i++) {
+			if (((goodSquares & Constants.TWOINAROWS[i]) == Constants.TWOINAROWS[i])
+					&& ((blockedSquares & Constants.OPENTHIRDS[i]) == 0)) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	// For SubBoards
+	public static int middleSquare(int goodSquares) {
+		if ((goodSquares & 0x10) == 0x10) {
+			return 1;
+		}
+		return 0;
+	}
 }
