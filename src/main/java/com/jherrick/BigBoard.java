@@ -166,21 +166,20 @@ public class BigBoard implements Board{
 		// if first move, generate all moves
 		if (move == null){
 			moves = allPossibleMoves(boards);
+			return moves;
 		}
 
 		// if target SubBoard is IN_PROGRESS, only generate moves in that SubBoard
-		else {
-			if (boards[move.getSubBoardTarget()].getState() == BoardState.IN_PROGRESS) {
-				
-				moves.addAll(getLegalMoves(move.getSubBoardTarget()));
-				return moves;
+		
+		if (boards[move.getSubBoardTarget()].getState() == BoardState.IN_PROGRESS) {
 			
-			} else {
-				moves = allPossibleMoves(boards);
-			}
+			moves.addAll(getLegalMoves(move.getSubBoardTarget()));
+			return moves;
+		
+		} else {
+			moves = allPossibleMoves(boards);
+			return moves;
 		}
-
-		return moves;
 	}
 
 	@Override
