@@ -59,38 +59,24 @@ public class BigBoard implements Board{
 	/**
 	 * Overloaded constructor. Creates a Board from a Herrick-Corley Notation
 	 * string. HCN notation lists the SubBoards using "X", "O", and 1-9, starting
-	 * from top left.
+	 * from top left. NEEDS TO BE REFACTORED
 	 **/
 	public BigBoard(String hcn) {
 		// call default constructor
 		this();
-
-		// compile the regex to match HCN's
-		Pattern r = Pattern.compile(
-				"^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2}|\\-)$");
-
-		// match the HCN
-		Matcher m = r.matcher(hcn);
-		if (m.matches()) {
+		
+		if (isValidHCN(hcn)) {
 			// loop through matches
-			for (int i = 1; i < 12; i++) {
-				if (i < 10) {
-					boards[i - 1] = new SubBoard(m.group(i));
-					boards[i - 1].checkConditions();
-					updateStateBitboards(i - 1);
-				} else if (i == 10) {
-					side = m.group(i).equals("X") ? Side.X : Side.O;
-				} else if (!m.group(i).equals("-")) {
-					pastMoves[0] = Utils.coordinatesToMove(m.group(i));
-					count = 1;
-				}
-			}
-		} else {
+			buildBigBoardFromHCN(hcn);
+		}
+		else {
 			System.out.println("Invalid HCN.");
 			System.exit(0);
 		}
 	}
 
+
+	
 	/**
 	 * Overloaded constructor. Creates a Board from a list of SubBoard objects, a
 	 * given Side, and a previous move. Primarily used in testing.
@@ -275,6 +261,41 @@ public class BigBoard implements Board{
 		side = side == Side.X ? Side.O : Side.X;
 	}
 
+
+	// =========== HCN BigBoard Constructor Helper Functions =========
+
+	private boolean isValidHCN(String hcn){
+		Pattern r = Pattern.compile(
+				"^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2}|\\-)$");
+
+		// match the HCN
+		Matcher m = r.matcher(hcn);
+		return m.matches();
+	}
+
+	private void buildBigBoardFromHCN(String hcn){
+		
+		Pattern r = Pattern.compile(
+				"^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2}|\\-)$");
+
+		// match the HCN
+		Matcher m = r.matcher(hcn);
+		m.matches();
+
+		// loop through matches
+		for (int i = 1; i < 12; i++) {
+			if (i < 10) {
+				boards[i - 1] = new SubBoard(m.group(i));
+				boards[i - 1].checkConditions();
+				updateStateBitboards(i - 1);
+			} else if (i == 10) {
+				side = m.group(i).equals("X") ? Side.X : Side.O;
+			} else if (!m.group(i).equals("-")) {
+				pastMoves[0] = Utils.coordinatesToMove(m.group(i));
+				count = 1;
+			}
+		}
+	}
 
 	// ================ Make Move Helper Functions ==================
 	
