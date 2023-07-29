@@ -1,14 +1,22 @@
 package com.jherrick;
 
 public class SubBoard {
+	
+	// ================ Instance Variables =================
+	
 	private int xBoard;
 	private int oBoard;
 	private BoardState state;
 
+	// ELIMINATE EVALUATION METRICS - SubBoards don't have inherent value, a subboard is judged by an Agent
 	// Evaluation constants to make the evaluation function easier to read
 	private int c0 = Constants.EVAL_CONSTANTS[0];
 	private int c1 = Constants.EVAL_CONSTANTS[1];
 	private int c2 = Constants.EVAL_CONSTANTS[2];
+
+
+
+	// ================== Constructors ====================
 
 	// constructor to create an empty board
 	public SubBoard() {
@@ -49,11 +57,21 @@ public class SubBoard {
 		state = BoardState.IN_PROGRESS;
 	}
 	
-	/**
-	 * Returns the BoardState of the SubBoard
-	 */
+
+
+	// ================= Public Variables ====================
+
+	// Getters
 	public BoardState getState() {
 		return state;
+	}
+
+	public int getXBoard() {
+		return xBoard;
+	}
+
+	public int getOBoard() {
+		return oBoard;
 	}
 
 	/**
@@ -180,13 +198,7 @@ public class SubBoard {
 				- c0 * Eval.twoInARowsWithOpenThird(oBoard, xBoard) - c1 * Eval.middleSquare(oBoard);
 	}
 
-	// getters
-	public int getXBoard() {
-		return xBoard;
-	}
 
-	public int getOBoard() {
-		return oBoard;
-	}
 
+	// =============== Helper Functions ================
 }
