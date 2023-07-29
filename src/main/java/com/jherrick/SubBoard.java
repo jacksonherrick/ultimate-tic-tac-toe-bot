@@ -8,12 +8,6 @@ public class SubBoard {
 	private int oBoard;
 	private BoardState state;
 
-	// ELIMINATE EVALUATION METRICS - SubBoards don't have inherent value, a subboard is judged by an Agent
-	// Evaluation constants to make the evaluation function easier to read
-	private int c0 = Constants.EVAL_CONSTANTS[0];
-	private int c1 = Constants.EVAL_CONSTANTS[1];
-	private int c2 = Constants.EVAL_CONSTANTS[2];
-
 
 
 	// ================== Constructors ====================
@@ -185,17 +179,6 @@ public class SubBoard {
 				result.append("\n");
 		}
 		return result.toString();
-	}
-
-	public int evaluate() {
-		if (state == BoardState.X_WON) {
-			return c2;
-		}
-		if (state == BoardState.O_WON) {
-			return -1 * c2;
-		}
-		return c0 * Eval.twoInARowsWithOpenThird(xBoard, oBoard) + c1 * Eval.middleSquare(xBoard)
-				- c0 * Eval.twoInARowsWithOpenThird(oBoard, xBoard) - c1 * Eval.middleSquare(oBoard);
 	}
 
 
