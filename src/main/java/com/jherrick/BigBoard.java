@@ -310,8 +310,10 @@ public class BigBoard implements Board{
 		List<Move> moves = new ArrayList<>();
 		
 		for (int i = 0; i < boards.length; i++) {
+			if (boards[i].getState() == BoardState.IN_PROGRESS){
 				moves.addAll(getLegalMoves(i));
 			}
+		}
 
 		return moves;
 	}

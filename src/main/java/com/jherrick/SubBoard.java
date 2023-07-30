@@ -68,6 +68,7 @@ public class SubBoard {
 		return oBoard;
 	}
 
+	
 	/**
 	 * Makes the specified move, and checks for win/draw conditions Take as input a
 	 * 9-bit integer and the side to move
