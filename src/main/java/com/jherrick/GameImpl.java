@@ -33,10 +33,11 @@ public class GameImpl implements Game {
 		BigBoard b = askForCustomBoard(reader);
 
 
-		// Only can assign CPU to X. TODO: Create functionality to choose if X or O or neither is bot
+		// TODO: Bug - CPU only works for X
 		Agent [] agents = assignAgentType(reader, b);
 
 		Game game = new GameImpl(b, agents[0], agents[1]);
+		
 		// use the inputed board
 		game.play();
 		
@@ -50,11 +51,15 @@ public class GameImpl implements Game {
 		boolean gameOver = false;
 		while(!gameOver){
 			System.out.println(board);
+			// TODO: Bug - Fix CPU making all moves immediately
 			Move nextMove = getNextMove();
+
+			// TODO: Add functionality for exiting the game. Move = -1?
+			
 			this.board.makeMove(nextMove);
 			gameOver = this.board.getBoardState() != BoardState.IN_PROGRESS; 
 		}
-		// TODO: Fix bug, no Game Over
+		// TODO: Fix bug, no Game Over when BigBoard is won
 		System.out.println("Game Over!");
 	}
 
@@ -114,7 +119,7 @@ public class GameImpl implements Game {
 		agents[0] = new ConsolePlayerAgent(reader);
 	}
 
-	// Get O Agent Assignment from player - BUG: Only X can play as bot?
+	// Get O Agent Assignment from player - TODO: Only X can play as bot?
 	System.out.println("Would you like a CPU to play as O? (Y/N)");
 	s = reader.nextLine();
 
@@ -130,7 +135,7 @@ public class GameImpl implements Game {
 }
 
 
-
+// TODO: No more Exit option
 private void gameFlowToBeUpdated(){
 
 
