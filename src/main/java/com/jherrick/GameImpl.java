@@ -4,12 +4,17 @@ import java.util.Scanner;
 
 public class GameImpl implements Game {
 
+
+	// ============== Instance variables ================
 	private final BigBoard board;
 	private final Agent xAgent;
 	private final Agent oAgent;
 	private final Side turn;
 
 	private static Scanner reader;
+
+
+	// ================== Constructors ==================
 
 	public GameImpl(BigBoard board, Agent xAgent, Agent oAgent) {
 		this.board = board;
@@ -18,39 +23,20 @@ public class GameImpl implements Game {
 		this.turn = Side.X;
 	}
 
-	// main method
+	
+	// ================== Main Method ===================
+
 	public static void initAndPlayGame() {
 		
-		// Can use print statements to test functionality here:
-		//System.out.println("Hello World")
-		
 		reader = new Scanner(System.in);
-
-		// set up the board
-		BigBoard b = new BigBoard();
 		
-		// get input
-		System.out.println("Welcome. Do you want a custom position?");
-		String s = reader.nextLine();
-		if (s.equals("yes")) {
-			b = inputCustomBoard();
-		}
+		BigBoard b = askForCustomBoard(reader);
 
 
 		// Only can assign CPU to X. TODO: Create functionality to choose if X or O or neither is bot
-		System.out.println("Would you like to play against a CPU? (say 'yes' if you would like a CPU)");
-		s = reader.nextLine();
-		Agent xAgent;
-		if (s.equals("yes")){
-			BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.X);
-			xAgent = new NegaMaxAgent(board_eval, Side.X);
-		}
-		else {
-			xAgent = new ConsolePlayerAgent(reader);
-		}
-		Agent oAgent = new ConsolePlayerAgent(reader);
+		Agent [] agents = assignAgentType(reader, b);
 
-		Game game = new GameImpl(b, xAgent, oAgent);
+		Game game = new GameImpl(b, agents[0], agents[1]);
 		// use the inputed board
 		game.play();
 		
@@ -58,13 +44,6 @@ public class GameImpl implements Game {
 		reader.close();
 	}
 
-	// input a particular board to play
-	public static BigBoard inputCustomBoard() {
-		System.out.println("Please enter the HCN string for the custom board.");
-		String s = reader.nextLine();
-		BigBoard b = new BigBoard(s);
-		return b;
-	}
 
 	@Override
 	public void play() {
@@ -79,6 +58,13 @@ public class GameImpl implements Game {
 		System.out.println("Game Over!");
 	}
 
+
+
+
+	// ================ Helper Functions =================
+
+	// ======== Move Generation Helper Functions =========
+	
 	private Move getNextMove() {
 		if(this.turn.equals(Side.X)){
 			return xAgent.pickMove(board);
@@ -86,7 +72,67 @@ public class GameImpl implements Game {
 		else return oAgent.pickMove(board);
 	}
 
-	private void gameFlowToBeUpdated(){
+	// ======= HCN Custom Board Helper Functions ============
+
+	private static BigBoard askForCustomBoard(Scanner reader){
+		BigBoard b = new BigBoard();
+		
+		// Get input
+		System.out.println("Welcome. Do you want a custom position?");
+		String s = reader.nextLine();
+		if (s.equals("yes")) {
+			b = inputCustomBoard();
+		}
+
+		return b;
+	}
+
+	// input a particular board to play
+	private static BigBoard inputCustomBoard() {
+		System.out.println("Please enter the HCN string for the custom board.");
+		String s = reader.nextLine();
+		BigBoard b = new BigBoard(s);
+		return b;
+	}
+
+
+	// ============ Assign Agent Type Helper Functions ===============
+
+	private static Agent[] assignAgentType(Scanner reader , BigBoard b){
+	
+	Agent[] agents = new Agent[2];
+
+	// Get X Agent Assignment from player
+	System.out.println("Would you like a CPU to play as X? (Y/N)");
+	String s = reader.nextLine();
+
+	if (s.equals("Y")){
+		BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.X);
+		agents[0] = new NegaMaxAgent(board_eval, Side.X);
+	}
+	else {
+		agents[0] = new ConsolePlayerAgent(reader);
+	}
+
+	// Get O Agent Assignment from player - BUG: Only X can play as bot?
+	System.out.println("Would you like a CPU to play as O? (Y/N)");
+	s = reader.nextLine();
+
+	if (s.equals("Y")){
+		BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.O);
+		agents[1] = new NegaMaxAgent(board_eval, Side.O);
+	}
+	else {
+		agents[1] = new ConsolePlayerAgent(reader);
+	}
+
+	return agents;
+}
+
+
+
+private void gameFlowToBeUpdated(){
+
 
 //		// alert the player
 //		System.out.println(
@@ -130,4 +176,7 @@ public class GameImpl implements Game {
 //		System.out.println("Goodbye. As a side note, Stiven's a scrub.");
 //	}
 	}
+
+
+
 }

@@ -7,7 +7,7 @@ public class BasicBoardEvaluator implements BoardEvaluator{
     // Evaluation metrics. Only add or remove metrics, do not hard code in. Should be hard coded in EVAL_CONSTANTS
     private static int c0 = Constants.EVAL_CONSTANTS[0];
 	private static int c1 = Constants.EVAL_CONSTANTS[1];
-	private static int c2 = Constants.EVAL_CONSTANTS[2];
+	// private static int c2 = Constants.EVAL_CONSTANTS[2];
 
     public BigBoard board;
     public Side side;
