@@ -48,6 +48,13 @@ public class ConsolePlayerAgent implements Agent {
         }
     }
 
+    
+    // ================ Helper Functions =================
+
+    private boolean moveStringFormatCheck(String s){
+        return s.matches("^\\s*[a-i][1-9]\\s*$");
+    }
+
     private boolean checkExitGame(String s){
         
         if (s.equals("quit") || s.equals("stop") || s.equals("exit")){
@@ -58,10 +65,5 @@ public class ConsolePlayerAgent implements Agent {
 
     private Move exitMove(){
         return new Move(-1, -1);
-    }
-    // ================ Helper Functions =================
-
-    private boolean moveStringFormatCheck(String s){
-        return s.matches("^\\s*[a-i][1-9]\\s*$");
     }
 }

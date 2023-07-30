@@ -31,9 +31,6 @@ public class GameImpl implements Game {
 		reader = new Scanner(System.in);
 		
 		BigBoard b = askForCustomBoard(reader);
-
-
-		// TODO: Bug - CPU only works for X
 		Agent [] agents = assignAgentType(reader, b);
 
 		Game game = new GameImpl(b, agents[0], agents[1]);
@@ -122,7 +119,8 @@ public class GameImpl implements Game {
 		agents[0] = new ConsolePlayerAgent(reader);
 	}
 
-	// Get O Agent Assignment from player - TODO: Only X can play as bot?
+	// Get O Agent Assignment from player - TODO: Only X can play as bot even with this functionality?
+
 	System.out.println("Would you like a CPU to play as O? (Y/N)");
 	s = reader.nextLine();
 
