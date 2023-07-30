@@ -54,12 +54,15 @@ public class GameImpl implements Game {
 			// TODO: Bug - Fix CPU making all moves immediately
 			Move nextMove = getNextMove();
 
-			// TODO: Add functionality for exiting the game. Move = -1?
-			
+			// Exit game if move is -1
+			if (nextMove.move == -1){
+				break;
+			}
+
 			this.board.makeMove(nextMove);
+			// TODO: Fix bug, no Game Over when BigBoard is won
 			gameOver = this.board.getBoardState() != BoardState.IN_PROGRESS; 
 		}
-		// TODO: Fix bug, no Game Over when BigBoard is won
 		System.out.println("Game Over!");
 	}
 
