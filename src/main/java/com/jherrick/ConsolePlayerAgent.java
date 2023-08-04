@@ -27,10 +27,10 @@ public class ConsolePlayerAgent implements Agent {
             String s = reader.nextLine();
 
             // Gives Agent option to exit the game if they return a move of -1.
-            if (checkExitGame(s)){
+            if (shouldExitGame(s)){
                 return exitMove();
             }
-            if (moveStringFormatCheck(s)) {
+            if (isValidHCN(s)) {
                 Move selectedMove = Utils.coordinatesToMove(s);
                 if (b.getLegalMoves().contains(selectedMove)) {
                     return selectedMove;
@@ -47,11 +47,11 @@ public class ConsolePlayerAgent implements Agent {
     
     // ========== Helper Functions ==========
 
-    private boolean moveStringFormatCheck(String s){
+    private boolean isValidHCN(String s){
         return s.matches("^\\s*[a-i][1-9]\\s*$");
     }
 
-    private boolean checkExitGame(String s){
+    private boolean shouldExitGame(String s){
         
         if (s.equals("quit") || s.equals("stop") || s.equals("exit")){
             return true;
