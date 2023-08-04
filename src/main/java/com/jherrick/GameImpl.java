@@ -102,84 +102,34 @@ public class GameImpl implements Game {
 
 	private static Agent[] assignAgentType(Scanner reader , Board b){
 	
-	Agent[] agents = new Agent[2];
+		Agent[] agents = new Agent[2];
 
-	// Get X Agent Assignment from player
-	System.out.println("Would you like a CPU to play as X? (Y/N)");
-	String s = reader.nextLine();
+		// Get X Agent Assignment from player
+		System.out.println("Would you like a CPU to play as X? (Y/N)");
+		String s = reader.nextLine();
 
-	if (s.equals("Y")){
-		BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.X);
-		agents[0] = new NegaMaxAgent(board_eval, Side.X);
-	}
-	else {
-		agents[0] = new ConsolePlayerAgent(reader);
-	}
+		if (s.equals("Y")){
+			BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.X);
+			agents[0] = new NegaMaxAgent(board_eval, Side.X);
+		}
+		else {
+			agents[0] = new ConsolePlayerAgent(reader);
+		}
 
-	// Get O Agent Assignment from player - TODO: Only X can play as bot even with this functionality?
+		// Get O Agent Assignment from player - TODO: Only X can play as bot even with this functionality?
 
-	System.out.println("Would you like a CPU to play as O? (Y/N)");
-	s = reader.nextLine();
+		System.out.println("Would you like a CPU to play as O? (Y/N)");
+		s = reader.nextLine();
 
-	if (s.equals("Y")){
-		BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.O);
-		agents[1] = new NegaMaxAgent(board_eval, Side.O);
-	}
-	else {
-		agents[1] = new ConsolePlayerAgent(reader);
-	}
+		if (s.equals("Y")){
+			BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.O);
+			agents[1] = new NegaMaxAgent(board_eval, Side.O);
+		}
+		else {
+			agents[1] = new ConsolePlayerAgent(reader);
+		}
 
-	return agents;
+		return agents;
 }
-
-
-// TODO: No more Exit option
-private void gameFlowToBeUpdated(){
-
-
-//		// alert the player
-//		System.out.println(
-//				"Type the coordinates of your first move. Type \"exit\" to, well, you figure it out. Likewise for \"undo\".");
-//
-//		// initialize move
-//		Move m = new Move(0, 0);
-//
-//		// continuously wait for input
-//		while (true) {
-//			System.out.println(b);
-//			System.out.print("  X: " + Integer.toBinaryString(b.xWinBoards));
-//			System.out.print(", O: " + Integer.toBinaryString(b.oWinBoards));
-//			System.out.print(", Draw: " + Integer.toBinaryString(b.drawnBoards));
-//			System.out.println();
-//			String s = reader.nextLine();
-//			if (s.equals("quit") || s.equals("stop") || s.equals("exit")) {
-//				break;
-//			} else if (s.equals("undo")) {
-//				b.takeMove(m);
-//			} else if (s.matches("^\\s*[a-i][1-9]\\s*$")) {
-//				m = Utils.coordinatesToMove(s);
-//				// checks if the move is on top of another move
-//				if (((b.boards[m.board].getXBoard() | b.boards[m.board].getOBoard()) & m.move) == 0) {
-//					// checks if the move is in the correct sub-board (it's not the first move or we
-//					// are in the sub-board dictated by the lat move or if that board is not in
-//					// progress)
-//					if (b.getLastMove() == null || m.board == b.getLastMove().translate()
-//							|| b.boards[b.getLastMove().translate()].getState() != BoardState.IN_PROGRESS) {
-//						b.makeMove(m);
-//					} else {
-//						System.out.println("Sorry, please move in the board corresponding to the last move");
-//					}
-//				} else {
-//					System.out.println("Sorry, that position is already taken. Please enter another move");
-//				}
-//			} else {
-//				System.out.println("Sorry, please enter a move or command.");
-//			}
-//		}
-//		System.out.println("Goodbye. As a side note, Stiven's a scrub.");
-//	}
-	}
-
-
 
 }

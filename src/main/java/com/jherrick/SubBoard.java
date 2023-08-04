@@ -153,8 +153,7 @@ public class SubBoard {
 	 *           representation
 	 **/
 	public String toString() {
-		String xString = Integer.toBinaryString(xBoard);
-		String oString = Integer.toBinaryString(oBoard);
+
 		StringBuilder result = new StringBuilder();
 
 		for (int i = 8; i > -1; i--) {

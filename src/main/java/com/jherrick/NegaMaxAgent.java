@@ -17,7 +17,6 @@ public class NegaMaxAgent implements Agent {
 		int depth = 0;
 		int beta = Integer.MAX_VALUE;
 		int color = 1;
-		int startTime = 0; /* This will be the start time of the negamax */
 		int depthCount = 1;
 		int maxValue = Integer.MIN_VALUE;
 		// iterative deepening
