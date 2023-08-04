@@ -19,7 +19,7 @@ public class ConsolePlayerAgent implements Agent {
 
     // ================ Public Functions ===================
     @Override
-    public Move pickMove(BigBoard b) {
+    public Move pickMove(Board b) {
 
         // alert the player
         System.out.println(

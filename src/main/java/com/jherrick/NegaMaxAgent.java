@@ -13,7 +13,7 @@ public class NegaMaxAgent implements Agent {
 	}
 
 	@Override
-	public Move pickMove(BigBoard game) {
+	public Move pickMove(Board game) {
 		int depth = 0;
 		int beta = Integer.MAX_VALUE;
 		int color = 1;
@@ -69,7 +69,7 @@ public class NegaMaxAgent implements Agent {
 
 	// color keeps track of the player. It is 1 if we are the player, -1 if the
 	// opponent is the player
-	private int negaMax(BigBoard game, int depth, int depthCount, int alpha, int beta, int color) {
+	private int negaMax(Board game, int depth, int depthCount, int alpha, int beta, int color) {
 
 		// if we are at the end of the game or have reached the iterative deepening
 		// depth, evaluate the state of the board and return a reward

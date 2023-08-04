@@ -168,6 +168,18 @@ public class BigBoard implements Board{
 		return this.boards;
 	}
 
+	public int getXWinBoards() {
+		return this.xWinBoards;
+	}
+
+	public int getOWinBoards() {
+		return this.oWinBoards;
+	}
+
+	public int getDrawnBoards() {
+		return this.drawnBoards;
+	}
+
 	/**
 	 * Returns the last move, or null if there have not been any moves
 	 **/

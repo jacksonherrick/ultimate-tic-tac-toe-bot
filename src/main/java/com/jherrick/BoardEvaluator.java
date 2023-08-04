@@ -10,5 +10,5 @@ public interface BoardEvaluator {
      * @return a numerical representation of how "good" the provided Board is for the provided Side
      */
 
-    double evaluate(BigBoard board, Side side);
+    double evaluate(Board board, Side side);
 }

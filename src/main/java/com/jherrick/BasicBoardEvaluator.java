@@ -8,7 +8,7 @@ public class BasicBoardEvaluator implements BoardEvaluator{
     private static int c0 = Constants.EVAL_CONSTANTS[0];
 	private static int c1 = Constants.EVAL_CONSTANTS[1];
 
-    public BigBoard board;
+    public Board board;
     public Side side;
 
 
@@ -19,7 +19,7 @@ public class BasicBoardEvaluator implements BoardEvaluator{
         side = Side.X;
     }
     
-    public BasicBoardEvaluator(BigBoard b, Side s){
+    public BasicBoardEvaluator(Board b, Side s){
         this();
 
         board = b;
@@ -54,15 +54,15 @@ public class BasicBoardEvaluator implements BoardEvaluator{
             return Integer.MIN_VALUE;
         }
     
-        return evaluateBigBoard(board);
+        return evaluateBoard(board);
     }
 
     // Apply heuristic
-    private double evaluateBigBoard(Board board){
-        return 10 * c0 * twoInARowsWithOpenThird(board.xWinBoards, (board.oWinBoards | board.drawnBoards))
-                + 10 * c1 * middleSquare(board.xWinBoards)
-                - 10 * c0 * twoInARowsWithOpenThird(board.oWinBoards, (board.xWinBoards | board.drawnBoards))
-                - 10 * c1 * middleSquare(board.oWinBoards);
+    private double evaluateBoard(Board board){
+        return 10 * c0 * twoInARowsWithOpenThird(board.getXWinBoards(), (board.getOWinBoards() | board.getDrawnBoards()))
+                + 10 * c1 * middleSquare(board.getXWinBoards())
+                - 10 * c0 * twoInARowsWithOpenThird(board.getOWinBoards(), (board.getXWinBoards() | board.getDrawnBoards()))
+                - 10 * c1 * middleSquare(board.getOWinBoards());
     }
 
     // For Boards, blockedSquares is oWinBoards | drawnBoards. For SubBoards, it's
