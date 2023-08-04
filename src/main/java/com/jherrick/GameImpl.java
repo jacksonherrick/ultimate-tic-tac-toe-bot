@@ -6,7 +6,7 @@ public class GameImpl implements Game {
 
 
 	// ============== Instance variables ================
-	private final BigBoard board;
+	private final Board board;
 	private final Agent xAgent;
 	private final Agent oAgent;
 	private final Side turn;
@@ -16,7 +16,7 @@ public class GameImpl implements Game {
 
 	// ================== Constructors ==================
 
-	public GameImpl(BigBoard board, Agent xAgent, Agent oAgent) {
+	public GameImpl(Board board, Agent xAgent, Agent oAgent) {
 		this.board = board;
 		this.xAgent = xAgent;
 		this.oAgent = oAgent;
@@ -30,7 +30,7 @@ public class GameImpl implements Game {
 		
 		reader = new Scanner(System.in);
 		
-		BigBoard b = askForCustomBoard(reader);
+		Board b = askForCustomBoard(reader);
 		Agent [] agents = assignAgentType(reader, b);
 
 		Game game = new GameImpl(b, agents[0], agents[1]);
@@ -79,8 +79,8 @@ public class GameImpl implements Game {
 
 	// ======= HCN Custom Board Helper Functions ============
 
-	private static BigBoard askForCustomBoard(Scanner reader){
-		BigBoard b = new BigBoard();
+	private static Board askForCustomBoard(Scanner reader){
+		Board b = new BigBoard();
 		
 		// Get input
 		System.out.println("Welcome. Do you want a custom position?");
@@ -93,17 +93,17 @@ public class GameImpl implements Game {
 	}
 
 	// input a particular board to play
-	private static BigBoard inputCustomBoard() {
+	private static Board inputCustomBoard() {
 		System.out.println("Please enter the HCN string for the custom board.");
 		String s = reader.nextLine();
-		BigBoard b = new BigBoard(s);
+		Board b = new BigBoard(s);
 		return b;
 	}
 
 
 	// ============ Assign Agent Type Helper Functions ===============
 
-	private static Agent[] assignAgentType(Scanner reader , BigBoard b){
+	private static Agent[] assignAgentType(Scanner reader , Board b){
 	
 	Agent[] agents = new Agent[2];
 
