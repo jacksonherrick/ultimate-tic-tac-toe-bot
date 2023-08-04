@@ -7,9 +7,6 @@ import java.util.regex.Pattern;
 
 public class BigBoard implements Board{
 	
-	// ============== Instance Variables =================
-	
-	// array to hold SubBoard instances
 	public SubBoard[] boards;
 
 	// bitboards used to check for wins and draws
@@ -17,18 +14,13 @@ public class BigBoard implements Board{
 	int oWinBoards;
 	int drawnBoards;
 
-	// represents which player is to move
 	Side side;
-
-	// state of the board
 	BoardState state;
 
 	// previous Move array and number of moves compelted
 	Move[] pastMoves;
 	int count;
 
-
-	// ===================== Constructors ======================
 
 	/**
 	 * Default constructor, creates a Board of 9 empty SubBoards Initializes
@@ -41,7 +33,6 @@ public class BigBoard implements Board{
 			boards[i] = new SubBoard();
 		}
 
-		// initialize bitboards to zero
 		xWinBoards = 0;
 		oWinBoards = 0;
 		drawnBoards = 0;
@@ -49,12 +40,12 @@ public class BigBoard implements Board{
 		// default side to X
 		side = Side.X;
 
-		// default BoardState
 		state = BoardState.IN_PROGRESS;
 
 		pastMoves = new Move[81];
 		count = 0;
 	}
+
 
 	/**
 	 * Overloaded constructor. Creates a Board from a Herrick-Corley Notation
@@ -83,7 +74,6 @@ public class BigBoard implements Board{
 	 **/
 	public BigBoard(SubBoard[] sbs, Side s, Move lastMove) {
 
-		// call default constructor
 		this();
 
 		// set SubBoards
@@ -93,10 +83,8 @@ public class BigBoard implements Board{
 			updateStateBitboards(i);
 		}
 
-		// set side
 		side = s;
 
-		// set previous move
 		if (lastMove != null) {
 			pastMoves[0] = lastMove;
 			count = 1;
@@ -105,7 +93,7 @@ public class BigBoard implements Board{
 
 
 
-	// ======================== Public Functions =========================
+	// ========== Public Functions ==========
 
 	/**
 	 * Makes the move (passed as an argument) Also triggers win/draw checks TODO:
@@ -264,7 +252,7 @@ public class BigBoard implements Board{
 
 
 
-	// ===================== Helper Functions ========================
+	// ========== Helper Functions ==========
 
 	/**
 	 * Toggles which side is to move
@@ -274,7 +262,7 @@ public class BigBoard implements Board{
 	}
 
 
-	// =========== HCN BigBoard Constructor Helper Functions =========
+	// ========== HCN BigBoard Constructor Helper Functions ==========
 
 	private boolean isValidHCN(String hcn){
 		Pattern r = Pattern.compile(
@@ -309,7 +297,7 @@ public class BigBoard implements Board{
 		}
 	}
 
-	// ================ Make Move Helper Functions ==================
+	// ========== Make Move Helper Functions ==========
 	
 	private void putMoveInLog(Move m) {
 		pastMoves[count] = m;
@@ -317,7 +305,7 @@ public class BigBoard implements Board{
 	}
 
 
-	// =============== Get Legal Moves Helper Functions ============
+	// ========== Get Legal Moves Helper Functions ==========
 	private List<Move> allPossibleMoves(SubBoard[] boards){
 		List<Move> moves = new ArrayList<>();
 		
@@ -349,7 +337,7 @@ public class BigBoard implements Board{
 		return moves;
 	}
 
-	// ========== Update BitBoard Helper Function =============
+	// ========== Update BitBoard Helper Function ==========
 
 	private void updateInProgressBitBoards (int board){
 		xWinBoards &= Constants.CLRBIT[board];
@@ -371,7 +359,7 @@ public class BigBoard implements Board{
 
 
 
-	// ============ Has Won Helper Function =============
+	// ========== Has Won Helper Function ==========
 
 	// TODO: Check functionality, game end not executing.
 
@@ -393,12 +381,13 @@ public class BigBoard implements Board{
 		return false;
 	}
 
+	// TODO: Needs to be completed!
 	// private boolean hasDrawn(){
 	// 	return false;
 	// }
 
 	
-	// ================ To Strig Helper Function =================
+	// ========== To Strig Helper Function ==========
 	private StringBuilder subBoardPrint(StringBuilder result){
 		
 		String spacer = "  +---------+---------+---------+\n";

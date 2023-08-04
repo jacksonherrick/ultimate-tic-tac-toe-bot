@@ -2,22 +2,16 @@ package com.jherrick;
 
 public class SubBoard {
 	
-	// ================ Instance Variables =================
-	
 	private int xBoard;
 	private int oBoard;
 	private BoardState state;
 
 
-
-	// ================== Constructors ====================
-
-	// constructor to create an empty board
 	public SubBoard() {
 		this(0, 0);
 	}
 
-	// constructor to create a board from parameters (x and o bitboards)
+
 	public SubBoard(int _xBoard, int _oBoard) {
 		xBoard = _xBoard;
 		oBoard = _oBoard;
@@ -53,9 +47,8 @@ public class SubBoard {
 	
 
 
-	// ================= Public Variables ====================
+	// ========== Public Variables ==========
 
-	// Getters
 	public BoardState getState() {
 		return state;
 	}
@@ -184,5 +177,5 @@ public class SubBoard {
 
 
 
-	// =============== Helper Functions ================
+	// ========== Helper Functions ==========
 }

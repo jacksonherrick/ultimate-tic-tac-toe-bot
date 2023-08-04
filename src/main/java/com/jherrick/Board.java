@@ -23,6 +23,9 @@ public interface Board {
      */
     BoardState getBoardState();
 
+    /**
+     * @return all complete subBoards within Board
+     */
     int getXWinBoards();
     int getOWinBoards();
     int getDrawnBoards();

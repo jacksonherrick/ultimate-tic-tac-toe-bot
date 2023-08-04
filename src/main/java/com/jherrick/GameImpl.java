@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class GameImpl implements Game {
 
-
-	// ============== Instance variables ================
 	private final Board board;
 	private final Agent xAgent;
 	private final Agent oAgent;
@@ -14,7 +12,6 @@ public class GameImpl implements Game {
 	private static Scanner reader;
 
 
-	// ================== Constructors ==================
 
 	public GameImpl(Board board, Agent xAgent, Agent oAgent) {
 		this.board = board;
@@ -24,7 +21,7 @@ public class GameImpl implements Game {
 	}
 
 	
-	// ================== Main Method ===================
+	// ========== Main Method ==========
 
 	public static void initAndPlayGame() {
 		
@@ -66,9 +63,9 @@ public class GameImpl implements Game {
 
 
 
-	// ================ Helper Functions =================
+	// ========== Helper Functions ==========
 
-	// ======== Move Generation Helper Functions =========
+	// ========== Move Generation Helper Functions ==========
 	
 	private Move getNextMove() {
 		if(this.turn.equals(Side.X)){
@@ -77,7 +74,7 @@ public class GameImpl implements Game {
 		else return oAgent.pickMove(board);
 	}
 
-	// ======= HCN Custom Board Helper Functions ============
+	// ========== HCN Custom Board Helper Functions ==========
 
 	private static Board askForCustomBoard(Scanner reader){
 		Board b = new BigBoard();
@@ -101,7 +98,7 @@ public class GameImpl implements Game {
 	}
 
 
-	// ============ Assign Agent Type Helper Functions ===============
+	// ========== Assign Agent Type Helper Functions ==========
 
 	private static Agent[] assignAgentType(Scanner reader , Board b){
 	

@@ -2,13 +2,10 @@ package com.jherrick;
 
 public class Move{
   
-  // =============== Instance Variables =================
   public int move;
   public int board;
 
 
-
-  // ==========-======= Constructors ====================
   public Move(int _move, int _board){
   	move = _move;
     board = _board;
@@ -16,7 +13,7 @@ public class Move{
 
 
 
-  // ================ Public Functions ==================
+  // ========== Public Functions ==========
 
   // Gets the SubBoard that we are sending the next player to based on the last move. Can make this more efficient - make a hashMap of translations
   public int getSubBoardTarget(){
@@ -69,16 +66,16 @@ public class Move{
 
 
 
-  // ================ Helper Functions ===================
+  // ========== Helper Functions ==========
 
 
-  // ======== Get SubBoard Target Helper Functions =======
+  // ========== Get SubBoard Target Helper Functions ==========
   private boolean isSubBoardTargetNumber(int possibleSubBoard){
     return (move & Constants.BIT_MASKS[possibleSubBoard]) == Constants.BIT_MASKS[possibleSubBoard];
   }
 
 
-  // ============ To String Helper Functions =============
+  // ========== To String Helper Functions ==========
 
   private int[] calculateRowandColforString(){
     int index = Utils.lowestSetBit(move);

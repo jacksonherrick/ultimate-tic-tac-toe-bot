@@ -2,9 +2,6 @@ package com.jherrick;
 
 public class BasicBoardEvaluator implements BoardEvaluator{
     
-    // =============== Instance variables ===============
-    
-    // Evaluation metrics. Only add or remove metrics, do not hard code in. Should be hard coded in EVAL_CONSTANTS
     private static int c0 = Constants.EVAL_CONSTANTS[0];
 	private static int c1 = Constants.EVAL_CONSTANTS[1];
 
@@ -13,7 +10,6 @@ public class BasicBoardEvaluator implements BoardEvaluator{
 
 
 
-    // ============== Constructors ======================
     public BasicBoardEvaluator(){
         board = new BigBoard();
         side = Side.X;
@@ -28,7 +24,7 @@ public class BasicBoardEvaluator implements BoardEvaluator{
 
 
 
-    // ============== Public Functions =================
+    // ========== Public Functions ==========
     @Override
     public double evaluate(Board board, Side side) {
         double xScore = evaluateForX(board);
@@ -40,10 +36,10 @@ public class BasicBoardEvaluator implements BoardEvaluator{
 
 
 
-    // ============== Helper Functions ================
+    // ========== Helper Functions ==========
 
 
-    // ========= Evaluation Helper Functions ==========
+    // ========== Evaluation Helper Functions ==========
     private double evaluateForX(Board board){
         
         // Find board that is won - This is the most extreme case (will always or never be picked)

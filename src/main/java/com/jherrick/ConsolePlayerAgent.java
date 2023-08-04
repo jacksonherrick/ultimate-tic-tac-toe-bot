@@ -4,12 +4,8 @@ import java.util.Scanner;
 
 public class ConsolePlayerAgent implements Agent {
     
-    // =============== Instance Variables ================
     private final Scanner reader;
 
-
-
-    // ================== Constructors ====================
 
     public ConsolePlayerAgent(Scanner reader) {
         this.reader = new Scanner(System.in);;
@@ -17,7 +13,7 @@ public class ConsolePlayerAgent implements Agent {
 
 
 
-    // ================ Public Functions ===================
+    // ========== Public Functions ==========
     @Override
     public Move pickMove(Board b) {
 
@@ -49,7 +45,7 @@ public class ConsolePlayerAgent implements Agent {
     }
 
     
-    // ================ Helper Functions =================
+    // ========== Helper Functions ==========
 
     private boolean moveStringFormatCheck(String s){
         return s.matches("^\\s*[a-i][1-9]\\s*$");
