@@ -7,7 +7,6 @@ public class BasicBoardEvaluator implements BoardEvaluator{
     // Evaluation metrics. Only add or remove metrics, do not hard code in. Should be hard coded in EVAL_CONSTANTS
     private static int c0 = Constants.EVAL_CONSTANTS[0];
 	private static int c1 = Constants.EVAL_CONSTANTS[1];
-	// private static int c2 = Constants.EVAL_CONSTANTS[2];
 
     public BigBoard board;
     public Side side;
@@ -31,7 +30,7 @@ public class BasicBoardEvaluator implements BoardEvaluator{
 
     // ============== Public Functions =================
     @Override
-    public double evaluate(BigBoard board, Side side) {
+    public double evaluate(Board board, Side side) {
         double xScore = evaluateForX(board);
         if(side.equals(Side.O)){
             return -1 * xScore;
@@ -45,7 +44,7 @@ public class BasicBoardEvaluator implements BoardEvaluator{
 
 
     // ========= Evaluation Helper Functions ==========
-    private double evaluateForX(BigBoard board){
+    private double evaluateForX(Board board){
         
         // Find board that is won - This is the most extreme case (will always or never be picked)
         if (board.getBoardState() == BoardState.X_WON) {
@@ -59,7 +58,7 @@ public class BasicBoardEvaluator implements BoardEvaluator{
     }
 
     // Apply heuristic
-    private double evaluateBigBoard(BigBoard board){
+    private double evaluateBigBoard(Board board){
         return 10 * c0 * twoInARowsWithOpenThird(board.xWinBoards, (board.oWinBoards | board.drawnBoards))
                 + 10 * c1 * middleSquare(board.xWinBoards)
                 - 10 * c0 * twoInARowsWithOpenThird(board.oWinBoards, (board.xWinBoards | board.drawnBoards))
