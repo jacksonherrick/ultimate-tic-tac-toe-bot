@@ -27,7 +27,7 @@ public class GameImpl implements Game {
 		
 		reader = new Scanner(System.in);
 		
-		Board b = askForCustomBoard(reader);
+		Board b = initBoard(reader);
 		Agent [] agents = assignAgentType(reader, b);
 
 		Game game = new GameImpl(b, agents[0], agents[1]);
@@ -76,27 +76,37 @@ public class GameImpl implements Game {
 
 	// ========== HCN Custom Board Helper Functions ==========
 
-	private static Board askForCustomBoard(Scanner reader){
+	private static Board initBoard(Scanner reader){
+		
 		Board b = new BigBoard();
 		
 		// Get input
 		System.out.println("Welcome. Do you want a custom position?");
 		String s = reader.nextLine();
+		
 		if (s.equals("yes")) {
-			b = inputCustomBoard();
+			b = initCustomBoard();
+		}
+		else {
+			b = initDefaultBoard();
 		}
 
 		return b;
 	}
 
 	// input a particular board to play
-	private static Board inputCustomBoard() {
+	private static Board initCustomBoard() {
 		System.out.println("Please enter the HCN string for the custom board.");
 		String s = reader.nextLine();
 		Board b = new BigBoard(s);
 		return b;
 	}
 
+	private static Board initDefaultBoard(){
+		Board b = new BigBoard();
+
+		return b;
+	}
 
 	// ========== Assign Agent Type Helper Functions ==========
 
