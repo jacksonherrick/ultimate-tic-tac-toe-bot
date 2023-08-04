@@ -108,6 +108,7 @@ public class BigBoard implements Board{
 		subboard.makeMove(m.move, side);
 
 		updateStateBitboards(m.board);
+		isWon();
 		toggleSide();
 		putMoveInLog(m);
 	}
@@ -211,19 +212,16 @@ public class BigBoard implements Board{
 	 * be done after many, many moves TODO: almost identical to SubBoard function.
 	 * Hmmm... inheritance? TODO: Hash Map!
 	 **/
-	public boolean isWon() {
+	public void isWon() {
 		if (hasXWon()) {
 			if (state == BoardState.IN_PROGRESS) {
 				state = BoardState.X_WON;
 			}
-			return true;
 		} else if (hasOWon()) {
 			if (state == BoardState.IN_PROGRESS) {
 				state = BoardState.O_WON;
 			}
-			return true;
 		}
-		return false;
 	}
 	
 	/**

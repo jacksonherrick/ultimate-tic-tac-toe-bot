@@ -54,13 +54,13 @@ public class GameImpl implements Game {
 			}
 
 			this.board.makeMove(nextMove);
-			// TODO: Fix bug, no Game Over when BigBoard is won
 			gameOver = this.board.getBoardState() != BoardState.IN_PROGRESS; 
 		}
+		printWinner(this.board.getBoardState());
 		System.out.println("Game Over!");
 	}
 
-
+	
 
 
 	// ========== Helper Functions ==========
@@ -140,6 +140,24 @@ public class GameImpl implements Game {
 		}
 
 		return agents;
-}
+	}
+
+
+	// ========== Game Printing Helper Functions ========== 
+
+	private void printWinner(BoardState state){
+		if (state == BoardState.X_WON){
+			System.out.println("X won!");
+		}
+		else if (state == BoardState.O_WON) {
+			System.out.println("O won!");
+		}
+		else if (state == BoardState.DRAWN){
+			System.out.println("Tie game!");
+		}
+		else {
+			// Throw and exception?
+		}
+	}
 
 }
