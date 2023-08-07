@@ -10,7 +10,8 @@ public final class Constants {
 
 	// constants to clear bit at particular index
 	// ex: CLRBIT[3] contains 111110111 to clear index 3
-	public static final int CLRBIT[] = new int[] { 0x1FE, 0x1FD, 0x1FB, 0x1F7, 0x1EF, 0x1DF, 0x1BF, 0x17F, 0xFF };
+	// public static final int CLRBIT[] = new int[] { 0x1FE, 0x1FD, 0x1FB, 0x1F7, 0x1EF, 0x1DF, 0x1BF, 0x17F, 0xFF };
+	public static final int CLRBIT[] = new int[] { 0xFF, 0x17F, 0x1BF, 0x1DF, 0x1EF, 0x1F7, 0x1FB, 0x1fD, 0x1FE };
 
 	// constants that contain a single set bit to be used as a mask
 	// ex: BIT_MASKS[3] contains 000001000

@@ -109,7 +109,7 @@ public class BigBoard implements Board{
 
 		updateStateBitboards(m.board);
 		isWon();
-		toggleSide();
+ 		toggleSide();
 		putMoveInLog(m);
 	}
 
@@ -228,9 +228,12 @@ public class BigBoard implements Board{
 	 * Returns true if the the board is drawn (no available moves) TODO: this check
 	 * only needs to be done after many, many moves
 	 **/
-	public boolean isDrawn() {
-		// Yeah... so... this needs to be built!
-		return false;
+	public void isDrawn() {
+		if (hasDrawn()){
+			if (state == BoardState.IN_PROGRESS){
+				state = BoardState.DRAWN;
+			}
+		}
 	}
 
 	/**
@@ -355,7 +358,7 @@ public class BigBoard implements Board{
 		oWinBoards |= Constants.BIT_MASKS[board];
 	}
 
-
+	
 
 	// ========== Has Won Helper Function ==========
 
@@ -379,10 +382,17 @@ public class BigBoard implements Board{
 		return false;
 	}
 
-	// TODO: Needs to be completed!
-	// private boolean hasDrawn(){
-	// 	return false;
-	// }
+	private boolean hasDrawn(){
+		for (int i = 0; i < boards.length; i++){
+			if (boards[i].getState() == BoardState.IN_PROGRESS){
+				return false;
+			}
+		}
+		if (hasXWon() || hasOWon()){
+			return false;
+		}
+		return true;
+	}
 
 	
 	// ========== To Strig Helper Function ==========
