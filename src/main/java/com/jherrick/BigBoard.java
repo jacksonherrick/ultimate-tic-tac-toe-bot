@@ -102,6 +102,7 @@ public class BigBoard implements Board {
 
 		updateStateBitboards(m.board);
 		isWon();
+		isDrawn();
 		toggleSide();
 		putMoveInLog(m);
 	}
