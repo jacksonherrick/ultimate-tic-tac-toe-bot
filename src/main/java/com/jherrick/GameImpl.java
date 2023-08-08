@@ -111,7 +111,7 @@ public class GameImpl implements Game {
 		String s = reader.nextLine();
 
 		if (s.equals("Y")) {
-			BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.X);
+			BasicBoardEvaluator board_eval = new BasicBoardEvaluator();
 			agents[0] = new NegaMaxAgent(board_eval, Side.X);
 		} else {
 			agents[0] = new ConsolePlayerAgent(reader);
@@ -124,7 +124,7 @@ public class GameImpl implements Game {
 		s = reader.nextLine();
 
 		if (s.equals("Y")) {
-			BasicBoardEvaluator board_eval = new BasicBoardEvaluator(b, Side.O);
+			BasicBoardEvaluator board_eval = new BasicBoardEvaluator();
 			agents[1] = new NegaMaxAgent(board_eval, Side.O);
 		} else {
 			agents[1] = new ConsolePlayerAgent(reader);

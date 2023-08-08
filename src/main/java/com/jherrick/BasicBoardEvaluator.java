@@ -5,19 +5,8 @@ public class BasicBoardEvaluator implements BoardEvaluator {
     private static int c0 = Constants.EVAL_CONSTANTS[0];
     private static int c1 = Constants.EVAL_CONSTANTS[1];
 
-    public Board board;
-    public Side side;
-
     public BasicBoardEvaluator() {
-        board = new BigBoard();
-        side = Side.X;
-    }
 
-    public BasicBoardEvaluator(Board b, Side s) {
-        this();
-
-        board = b;
-        side = s;
     }
 
     // ========== Public Functions ==========
