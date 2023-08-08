@@ -1,16 +1,14 @@
 package com.jherrick;
 
 public class SubBoard {
-	
+
 	private int xBoard;
 	private int oBoard;
 	private BoardState state;
 
-
 	public SubBoard() {
 		this(0, 0);
 	}
-
 
 	public SubBoard(int _xBoard, int _oBoard) {
 		xBoard = _xBoard;
@@ -22,13 +20,13 @@ public class SubBoard {
 	public SubBoard(String s) {
 		xBoard = 0;
 		oBoard = 0;
-		
+
 		// keeps track of where we are in the sub board
 		int count = 0;
-		
+
 		// keeps track of where we are in the string
 		int stringIterator = 0;
-		
+
 		// while we still have string to iterate over
 		while (stringIterator < s.length()) {
 			if (s.charAt(stringIterator) == 'X') {
@@ -44,8 +42,6 @@ public class SubBoard {
 		}
 		state = BoardState.IN_PROGRESS;
 	}
-	
-
 
 	// ========== Public Variables ==========
 
@@ -61,7 +57,6 @@ public class SubBoard {
 		return oBoard;
 	}
 
-	
 	/**
 	 * Makes the specified move, and checks for win/draw conditions Take as input a
 	 * 9-bit integer and the side to move
@@ -173,8 +168,6 @@ public class SubBoard {
 		}
 		return result.toString();
 	}
-
-
 
 	// ========== Helper Functions ==========
 }

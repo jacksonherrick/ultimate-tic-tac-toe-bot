@@ -6,9 +6,11 @@ import java.util.Collection;
  * The interface representing the game board
  */
 public interface Board {
-    
+
     /**
-     * Apply the given Move to the Board, do all necessary checks, and return the board to an idle state
+     * Apply the given Move to the Board, do all necessary checks, and return the
+     * board to an idle state
+     * 
      * @param move - the Move to be applied to the board
      */
     void makeMove(Move move);
@@ -19,7 +21,8 @@ public interface Board {
     void undoLastMove();
 
     /**
-     * @return the BoardState of the Board - an indication of the current game phase.
+     * @return the BoardState of the Board - an indication of the current game
+     *         phase.
      */
     BoardState getBoardState();
 
@@ -27,7 +30,9 @@ public interface Board {
      * @return all complete subBoards within Board
      */
     int getXWinBoards();
+
     int getOWinBoards();
+
     int getDrawnBoards();
 
     /**

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BigBoard implements Board{
-	
+public class BigBoard implements Board {
+
 	public SubBoard[] boards;
 
 	// bitboards used to check for wins and draws
@@ -20,7 +20,6 @@ public class BigBoard implements Board{
 	// previous Move array and number of moves compelted
 	Move[] pastMoves;
 	int count;
-
 
 	/**
 	 * Default constructor, creates a Board of 9 empty SubBoards Initializes
@@ -46,7 +45,6 @@ public class BigBoard implements Board{
 		count = 0;
 	}
 
-
 	/**
 	 * Overloaded constructor. Creates a Board from a Herrick-Corley Notation
 	 * string. HCN notation lists the SubBoards using "X", "O", and 1-9, starting
@@ -55,19 +53,16 @@ public class BigBoard implements Board{
 	public BigBoard(String hcn) {
 		// call default constructor
 		this();
-		
+
 		if (isValidHCN(hcn)) {
 			// loop through matches
 			buildBigBoardFromHCN(hcn);
-		}
-		else {
+		} else {
 			System.out.println("Invalid HCN.");
 			System.exit(0);
 		}
 	}
 
-
-	
 	/**
 	 * Overloaded constructor. Creates a Board from a list of SubBoard objects, a
 	 * given Side, and a previous move. Primarily used in testing.
@@ -91,8 +86,6 @@ public class BigBoard implements Board{
 		}
 	}
 
-
-
 	// ========== Public Functions ==========
 
 	/**
@@ -103,13 +96,13 @@ public class BigBoard implements Board{
 
 	@Override
 	public void makeMove(Move m) {
-		
+
 		SubBoard subboard = boards[m.board];
 		subboard.makeMove(m.move, side);
 
 		updateStateBitboards(m.board);
 		isWon();
- 		toggleSide();
+		toggleSide();
 		putMoveInLog(m);
 	}
 
@@ -129,23 +122,23 @@ public class BigBoard implements Board{
 	 **/
 	@Override
 	public List<Move> getLegalMoves() {
-		
+
 		List<Move> moves = new ArrayList<>();
 		Move move = this.getLastMove();
 
 		// if first move, generate all moves
-		if (move == null){
+		if (move == null) {
 			moves = allPossibleMoves(boards);
 			return moves;
 		}
 
 		// if target SubBoard is IN_PROGRESS, only generate moves in that SubBoard
-		
+
 		if (boards[move.getSubBoardTarget()].getState() == BoardState.IN_PROGRESS) {
-			
+
 			moves.addAll(getLegalMoves(move.getSubBoardTarget()));
 			return moves;
-		
+
 		} else {
 			moves = allPossibleMoves(boards);
 			return moves;
@@ -223,14 +216,14 @@ public class BigBoard implements Board{
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns true if the the board is drawn (no available moves) TODO: this check
 	 * only needs to be done after many, many moves
 	 **/
 	public void isDrawn() {
-		if (hasDrawn()){
-			if (state == BoardState.IN_PROGRESS){
+		if (hasDrawn()) {
+			if (state == BoardState.IN_PROGRESS) {
 				state = BoardState.DRAWN;
 			}
 		}
@@ -241,7 +234,7 @@ public class BigBoard implements Board{
 	 */
 	public String toString() {
 		StringBuilder result = new StringBuilder("\n  HCN: " + Utils.boardToHCN(this) + "\n");
-		
+
 		result = subBoardPrint(result);
 
 		String bottomKey = String.format("%3s a  b  c %1s d  e  f %1s g  h  i \n", " ", " ", " ");
@@ -249,9 +242,6 @@ public class BigBoard implements Board{
 
 		return result.toString();
 	}
-
-
-
 
 	// ========== Helper Functions ==========
 
@@ -262,10 +252,9 @@ public class BigBoard implements Board{
 		side = side == Side.X ? Side.O : Side.X;
 	}
 
-
 	// ========== HCN BigBoard Constructor Helper Functions ==========
 
-	private boolean isValidHCN(String hcn){
+	private boolean isValidHCN(String hcn) {
 		Pattern r = Pattern.compile(
 				"^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2}|\\-)$");
 
@@ -274,8 +263,8 @@ public class BigBoard implements Board{
 		return m.matches();
 	}
 
-	private void buildBigBoardFromHCN(String hcn){
-		
+	private void buildBigBoardFromHCN(String hcn) {
+
 		Pattern r = Pattern.compile(
 				"^([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\/([XO1-9]{0,9})\\s([XO]){1}\\s([a-zA-Z0-9]{2}|\\-)$");
 
@@ -299,19 +288,18 @@ public class BigBoard implements Board{
 	}
 
 	// ========== Make Move Helper Functions ==========
-	
+
 	private void putMoveInLog(Move m) {
 		pastMoves[count] = m;
 		count++;
 	}
 
-
 	// ========== Get Legal Moves Helper Functions ==========
-	private List<Move> allPossibleMoves(SubBoard[] boards){
+	private List<Move> allPossibleMoves(SubBoard[] boards) {
 		List<Move> moves = new ArrayList<>();
-		
+
 		for (int i = 0; i < boards.length; i++) {
-			if (boards[i].getState() == BoardState.IN_PROGRESS){
+			if (boards[i].getState() == BoardState.IN_PROGRESS) {
 				moves.addAll(getLegalMoves(i));
 			}
 		}
@@ -340,31 +328,29 @@ public class BigBoard implements Board{
 
 	// ========== Update BitBoard Helper Function ==========
 
-	private void updateInProgressBitBoards (int board){
+	private void updateInProgressBitBoards(int board) {
 		xWinBoards &= Constants.CLRBIT[board];
 		oWinBoards &= Constants.CLRBIT[board];
 		drawnBoards &= Constants.CLRBIT[board];
 	}
 
-	private void updateDrawnBitBoards (int board){
+	private void updateDrawnBitBoards(int board) {
 		drawnBoards |= Constants.BIT_MASKS[board];
 	}
 
-	private void updateXWonBitBoards (int board){
+	private void updateXWonBitBoards(int board) {
 		xWinBoards |= Constants.BIT_MASKS[board];
 	}
 
-	private void updateOWonBitBoards (int board){
+	private void updateOWonBitBoards(int board) {
 		oWinBoards |= Constants.BIT_MASKS[board];
 	}
-
-	
 
 	// ========== Has Won Helper Function ==========
 
 	// TODO: Check functionality, game end not executing.
 
-	private boolean hasXWon(){
+	private boolean hasXWon() {
 		for (int bb : Constants.WIN_BITBOARDS) {
 			if ((bb & xWinBoards) == bb) {
 				return true;
@@ -373,7 +359,7 @@ public class BigBoard implements Board{
 		return false;
 	}
 
-	private boolean hasOWon(){
+	private boolean hasOWon() {
 		for (int bb : Constants.WIN_BITBOARDS) {
 			if ((bb & oWinBoards) == bb) {
 				return true;
@@ -382,22 +368,21 @@ public class BigBoard implements Board{
 		return false;
 	}
 
-	private boolean hasDrawn(){
-		for (int i = 0; i < boards.length; i++){
-			if (boards[i].getState() == BoardState.IN_PROGRESS){
+	private boolean hasDrawn() {
+		for (int i = 0; i < boards.length; i++) {
+			if (boards[i].getState() == BoardState.IN_PROGRESS) {
 				return false;
 			}
 		}
-		if (hasXWon() || hasOWon()){
+		if (hasXWon() || hasOWon()) {
 			return false;
 		}
 		return true;
 	}
 
-	
 	// ========== To Strig Helper Function ==========
-	private StringBuilder subBoardPrint(StringBuilder result){
-		
+	private StringBuilder subBoardPrint(StringBuilder result) {
+
 		String spacer = "  +---------+---------+---------+\n";
 		result.append(spacer);
 
@@ -413,7 +398,7 @@ public class BigBoard implements Board{
 			}
 			result.append(spacer);
 		}
-		
+
 		return result;
 	}
 }

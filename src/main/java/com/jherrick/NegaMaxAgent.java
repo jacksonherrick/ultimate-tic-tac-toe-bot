@@ -21,7 +21,7 @@ public class NegaMaxAgent implements Agent {
 		int maxValue = Integer.MIN_VALUE;
 		// iterative deepening
 		List<Move> tempMoves = (List<Move>) game.getLegalMoves();
-			
+
 		MoveAndValue[] moves = new MoveAndValue[tempMoves.size()];
 		int count = 0;
 		for (Move m : tempMoves) {
@@ -65,7 +65,8 @@ public class NegaMaxAgent implements Agent {
 		// if we are at the end of the game or have reached the iterative deepening
 		// depth, evaluate the state of the board and return a reward
 		// Note: Maybe factor depth into the evaluation in the future?
-		if (game.getBoardState() == BoardState.X_WON || game.getBoardState() == BoardState.O_WON || depth == depthCount) {
+		if (game.getBoardState() == BoardState.X_WON || game.getBoardState() == BoardState.O_WON
+				|| depth == depthCount) {
 			return (int) (color * evaluator.evaluate(game, side));
 		}
 

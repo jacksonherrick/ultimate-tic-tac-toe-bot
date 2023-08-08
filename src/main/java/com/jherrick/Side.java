@@ -1,6 +1,5 @@
 package com.jherrick;
 
-public enum Side
-{
+public enum Side {
     X, O
 }
