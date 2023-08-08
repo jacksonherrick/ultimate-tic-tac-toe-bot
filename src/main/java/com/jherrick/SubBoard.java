@@ -1,21 +1,15 @@
 package com.jherrick;
 
 public class SubBoard {
+
 	private int xBoard;
 	private int oBoard;
 	private BoardState state;
 
-	// Evaluation constants to make the evaluation function easier to read
-	private int c0 = Constants.EVAL_CONSTANTS[0];
-	private int c1 = Constants.EVAL_CONSTANTS[1];
-	private int c2 = Constants.EVAL_CONSTANTS[2];
-
-	// constructor to create an empty board
 	public SubBoard() {
 		this(0, 0);
 	}
 
-	// constructor to create a board from parameters (x and o bitboards)
 	public SubBoard(int _xBoard, int _oBoard) {
 		xBoard = _xBoard;
 		oBoard = _oBoard;
@@ -26,13 +20,13 @@ public class SubBoard {
 	public SubBoard(String s) {
 		xBoard = 0;
 		oBoard = 0;
-		
+
 		// keeps track of where we are in the sub board
 		int count = 0;
-		
+
 		// keeps track of where we are in the string
 		int stringIterator = 0;
-		
+
 		// while we still have string to iterate over
 		while (stringIterator < s.length()) {
 			if (s.charAt(stringIterator) == 'X') {
@@ -48,12 +42,19 @@ public class SubBoard {
 		}
 		state = BoardState.IN_PROGRESS;
 	}
-	
-	/**
-	 * Returns the BoardState of the SubBoard
-	 */
+
+	// ========== Public Variables ==========
+
 	public BoardState getState() {
 		return state;
+	}
+
+	public int getXBoard() {
+		return xBoard;
+	}
+
+	public int getOBoard() {
+		return oBoard;
 	}
 
 	/**
@@ -147,8 +148,7 @@ public class SubBoard {
 	 *           representation
 	 **/
 	public String toString() {
-		String xString = Integer.toBinaryString(xBoard);
-		String oString = Integer.toBinaryString(oBoard);
+
 		StringBuilder result = new StringBuilder();
 
 		for (int i = 8; i > -1; i--) {
@@ -169,24 +169,5 @@ public class SubBoard {
 		return result.toString();
 	}
 
-	public int evaluate() {
-		if (state == BoardState.X_WON) {
-			return c2;
-		}
-		if (state == BoardState.O_WON) {
-			return -1 * c2;
-		}
-		return c0 * Eval.twoInARowsWithOpenThird(xBoard, oBoard) + c1 * Eval.middleSquare(xBoard)
-				- c0 * Eval.twoInARowsWithOpenThird(oBoard, xBoard) - c1 * Eval.middleSquare(oBoard);
-	}
-
-	// getters
-	public int getXBoard() {
-		return xBoard;
-	}
-
-	public int getOBoard() {
-		return oBoard;
-	}
-
+	// ========== Helper Functions ==========
 }

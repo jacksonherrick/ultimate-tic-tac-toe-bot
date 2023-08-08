@@ -18,103 +18,133 @@ public class GameImpl implements Game {
 		this.turn = Side.X;
 	}
 
-	// main method
+	// ========== Main Method ==========
+
 	public static void initAndPlayGame() {
-		Move m1 = Utils.coordinatesToMove("e5");
-		Move m2 = Utils.coordinatesToMove("e5");
-		System.out.println(m1.equals(m2));
+
 		reader = new Scanner(System.in);
 
-		// set up the board
-		BigBoard b = new BigBoard();
-		
-		// get input
-		System.out.println("Welcome. Do you want a custom position?");
-		String s = reader.nextLine();
-		if (s.equals("yes")) {
-			b = inputCustomBoard();
-		}
+		Board b = initBoard(reader);
+		Agent[] agents = assignAgentType(reader, b);
 
-		Agent xAgent = new ConsolePlayerAgent(reader);
-		Agent oAgent = new ConsolePlayerAgent(reader);
+		Game game = new GameImpl(b, agents[0], agents[1]);
 
-		Game game = new GameImpl(b, xAgent, oAgent);
 		// use the inputed board
 		game.play();
-		
+
 		// close scanner
 		reader.close();
-	}
-
-	// input a particular board to play
-	public static BigBoard inputCustomBoard() {
-		System.out.println("Please enter the HCN string for the custom board.");
-		String s = reader.nextLine();
-		BigBoard b = new BigBoard(s);
-		return b;
 	}
 
 	@Override
 	public void play() {
 		boolean gameOver = false;
-		while(!gameOver){
+		while (!gameOver) {
 			System.out.println(board);
+			// TODO: Bug - Fix CPU making all moves immediately
 			Move nextMove = getNextMove();
+
+			// Exit game if move is -1
+			if (nextMove.move == -1) {
+				break;
+			}
+
 			this.board.makeMove(nextMove);
 			gameOver = this.board.getBoardState() != BoardState.IN_PROGRESS;
 		}
+		printWinner(this.board.getBoardState());
 		System.out.println("Game Over!");
 	}
 
+	// ========== Helper Functions ==========
+
+	// ========== Move Generation Helper Functions ==========
+
 	private Move getNextMove() {
-		if(this.turn.equals(Side.X)){
+		if (this.turn.equals(Side.X)) {
 			return xAgent.pickMove(board);
+		} else
+			return oAgent.pickMove(board);
+	}
+
+	// ========== HCN Custom Board Helper Functions ==========
+
+	private static Board initBoard(Scanner reader) {
+
+		Board b = new BigBoard();
+
+		// Get input
+		System.out.println("Welcome. Do you want a custom position?");
+		String s = reader.nextLine();
+
+		if (s.equals("yes")) {
+			b = initCustomBoard();
+		} else {
+			b = initDefaultBoard();
 		}
-		else return oAgent.pickMove(board);
+
+		return b;
 	}
 
-	private void gameFlowToBeUpdated(){
-
-//		// alert the player
-//		System.out.println(
-//				"Type the coordinates of your first move. Type \"exit\" to, well, you figure it out. Likewise for \"undo\".");
-//
-//		// initialize move
-//		Move m = new Move(0, 0);
-//
-//		// continuously wait for input
-//		while (true) {
-//			System.out.println(b);
-//			System.out.print("  X: " + Integer.toBinaryString(b.xWinBoards));
-//			System.out.print(", O: " + Integer.toBinaryString(b.oWinBoards));
-//			System.out.print(", Draw: " + Integer.toBinaryString(b.drawnBoards));
-//			System.out.println();
-//			String s = reader.nextLine();
-//			if (s.equals("quit") || s.equals("stop") || s.equals("exit")) {
-//				break;
-//			} else if (s.equals("undo")) {
-//				b.takeMove(m);
-//			} else if (s.matches("^\\s*[a-i][1-9]\\s*$")) {
-//				m = Utils.coordinatesToMove(s);
-//				// checks if the move is on top of another move
-//				if (((b.boards[m.board].getXBoard() | b.boards[m.board].getOBoard()) & m.move) == 0) {
-//					// checks if the move is in the correct sub-board (it's not the first move or we
-//					// are in the sub-board dictated by the lat move or if that board is not in
-//					// progress)
-//					if (b.getLastMove() == null || m.board == b.getLastMove().translate()
-//							|| b.boards[b.getLastMove().translate()].getState() != BoardState.IN_PROGRESS) {
-//						b.makeMove(m);
-//					} else {
-//						System.out.println("Sorry, please move in the board corresponding to the last move");
-//					}
-//				} else {
-//					System.out.println("Sorry, that position is already taken. Please enter another move");
-//				}
-//			} else {
-//				System.out.println("Sorry, please enter a move or command.");
-//			}
-//		}
-//		System.out.println("Goodbye. As a side note, Stiven's a scrub.");
-//	}
+	// input a particular board to play
+	private static Board initCustomBoard() {
+		System.out.println("Please enter the HCN string for the custom board.");
+		String s = reader.nextLine();
+		Board b = new BigBoard(s);
+		return b;
 	}
+
+	private static Board initDefaultBoard() {
+		Board b = new BigBoard();
+
+		return b;
+	}
+
+	// ========== Assign Agent Type Helper Functions ==========
+
+	private static Agent[] assignAgentType(Scanner reader, Board b) {
+
+		Agent[] agents = new Agent[2];
+
+		// Get X Agent Assignment from player
+		System.out.println("Would you like a CPU to play as X? (Y/N)");
+		String s = reader.nextLine();
+
+		if (s.equals("Y")) {
+			BasicBoardEvaluator board_eval = new BasicBoardEvaluator();
+			agents[0] = new NegaMaxAgent(board_eval, Side.X);
+		} else {
+			agents[0] = new ConsolePlayerAgent(reader);
+		}
+
+		// Get O Agent Assignment from player - TODO: Only X can play as bot even with
+		// this functionality?
+
+		System.out.println("Would you like a CPU to play as O? (Y/N)");
+		s = reader.nextLine();
+
+		if (s.equals("Y")) {
+			BasicBoardEvaluator board_eval = new BasicBoardEvaluator();
+			agents[1] = new NegaMaxAgent(board_eval, Side.O);
+		} else {
+			agents[1] = new ConsolePlayerAgent(reader);
+		}
+
+		return agents;
+	}
+
+	// ========== Game Printing Helper Functions ==========
+
+	private void printWinner(BoardState state) {
+		if (state == BoardState.X_WON) {
+			System.out.println("X won!");
+		} else if (state == BoardState.O_WON) {
+			System.out.println("O won!");
+		} else if (state == BoardState.DRAWN) {
+			System.out.println("Tie game!");
+		} else {
+			// Throw and exception?
+		}
+	}
+
 }

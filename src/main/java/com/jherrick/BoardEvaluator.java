@@ -6,8 +6,10 @@ package com.jherrick;
 public interface BoardEvaluator {
     /**
      * @param board - the Board to evaluate
-     * @param side - the Side we are evaluating the Board for
-     * @return a numerical representation of how "good" the provided Board is for the provided Side
+     * @param side  - the Side we are evaluating the Board for
+     * @return a numerical representation of how "good" the provided Board is for
+     *         the provided Side
      */
+
     double evaluate(Board board, Side side);
 }
