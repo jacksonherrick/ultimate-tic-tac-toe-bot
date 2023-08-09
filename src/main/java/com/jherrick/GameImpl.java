@@ -1,5 +1,6 @@
 package com.jherrick;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameImpl implements Game {
@@ -22,7 +23,7 @@ public class GameImpl implements Game {
         reader = new Scanner(System.in);
 
         Board b = initBoard(reader);
-        Agent[] agents = assignAgentType(reader, b);
+        Agent[] agents = initAgents(reader, b);
 
         Game game = new GameImpl(b, agents[0], agents[1]);
 
@@ -98,36 +99,59 @@ public class GameImpl implements Game {
 
     // ========== Assign Agent Type Helper Functions ==========
 
-    private static Agent[] assignAgentType(Scanner reader, Board b) {
+    private static Agent[] initAgents(Scanner reader, Board b) {
 
         Agent[] agents = new Agent[2];
 
         // Get X Agent Assignment from player
-        System.out.println("Would you like a CPU to play as X? (Y/N)");
+        System.out.println(selectAgentPrompt(Side.X));
         String s = reader.nextLine();
-
-        if (s.equals("Y")) {
-            BasicBoardEvaluator board_eval = new BasicBoardEvaluator();
-            agents[0] = new NegaMaxAgent(board_eval, Side.X);
-        } else {
-            agents[0] = new ConsolePlayerAgent(reader);
-        }
+		agents[0] = selectAgentType(s, Side.X, reader);
 
         // Get O Agent Assignment from player - TODO: Only X can play as bot even with
         // this functionality?
 
-        System.out.println("Would you like a CPU to play as O? (Y/N)");
+        System.out.println(selectAgentPrompt(Side.O));
         s = reader.nextLine();
-
-        if (s.equals("Y")) {
-            BasicBoardEvaluator board_eval = new BasicBoardEvaluator();
-            agents[1] = new NegaMaxAgent(board_eval, Side.O);
-        } else {
-            agents[1] = new ConsolePlayerAgent(reader);
-        }
+		agents[1] = selectAgentType(s, Side.O, reader);
 
         return agents;
     }
+
+	private static Agent selectAgentType(String s, Side side, Scanner reader){
+		
+		Agent a = new ConsolePlayerAgent(reader);
+		BasicBoardEvaluator replacable = new BasicBoardEvaluator();
+
+		switch (s) {
+			case "1": {
+				return new ConsolePlayerAgent(reader);
+			}
+			case "2": {
+				return new RandomAgent();
+			}
+			case "3": {
+				return new NegaMaxAgent(replacable, side);
+			}
+		}
+
+		return a;
+	}
+	
+	private static String selectAgentPrompt(Side side){
+		String sideString;
+		if (side == Side.X){
+			sideString = "X";
+		}
+		else {
+			sideString = "O";
+		}
+
+		return "What Agent would you like to play " + sideString + "? \n"
+			 + "ConsoleAgent [1] \n"
+			 + "RandomAgent [2] \n"
+			 + "NegaMax Agent [3]";
+	}
 
     // ========== Game Printing Helper Functions ==========
 
