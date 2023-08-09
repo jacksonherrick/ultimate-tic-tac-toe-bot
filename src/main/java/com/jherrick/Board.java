@@ -10,7 +10,7 @@ public interface Board {
     /**
      * Apply the given Move to the Board, do all necessary checks, and return the
      * board to an idle state
-     * 
+     *
      * @param move - the Move to be applied to the board
      */
     void makeMove(Move move);
@@ -22,7 +22,7 @@ public interface Board {
 
     /**
      * @return the BoardState of the Board - an indication of the current game
-     *         phase.
+     * phase.
      */
     BoardState getBoardState();
 
@@ -44,4 +44,9 @@ public interface Board {
      * @return the specifics of the current Board position
      */
     SubBoard[] getBoardPosition();
+
+    /**
+     * @return which player is making the next move
+     */
+    Side getSideForNextMove();
 }
