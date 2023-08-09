@@ -49,6 +49,7 @@ public class GameImpl implements Game {
             this.board.makeMove(nextMove);
             gameOver = this.board.getBoardState() != BoardState.IN_PROGRESS;
         }
+		System.out.println(board);
         printWinner(this.board.getBoardState());
         System.out.println("Game Over!");
     }
