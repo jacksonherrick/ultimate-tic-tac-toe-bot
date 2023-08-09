@@ -132,7 +132,7 @@ public class GameImpl implements Game {
 
 		return agents;
 	}
-
+	
 	// ========== Game Printing Helper Functions ==========
 
 	private void printWinner(BoardState state) {
