@@ -49,4 +49,10 @@ public interface Board {
      * @return which player is making the next move
      */
     Side getSideForNextMove();
+
+    /**
+     * @return which the last move played
+     */
+    Move getLastMove();
+
 }
