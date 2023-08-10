@@ -100,11 +100,12 @@ public class BigBoard implements Board {
         SubBoard subboard = boards[m.board];
         subboard.makeMove(m.move, side);
 
-        updateStateBitboards(m.board);
-        isWon();
-        toggleSide();
-        putMoveInLog(m);
-    }
+		updateStateBitboards(m.board);
+		isWon();
+		isDrawn();
+		toggleSide();
+		putMoveInLog(m);
+	}
 
     @Override
     public void undoLastMove() {

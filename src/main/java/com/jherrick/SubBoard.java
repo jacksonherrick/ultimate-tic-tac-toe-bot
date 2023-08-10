@@ -122,7 +122,7 @@ public class SubBoard {
 	 * NOTE: isWon() must always be called before isDrawn()
 	 **/
 	public boolean isDraw() {
-		if (~(xBoard | oBoard) == 0) {
+		if ((xBoard | oBoard) == 511) {
 			state = BoardState.DRAWN;
 			return true;
 		}
