@@ -52,8 +52,13 @@ public class GameImpl implements Game {
 		System.out.println(board);
         printWinner(this.board.getBoardState());
         System.out.println("Game Over!");
+
+        if (isPlayAgain()) {
+            initAndPlayGame();
+        }
     }
 
+    
     // ========== Helper Functions ==========
 
     // ========== Move Generation Helper Functions ==========
@@ -168,4 +173,17 @@ public class GameImpl implements Game {
         }
     }
 
+    // ========== Play Again Helper Functions ==========
+
+    private boolean isPlayAgain() {
+        System.out.println("Play Again? [Y/N]");
+        
+        reader = new Scanner(System.in);
+        String s = reader.nextLine();
+
+        if (s.equals("Y")) {
+            return true;
+        }
+        return false;
+    }
 }
