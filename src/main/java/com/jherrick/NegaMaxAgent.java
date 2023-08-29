@@ -15,7 +15,7 @@ public class NegaMaxAgent implements Agent {
 	@Override
 	public Move pickMove(Board game) {
 		// Create copy of board to simulate
-		BigBoard temp_game = new BigBoard(game.getBoardPosition(), game.getSideForNextMove(), game.getLastMove());
+		BigBoard tempGame = new BigBoard(game.getBoardPosition(), game.getSideForNextMove(), game.getLastMove());
 		
 		int depth = 0;
 		int beta = Integer.MAX_VALUE;
@@ -23,7 +23,7 @@ public class NegaMaxAgent implements Agent {
 		int depthCount = 1;
 		int maxValue = Integer.MIN_VALUE;
 		// iterative deepening
-		List<Move> tempMoves = (List<Move>) temp_game.getLegalMoves();
+		List<Move> tempMoves = (List<Move>) tempGame.getLegalMoves();
 
 		MoveAndValue[] moves = new MoveAndValue[tempMoves.size()];
 		int count = 0;
@@ -35,14 +35,14 @@ public class NegaMaxAgent implements Agent {
 
 		while (depthCount <= 5) {
 			for (int i = 0; i < moves.length; i++) {
-				temp_game.makeMove(moves[i].move);
+				tempGame.makeMove(moves[i].move);
 
 				/*
 				 * maxValue here starts off as -infinity. In a normal negamax, the root has a
 				 * value after the first branch explored that acts as a lower bound for the rest
 				 * of the search. Essentially it acts as the root's alpha.
 				 */
-				moves[i].value = negaMax(temp_game, depth, depthCount, maxValue, beta, color);
+				moves[i].value = negaMax(tempGame, depth, depthCount, maxValue, beta, color);
 
 				// This should take care of the fact that we are doing each of the root's moves
 				// separately. This takes the place of the "max" in the recursive negamax
@@ -50,7 +50,7 @@ public class NegaMaxAgent implements Agent {
 				if (moves[i].value > maxValue) {
 					maxValue = moves[i].value;
 				}
-				temp_game.undoLastMove();
+				tempGame.undoLastMove();
 
 			}
 			depthCount++;
