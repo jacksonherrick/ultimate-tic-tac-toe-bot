@@ -14,13 +14,16 @@ public class NegaMaxAgent implements Agent {
 
 	@Override
 	public Move pickMove(Board game) {
+		// Create copy of board to simulate
+		BigBoard tempGame = new BigBoard(game.getBoardPosition(), game.getSideForNextMove(), game.getLastMove());
+		
 		int depth = 0;
 		int beta = Integer.MAX_VALUE;
 		int color = 1;
 		int depthCount = 1;
 		int maxValue = Integer.MIN_VALUE;
 		// iterative deepening
-		List<Move> tempMoves = (List<Move>) game.getLegalMoves();
+		List<Move> tempMoves = (List<Move>) tempGame.getLegalMoves();
 
 		MoveAndValue[] moves = new MoveAndValue[tempMoves.size()];
 		int count = 0;
@@ -32,14 +35,14 @@ public class NegaMaxAgent implements Agent {
 
 		while (depthCount <= 5) {
 			for (int i = 0; i < moves.length; i++) {
-				game.makeMove(moves[i].move);
+				tempGame.makeMove(moves[i].move);
 
 				/*
 				 * maxValue here starts off as -infinity. In a normal negamax, the root has a
 				 * value after the first branch explored that acts as a lower bound for the rest
 				 * of the search. Essentially it acts as the root's alpha.
 				 */
-				moves[i].value = negaMax(game, depth, depthCount, maxValue, beta, color);
+				moves[i].value = negaMax(tempGame, depth, depthCount, maxValue, beta, color);
 
 				// This should take care of the fact that we are doing each of the root's moves
 				// separately. This takes the place of the "max" in the recursive negamax
@@ -47,7 +50,7 @@ public class NegaMaxAgent implements Agent {
 				if (moves[i].value > maxValue) {
 					maxValue = moves[i].value;
 				}
-				game.undoLastMove();
+				tempGame.undoLastMove();
 
 			}
 			depthCount++;
@@ -60,14 +63,14 @@ public class NegaMaxAgent implements Agent {
 
 	// color keeps track of the player. It is 1 if we are the player, -1 if the
 	// opponent is the player
-	private int negaMax(Board game, int depth, int depthCount, int alpha, int beta, int color) {
+	private int negaMax(Board temp_game, int depth, int depthCount, int alpha, int beta, int color) {
 
 		// if we are at the end of the game or have reached the iterative deepening
 		// depth, evaluate the state of the board and return a reward
 		// Note: Maybe factor depth into the evaluation in the future?
-		if (game.getBoardState() == BoardState.X_WON || game.getBoardState() == BoardState.O_WON
+		if (temp_game.getBoardState() == BoardState.X_WON || temp_game.getBoardState() == BoardState.O_WON
 				|| depth == depthCount) {
-			return (int) (color * evaluator.evaluate(game, side));
+			return (int) (color * evaluator.evaluate(temp_game, side));
 		}
 
 		// keeps track of the value of the best move we've found so far. Starts at
@@ -75,15 +78,15 @@ public class NegaMaxAgent implements Agent {
 		int max = Integer.MIN_VALUE;
 
 		// explores each node in the tree
-		for (Move possibleMove : game.getLegalMoves()) {
+		for (Move possibleMove : temp_game.getLegalMoves()) {
 
 			// these three lines make a move, recurivsely call the negamax on the new board
 			// state, and then un-make the move. This allows us to get the value of the move
 			// without
 			// "making" the move on our actual board
-			game.makeMove(possibleMove);
-			int negaMax_value = -negaMax(game, depth + 1, depthCount, -beta, -alpha, -color);
-			game.undoLastMove();
+			temp_game.makeMove(possibleMove);
+			int negaMax_value = -negaMax(temp_game, depth + 1, depthCount, -beta, -alpha, -color);
+			temp_game.undoLastMove();
 
 			// if we found a move better than our max, it is our new max
 			if (negaMax_value > max) {
