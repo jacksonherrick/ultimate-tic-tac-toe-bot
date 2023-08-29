@@ -127,7 +127,7 @@ public class GameImpl implements Game {
 	private static Agent selectAgentType(String s, Side side, Scanner reader){
 		
 		Agent a = new ConsolePlayerAgent(reader);
-		BasicBoardEvaluator replacable = new BasicBoardEvaluator();
+		OwenBoardEvaluator replacable = new OwenBoardEvaluator();
 
 		switch (s) {
 			case "1": {
@@ -137,7 +137,8 @@ public class GameImpl implements Game {
 				return new RandomAgent();
 			}
 			case "3": {
-				return new NegaMaxAgent(replacable, side);
+				// Should make selection felxible
+                return new NegaMaxAgent(replacable, side);
 			}
 		}
 
