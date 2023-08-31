@@ -21,17 +21,79 @@ public class GameImpl implements Game {
     public static void initAndPlayGame() {
 
         reader = new Scanner(System.in);
+        System.out.println("Would you like to test bots against eachother? [y/n]");
+        String s = reader.nextLine();
 
-        Board b = initBoard(reader);
-        Agent[] agents = initAgents(reader, b);
+        // Test Bot
+        if (s.equals("y")) {
+            botStrengthSimulator();
+        }
 
-        Game game = new GameImpl(b, agents[0], agents[1]);
+        // Regular Game
+        else {
+            Board b = initBoard(reader);
+            Agent[] agents = initAgents(reader, b);
 
-        // use the inputed board
-        game.play();
+            Game game = new GameImpl(b, agents[0], agents[1]);
+
+            // use the inputed board
+            game.play();
+        }
+        
 
         // close scanner
         reader.close();
+    }
+
+    private static void botStrengthSimulator() {
+        Board b = new BigBoard();
+        Agent[] agents = initAgents(reader, b);
+
+        System.out.println("How many games should be played?");
+        reader = new Scanner(System.in);
+        String s = reader.nextLine();
+
+        int numGames = Integer.parseInt(s);
+        int xWins = 0;
+        int oWins = 0;
+        int draws = 0;
+
+        for (int i = 0; i < numGames; i++) {
+            b = new BigBoard();
+            Game g = new GameImpl(b, agents[0], agents[1]);
+
+            BoardState result = g.noIOPlay();
+
+            if (result == BoardState.X_WON) {
+                xWins++;
+            }
+            else if (result == BoardState.O_WON) {
+                oWins++;
+            }
+            else {
+                draws++;
+            }
+        }
+        System.out.println("X Bot won: " + xWins + "\nO Bot won: " + oWins + "\n" + draws +  " games were drawn");
+
+    }
+
+    @Override
+    public BoardState noIOPlay() {
+        boolean gameOver = false;
+        while (!gameOver) {
+            Move nextMove = getNextMove();
+            
+            // Exit game if move is -1
+            if (nextMove.move == -1) {
+                break;
+            }
+
+            this.board.makeMove(nextMove);
+            gameOver = this.board.getBoardState() != BoardState.IN_PROGRESS;
+        }
+
+        return this.board.getBoardState();
     }
 
     @Override
