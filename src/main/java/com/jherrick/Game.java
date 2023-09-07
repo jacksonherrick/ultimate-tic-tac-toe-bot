@@ -9,4 +9,5 @@ package com.jherrick;
  */
 public interface Game {
     void play();
+    BoardState noIOPlay();
 }
