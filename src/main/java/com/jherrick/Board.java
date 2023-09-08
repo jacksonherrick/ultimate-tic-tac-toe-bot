@@ -41,6 +41,11 @@ public interface Board {
     Collection<Move> getLegalMoves();
 
     /**
+     * 
+     * @return if the next move can go into any subBoard
+     */
+    boolean isAllPossibleMoves();
+    /**
      * @return the specifics of the current Board position
      */
     SubBoard[] getBoardPosition();

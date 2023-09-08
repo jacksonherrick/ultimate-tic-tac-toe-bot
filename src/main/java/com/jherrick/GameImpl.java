@@ -189,7 +189,7 @@ public class GameImpl implements Game {
 	private static Agent selectAgentType(String s, Side side, Scanner reader){
 		
 		Agent a = new ConsolePlayerAgent(reader);
-		OwenBoardEvaluator replacable = new OwenBoardEvaluator();
+		BoardEvaluator replacable = new OwenBoardEvaluator();
 
 		switch (s) {
 			case "1": {
