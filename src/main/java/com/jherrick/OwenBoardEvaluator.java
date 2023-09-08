@@ -56,7 +56,8 @@ public class OwenBoardEvaluator implements BoardEvaluator {
         to a board that is complete. Generally in games, strategic options have
         non-negative value, so giving your opponent the ability to go anywhere
         will rarely be beneficial. This should be outweighed by winning subBoards
-        and the game as a whole.
+        and the game as a whole. You could also prefer to send to a subBoard
+        that has few moves left to force their decisions
     */
     private double evaluateBoard(Board board) {
         
