@@ -13,6 +13,9 @@ public class BigBoard implements Board {
     int xWinBoards;
     int oWinBoards;
     int drawnBoards;
+    int numXWinBoards;
+    int numOWinBoards;
+    int numDrawnBoards;
 
     Side side;
     BoardState state;
@@ -128,7 +131,7 @@ public class BigBoard implements Board {
         Move move = this.getLastMove();
 
         // if first move, generate all moves
-        if (isAllPossibleMoves()) {
+        if (isAllPossibleMoves()) {;
             moves = allPossibleMoves(boards);
             return moves;
         }
@@ -172,6 +175,18 @@ public class BigBoard implements Board {
         return this.drawnBoards;
     }
 
+    public int getnumXWinBoards() {
+        return this.numXWinBoards;
+    }
+
+    public int getnumOWinBoards() {
+        return this.numOWinBoards;
+    }
+
+    public int getnumDrawnBoards() {
+        return this.numDrawnBoards;
+    }
+
     /**
      * Returns the last move, or null if there have not been any moves
      **/
@@ -189,10 +204,13 @@ public class BigBoard implements Board {
             updateInProgressBitBoards(board);
         } else if (s == BoardState.DRAWN) {
             updateDrawnBitBoards(board);
+            numDrawnBoards++;
         } else if (s == BoardState.X_WON) {
             updateXWonBitBoards(board);
+            numXWinBoards++;
         } else if (s == BoardState.O_WON) {
             updateOWonBitBoards(board);
+            numOWinBoards++;
         } else if (Constants.REPORTING_LEVEL > 1) {
             throw new java.lang.RuntimeException(
                     "Unknown BoardState \"" + s + "\" encountered in updateStateBitboards()");

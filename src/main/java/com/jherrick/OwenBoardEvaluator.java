@@ -45,19 +45,13 @@ public class OwenBoardEvaluator implements BoardEvaluator {
 
         First off, the heuristic needs to positively weigh won subBoards.
         There is nuance to the value of winning a board, but to beat a random
-        bot, it should probably prioritize winning subBoards.
+        bot, it should probably prioritize winning subBoards. Suggest bigBoard
+        to keep track (add instance variable)
 
         Second, need something that reads each subBoard, and positively weigh subBoards
         that are close to winning. On the same lines, can determine how many
         options a side has to win a subBoard or the entire board based on 
         any amount of Xs or Os present.
-
-        Third, there is very little strategic benefit to sending an opponent
-        to a board that is complete. Generally in games, strategic options have
-        non-negative value, so giving your opponent the ability to go anywhere
-        will rarely be beneficial. This should be outweighed by winning subBoards
-        and the game as a whole. You could also prefer to send to a subBoard
-        that has few moves left to force their decisions
     */
     private double evaluateBoard(Board board) {
         
