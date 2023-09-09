@@ -33,7 +33,7 @@ public class NegaMaxAgent implements Agent {
 			count++;
 		}
 
-		while (depthCount <= 5) {
+		while (depthCount <= 6) {
 			for (int i = 0; i < moves.length; i++) {
 				tempGame.makeMove(moves[i].move);
 

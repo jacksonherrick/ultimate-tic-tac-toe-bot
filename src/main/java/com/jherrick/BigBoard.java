@@ -175,15 +175,15 @@ public class BigBoard implements Board {
         return this.drawnBoards;
     }
 
-    public int getnumXWinBoards() {
+    public int getNumXWinBoards() {
         return this.numXWinBoards;
     }
 
-    public int getnumOWinBoards() {
+    public int getNumOWinBoards() {
         return this.numOWinBoards;
     }
 
-    public int getnumDrawnBoards() {
+    public int getNumDrawnBoards() {
         return this.numDrawnBoards;
     }
 

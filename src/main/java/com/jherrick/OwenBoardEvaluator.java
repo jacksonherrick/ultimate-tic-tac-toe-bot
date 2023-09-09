@@ -3,11 +3,10 @@ package com.jherrick;
 public class OwenBoardEvaluator implements BoardEvaluator {
 
     // Can use Eval Constants, will instead change values here
-    private static int c0 = 0;
-    private static int c1 = 0;
-    private static int c2 = 100;
-    private static int c3 = 1;
-    private static int c4 = 2;
+    private static int c0 = 1;
+    private static int c1 = 4;
+    private static int c2 = 0;
+    private static int c3 = 0;
 
     public OwenBoardEvaluator() {
 
@@ -59,10 +58,12 @@ public class OwenBoardEvaluator implements BoardEvaluator {
         
         boardEval += c0 * twoInARowsWithOpenThird(board.getXWinBoards(), (board.getOWinBoards() | board.getDrawnBoards()))
                 + c1 * middleSquare(board.getXWinBoards())
-                + c2 * freedomOfMovement(board, Side.X)
+                + c2 * board.getNumXWinBoards()
+                + c3 * freedomOfMovement(board, Side.X)
                 - c0 * twoInARowsWithOpenThird(board.getOWinBoards(), (board.getXWinBoards() | board.getDrawnBoards()))
                 - c1 * middleSquare(board.getOWinBoards())
-                - c2 * freedomOfMovement(board, Side.O);
+                - c2 * board.getNumOWinBoards()
+                - c3 * freedomOfMovement(board, Side.O);
         
         return boardEval;
     }

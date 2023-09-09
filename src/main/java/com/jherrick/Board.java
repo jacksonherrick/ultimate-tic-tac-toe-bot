@@ -35,6 +35,12 @@ public interface Board {
 
     int getDrawnBoards();
 
+    int getNumXWinBoards();
+
+    int getNumOWinBoards();
+
+    int getNumDrawnBoards();
+
     /**
      * @return the Collection of moves that can currently be made
      */
