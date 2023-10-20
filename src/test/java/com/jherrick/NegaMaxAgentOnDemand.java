@@ -12,6 +12,13 @@ public class NegaMaxAgentOnDemand {
         Side agentSide = Side.X;
         return new NegaMaxAgent(evaluator, agentSide);
     }
+
+    public static NegaMaxAgent createXNegamaxAgentWithTimeout(long thinkTime){
+        BoardEvaluator evaluator = new BasicBoardEvaluator();
+        Side agentSide = Side.X;
+        return new NegaMaxAgent(evaluator, agentSide, thinkTime);
+    }
+
     @Test
     public void given_ImmediateWinningMoveAvailable_when_PickingMove_then_ReturnWinningMove(){
         // Arrange
@@ -71,6 +78,21 @@ public class NegaMaxAgentOnDemand {
 
     // Evaluate to deeper win conditions and make sure it can find them
 
+    @Test
+    public void timeoutTest(){
+        // Arrange
+        long thinkTime = 15L;
+        NegaMaxAgent xAgent = createXNegamaxAgentWithTimeout(thinkTime);
+        Board board = new BigBoard("XOXXOOO2/X8/OOO6/X8/X8/OOO6/X8/XX1OOXXXO/OO1XXOX1X X g9");
+        long start = System.currentTimeMillis();
+
+        // Act
+        xAgent.pickMove(board);
+
+        // Assert
+        long delta = System.currentTimeMillis() - start;
+        Assertions.assertTrue(delta < thinkTime + 5);
+    }
     @Test
     public void moveUtilsTest(){
         System.out.println(new BigBoard());
