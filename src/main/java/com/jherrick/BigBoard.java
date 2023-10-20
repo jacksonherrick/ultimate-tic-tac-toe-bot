@@ -101,8 +101,7 @@ public class BigBoard implements Board {
         subboard.makeMove(m.move, side);
 
 		updateStateBitboards(m.board);
-		isWon();
-		isDrawn();
+        gameStatusCheck();
 		toggleSide();
 		putMoveInLog(m);
 	}
@@ -201,37 +200,26 @@ public class BigBoard implements Board {
     public void takeMove(Move m) {
         boards[m.board].takeMove(m.move);
         updateStateBitboards(m.board);
+        gameStatusCheck();
         toggleSide();
         count--;
         pastMoves[count] = null;
     }
 
     /**
-     * Returns true if a player has won on the board TODO: this check only needs to
-     * be done after many, many moves TODO: almost identical to SubBoard function.
-     * Hmmm... inheritance? TODO: Hash Map!
-     **/
-    public void isWon() {
+     * Update the game status to X_WON, O_WON, DRAWN, or IN_PROGRESS.
+     * TODO: this is currently dependent on updateBitBoards being called before it. Roll the calls together so there's no required order of operations
+     */
+    public void gameStatusCheck(){
         if (hasXWon()) {
-            if (state == BoardState.IN_PROGRESS) {
-                state = BoardState.X_WON;
-            }
+            state = BoardState.X_WON;
         } else if (hasOWon()) {
-            if (state == BoardState.IN_PROGRESS) {
-                state = BoardState.O_WON;
-            }
+            state = BoardState.O_WON;
+        } else if (hasDrawn()) {
+            state = BoardState.DRAWN;
         }
-    }
-
-    /**
-     * Returns true if the the board is drawn (no available moves) TODO: this check
-     * only needs to be done after many, many moves
-     **/
-    public void isDrawn() {
-        if (hasDrawn()) {
-            if (state == BoardState.IN_PROGRESS) {
-                state = BoardState.DRAWN;
-            }
+        else{
+            state = BoardState.IN_PROGRESS;
         }
     }
 

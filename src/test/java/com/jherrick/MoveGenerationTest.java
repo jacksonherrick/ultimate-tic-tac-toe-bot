@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
  * Test class to confirm move generation works as expected. Tests both on random
  * positions confirming expected number of positions, and predetermined boards.
  */
-class TestMoveGeneration {
+class MoveGenerationTest {
 
 	/**
 	 * We use the randomly generated positions to confirm that we have the expected
 	 * number of moves.
 	 * 
-	 * @throws IOExceptiont
+	 * @throws IOException
 	 */
 	@DisplayName("Move Generation Shallow Test")
 	@Test

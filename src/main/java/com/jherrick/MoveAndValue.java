@@ -10,6 +10,6 @@ public class MoveAndValue implements Comparable<MoveAndValue> {
 	}
 
 	public int compareTo(MoveAndValue y) {
-		return this.value - y.value;
+		return Integer.compare(this.value, y.value);
 	}
 }

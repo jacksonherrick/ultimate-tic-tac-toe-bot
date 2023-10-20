@@ -7,9 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.jherrick.Utils;
-
-public class TestBoardGenerator {
+public class BoardGeneratorOnDemand {
 	
 	/**
 	 * Randomly generate boards from the Utils.generateRandomBoard() function, and saves to file.

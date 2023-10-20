@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
  * functions include: boardToHCN(), subBoardToHCN(), and Board's HCN
  * constructor.
  */
-class TestHCN {
+class HCNTest {
 
 	/**
 	 * We create a board from HCN, convert that board to an HCN, and assert they are

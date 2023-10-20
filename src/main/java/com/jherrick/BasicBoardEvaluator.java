@@ -27,10 +27,10 @@ public class BasicBoardEvaluator implements BoardEvaluator {
         // Find board that is won - This is the most extreme case (will always or never
         // be picked)
         if (board.getBoardState() == BoardState.X_WON) {
-            return Integer.MAX_VALUE;
+            return Integer.MAX_VALUE-1;
         }
         if (board.getBoardState() == BoardState.O_WON) {
-            return Integer.MIN_VALUE;
+            return Integer.MIN_VALUE+1;
         }
 
         return evaluateBoard(board);

@@ -20,7 +20,9 @@ public final class TestUtils {
 		}
 		for(int i = 0; i < b.boards.length; i++) {
 			if(m == null || ((m.move & Constants.BIT_MASKS[i]) > 0) || b.boards[target].getState() != BoardState.IN_PROGRESS) {
-				count += Integer.bitCount(b.boards[i].generateMoves());
+				if(b.boards[i].getState() == BoardState.IN_PROGRESS) {
+					count += Integer.bitCount(b.boards[i].generateMoves());
+				}
 			}
 		}
 		return count;
