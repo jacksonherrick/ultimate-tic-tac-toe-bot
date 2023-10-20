@@ -1,5 +1,6 @@
 package com.jherrick;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Arrays;
 
@@ -57,7 +58,7 @@ public class NegaMaxAgent implements Agent {
 			}
 			iterativeMaxDepth++;
 			// explore the best moves first
-			Arrays.sort(moves);
+			Arrays.sort(moves, Collections.reverseOrder());
 		}
 
 //		return moves[0].move;
@@ -68,7 +69,7 @@ public class NegaMaxAgent implements Agent {
 	// TODO: this will lead to the behavior that if the CPU has a guaranteed win, it will make random moves instead of immediately winning.
 	// 	Should be fine functionally, but might be annoying to play against. Do we need to implement some discounting?
 	private Move pickRandomBestMove(MoveAndValue[] scoredMoves){
-		Arrays.sort(scoredMoves);
+		Arrays.sort(scoredMoves, Collections.reverseOrder());
 		int bestScore = scoredMoves[0].value;
 
 		// count the number of moves tied for top score
